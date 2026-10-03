@@ -79,6 +79,22 @@ public final class PhysicalLifecycleGameTests {
         s.startTimer("ass_riposte",100);s.startTimer("ass_soul_strike",100);s.startTimer("ass_void_debt",100);
     }
     @GameTest(templateName="empty",tickLimit=80)
+    public static void parriesRejectAttributedNonMeleeDamage(TestContext c) {
+        var p=TestPlayers.create(c);var t=target(c);
+        try{for(var spec:new RPGSpecialization[]{RPGSpecialization.DUEL_MASTER,RPGSpecialization.COUNTERBLADE}){
+            configure(p,spec);String prefix=spec.parent.parent==RPGClass.GUERREIRO?"war":"ass";
+            var state=CombatState.get(p.getUuid());state.startTimer(prefix+"_parry",100);
+            for(var source:new net.minecraft.entity.damage.DamageSource[]{p.getDamageSources().thorns(t),
+                    p.getDamageSources().indirectMagic(t,t),p.getDamageSources().sonicBoom(t)}){
+                float damage=ClassMechanics.modifyIncomingDamage(p,StatsManager.get(p),10,source);
+                c.assertTrue(Math.abs(damage-10)<.001f,spec+" treated attributed non-melee damage as a parry: "+source);
+                ClassMechanics.onHurt(p,StatsManager.get(p),10,source);
+                c.assertTrue(state.timer(prefix+"_parry")==100&&state.timer(prefix+"_riposte")==0,
+                    spec+" consumed Parry on attributed non-melee damage: "+source);
+            }
+        }}finally{t.discard();TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=80)
     public static void rejectedAssassinHitsPreserveResourcesAndEffects(TestContext c) {
         var p=TestPlayers.create(c);
         try{for(var spec:new RPGSpecialization[]{RPGSpecialization.COUNTERBLADE,RPGSpecialization.SOULKNIFE,RPGSpecialization.VOIDWALKER}){
