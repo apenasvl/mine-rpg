@@ -256,8 +256,11 @@ public final class ArcherTechniqueGameTests {
         player.setStackInHand(net.minecraft.util.Hand.MAIN_HAND, new ItemStack(net.minecraft.item.Items.BOW));
         CombatHandler.activateAbility(player, 0);
         var first = new net.minecraft.entity.projectile.ArrowEntity(player.getWorld(), player);
+        context.assertTrue(CombatState.get(player.getUuid()).cooldown("arc_magic_fire_technique") > 0, "Native dummy rotation did not start its fire technique");
         com.rpgstats.combat.ArcherShotTracker.beginLaunch(player, player.getMainHandStack()); player.getServerWorld().spawnEntity(first); com.rpgstats.combat.ArcherShotTracker.endLaunch(player);
         dummy.damage(player.getDamageSources().arrow(first, player), 2f);
+        context.assertTrue(dummyDamageTotal(dummy)>0, "Native dummy rotation's first arrow dealt no confirmed damage");
+        context.assertTrue(player.canSee(dummy), "Native dummy rotation lost line of sight before its signature");
         PlayerStats ready = StatsManager.get(player); ready.resource = ready.resourceMax; StatsManager.save(player, ready);
         context.assertTrue(com.rpgstats.combat.ArcherTechniqueHandler.canActivate(player, ready, "arc_magic_fire_signature"), "Native dummy mark could not satisfy elemental signature");
         CombatHandler.activateAbility(player, 1);

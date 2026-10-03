@@ -87,6 +87,8 @@ public final class NativeMageSpecializationGameTests {
   if(!iron()){c.complete();return;}var p=mage(c,RPGSpecialization.CRYOMANCER);
   var stats=StatsManager.get(p);stats.level=30;
   stats.unlockedNodes.removeAll(Set.of("mag_cryo_ice_barrier","mag_cryo_frost_nova","mag_cryo_deep_freeze","mag_cryo_shatter","mag_cryo_asc_winterheart"));
+  StatsManager.save(p,stats);
+  c.assertTrue(StatsManager.get(p).level==30&&!StatsManager.get(p).unlockedNodes.contains("mag_cryo_deep_freeze"),"Level-30 Ice fixture was not persisted");
   var t=EntityType.COW.create(c.getWorld());t.refreshPositionAndAngles(c.getAbsolutePos(new BlockPos(6,3,6)),0,0);c.getWorld().spawnEntity(t);
   try{
    var status=MageState.get(p.getUuid()).target(t.getUuid());status.frost=80f;
