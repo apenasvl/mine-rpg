@@ -50,9 +50,19 @@ public final class ClassBalance {
         float progress=levelProgress(level);
         return progress*progress*(.28f+.07f*attributeProgress(tenacity));
     }
+    /** Heavy defensive specialization: late progression preserves the level25 boss pressure. */
+    public static float juggernautBossReduction(int level,int tenacity) {
+        float late=Math.max(0f,Math.min(1f,(level-25f)/25f));
+        return Math.min(.80f,warriorBossReduction(level,tenacity)
+                +late*late*(.45f+.05f*attributeProgress(tenacity)));
+    }
     /** All RPG guard layers together may mitigate at most 60%, before native armor. */
     public static float warriorBossDamage(float beforeClass,float afterGuards,float roleReduction) {
         return Math.max(beforeClass*.40f,afterGuards*(1f-Math.max(0f,Math.min(.35f,roleReduction))));
+    }
+    /** Juggernaut's RPG reductions together cap at 80%; native armor still applies afterwards. */
+    public static float juggernautBossDamage(float beforeClass,float afterGuards,float roleReduction) {
+        return Math.max(beforeClass*.20f,afterGuards*(1f-Math.max(0f,Math.min(.80f,roleReduction))));
     }
 
     private static float attributeProgress(int points) {

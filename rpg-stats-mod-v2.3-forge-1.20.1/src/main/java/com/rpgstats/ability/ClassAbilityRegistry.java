@@ -774,6 +774,8 @@ public final class ClassAbilityRegistry {
             default -> "";
         };
         if (loop.isEmpty()) return "";
+        if (id.endsWith("_initiation") && key.equals("war_van_jugg"))
+            return "MECANICA: " + loop + ". Defesa contra bosses cresce com nivel e Tenacidade, especialmente entre niveis 25 e 50. Inclui ataques de area e projeteis atribuidos ao boss, mesmo alem de 8 blocos. No nivel 50 e com 25 Tenacidade: 79% de reducao antes da armadura; todas as protecoes do RPG juntas respeitam o limite de 80%.";
         if (id.endsWith("_initiation")) return "MECANICA: " + loop + ".";
         if (id.endsWith("_engine")) return "MOTOR: habilita o gatilho server-side de " + specializationName(id) + ".";
         if (id.endsWith("_technique")) return "ATIVA: inicia a ferramenta caracteristica; exige o motor da build.";
