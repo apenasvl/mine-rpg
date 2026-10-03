@@ -286,6 +286,9 @@ public final class RPGStatsGameTests {
                 player, stats, 10.0f, player.getDamageSources().mobAttack(attacker));
         context.assertTrue(melee < 10.0f,
                 "Direct melee damage did not receive Duelist parry reduction: " + melee);
+        context.assertTrue(state.timer("ass_parry") > 0 && state.timer("ass_riposte") == 0,
+                "Damage scaling consumed Parry before confirmation");
+        ClassMechanics.onHurt(player, stats, melee, player.getDamageSources().mobAttack(attacker));
         context.assertTrue(state.timer("ass_parry") == 0,
                 "Direct melee damage did not consume Duelist parry");
         context.assertTrue(state.timer("ass_riposte") > 0,

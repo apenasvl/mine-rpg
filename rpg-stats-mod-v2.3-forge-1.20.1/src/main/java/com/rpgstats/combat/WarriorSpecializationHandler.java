@@ -102,13 +102,6 @@ public final class WarriorSpecializationHandler {
                 protectNearby(player, asc(state, RPGSpecialization.BULWARK) ? 7d : 5d, 35);
         }
 
-        if (stats.specialization == RPGSpecialization.DUEL_MASTER
-                && has(stats, "war_weap_duel_engine")
-                && state.timer("war_parry") > 0) {
-            state.startTimer("war_riposte", 70);
-            state.addGauge("war_guard", .8f, 10f);
-        }
-
         if (stats.specialization == RPGSpecialization.SPELLBREAKER
                 && has(stats, "war_rune_break_engine")
                 && (event.getSource().getSource() != event.getSource().getAttacker()
