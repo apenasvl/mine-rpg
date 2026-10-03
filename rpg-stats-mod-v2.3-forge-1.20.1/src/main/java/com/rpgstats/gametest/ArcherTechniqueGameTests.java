@@ -247,8 +247,13 @@ public final class ArcherTechniqueGameTests {
         stats.setActiveSlot(0, "arc_magic_fire_technique"); stats.setActiveSlot(1, "arc_magic_fire_signature"); reset(player, stats);
         var type = net.minecraft.registry.Registries.ENTITY_TYPE.get(new net.minecraft.util.Identifier("dummmmmmy", "target_dummy"));
         var dummy = (net.minecraft.entity.LivingEntity) type.create(player.getWorld());
-        context.setBlockState(new BlockPos(3, 0, 3), net.minecraft.block.Blocks.STONE.getDefaultState());
-        var pos = context.getAbsolutePos(new BlockPos(3, 1, 3)); dummy.refreshPositionAndAngles(pos.getX() + .5, pos.getY(), pos.getZ() + .5, 0, 0); player.getServerWorld().spawnEntity(dummy);
+        // Keep the rotation inside the template and provide a clear, supported sightline.
+        // Signature activation requires visibility; explicitly clear the fixture's corridor.
+        for (int z = 1; z <= 2; z++) {
+            context.setBlockState(new BlockPos(1, 0, z), net.minecraft.block.Blocks.STONE.getDefaultState());
+            for (int y = 1; y <= 3; y++) context.setBlockState(new BlockPos(1, y, z), net.minecraft.block.Blocks.AIR.getDefaultState());
+        }
+        var pos = context.getAbsolutePos(new BlockPos(1, 1, 2)); dummy.refreshPositionAndAngles(pos.getX() + .5, pos.getY(), pos.getZ() + .5, 0, 0); player.getServerWorld().spawnEntity(dummy);
         // Nearby queries see newly spawned native dummies only after their index is updated.
         context.runAtTick(2, () -> {
         context.assertTrue(player.getServerWorld().getEntitiesByClass(net.minecraft.entity.LivingEntity.class,
