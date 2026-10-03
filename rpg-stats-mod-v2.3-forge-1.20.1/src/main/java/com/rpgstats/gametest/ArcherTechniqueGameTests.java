@@ -279,7 +279,8 @@ public final class ArcherTechniqueGameTests {
             dummy.damage(player.getDamageSources().arrow(second, player), 2f);
             float beforeSupplement = dummyDamageTotal(dummy); float focus = StatsManager.get(player).resource;
             second.discard();
-            context.runAtTick(14, () -> {
+            // Same-target supplements wait 11 server ticks to clear hurt resistance.
+            context.runAtTick(18, () -> {
                 context.assertTrue(dummyDamageTotal(dummy) >= beforeSupplement + 3.99f, "Consumed elemental mark did not deal its +4 supplemental damage");
                 context.assertTrue(StatsManager.get(player).xp == 0, "Elemental dummy rotation awarded XP");
                 // Queued supplement must not generate another resource reward.
