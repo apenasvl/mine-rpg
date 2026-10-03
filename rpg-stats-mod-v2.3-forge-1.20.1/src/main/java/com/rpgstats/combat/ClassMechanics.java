@@ -1087,6 +1087,7 @@ public final class ClassMechanics {
                 || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_EXPLOSION)
                 || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_FIRE)
                 || source.isOf(net.minecraft.entity.damage.DamageTypes.THORNS)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.SONIC_BOOM)
                 || source.isOf(net.minecraft.entity.damage.DamageTypes.MAGIC)
                 || source.isOf(net.minecraft.entity.damage.DamageTypes.INDIRECT_MAGIC)
                 || com.rpgstats.compat.CompatManager.isIronsSpellDamage(source)) return false;
