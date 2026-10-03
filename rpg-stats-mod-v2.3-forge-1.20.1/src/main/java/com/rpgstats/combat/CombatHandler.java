@@ -9,6 +9,7 @@ import com.rpgstats.balance.GlobalCaps;
 import com.rpgstats.boss.BossScaler;
 import com.rpgstats.classes.HouseRules;
 import com.rpgstats.classes.RPGClass;
+import com.rpgstats.classes.RPGSpecialization;
 import com.rpgstats.compat.CompatManager;
 import com.rpgstats.integration.IntegrationServices;
 import com.rpgstats.stats.PlayerStats;
@@ -152,10 +153,18 @@ public final class CombatHandler {
         reduction = GlobalCaps.damageReduction(reduction);
         float guarded=amount*(1f-reduction);
         if(stats.clazz==RPGClass.GUERREIRO && attacker instanceof LivingEntity boss
-                && !(boss instanceof PlayerEntity) && BossScaler.getTier(boss)>0
-                && player.squaredDistanceTo(boss)<=64d) {
-            guarded=com.rpgstats.balance.ClassBalance.warriorBossDamage(beforeClassGuards,guarded,
-                    com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,stats.totalStats().getOrDefault(Stat.TENACIDADE,0)));
+                && !(boss instanceof PlayerEntity) && BossScaler.getTier(boss)>0) {
+            boolean juggernaut=stats.specialization==RPGSpecialization.JUGGERNAUT
+                    && stats.hasNode(RPGSpecialization.JUGGERNAUT.nodes.get(0).id());
+            int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
+            if(juggernaut) {
+                // Boss area attacks remain attributable even after the melee fighter retreats.
+                guarded=com.rpgstats.balance.ClassBalance.juggernautBossDamage(beforeClassGuards,guarded,
+                        com.rpgstats.balance.ClassBalance.juggernautBossReduction(stats.level,tenacity),stats.level);
+            } else if(player.squaredDistanceTo(boss)<=64d) {
+                guarded=com.rpgstats.balance.ClassBalance.warriorBossDamage(beforeClassGuards,guarded,
+                        com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,tenacity));
+            }
         }
         return guarded*(1f+HouseRules.vulnerability(stats));
     }
