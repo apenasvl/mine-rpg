@@ -1082,6 +1082,14 @@ public final class ClassMechanics {
 
     private static boolean isDirectMeleeDamage(DamageSource source) {
         if (source == null) return false;
+        if (source.isIn(net.minecraft.registry.tag.DamageTypeTags.BYPASSES_RESISTANCE)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_PROJECTILE)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_EXPLOSION)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_FIRE)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.THORNS)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.MAGIC)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.INDIRECT_MAGIC)
+                || com.rpgstats.compat.CompatManager.isIronsSpellDamage(source)) return false;
         Entity attacker = source.getAttacker();
         Entity direct = source.getSource();
         return attacker instanceof LivingEntity && direct == attacker;
@@ -1131,4 +1139,3 @@ public final class ClassMechanics {
         return String.format(Locale.ROOT, "%.1f", value);
     }
 }
-
