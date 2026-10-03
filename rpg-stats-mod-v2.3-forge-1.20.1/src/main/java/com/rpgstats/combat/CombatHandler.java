@@ -161,9 +161,9 @@ public final class CombatHandler {
                 // Boss area attacks remain attributable even after the melee fighter retreats.
                 guarded=com.rpgstats.balance.ClassBalance.juggernautBossDamage(beforeClassGuards,guarded,
                         com.rpgstats.balance.ClassBalance.juggernautBossReduction(stats.level,tenacity),stats.level);
-            } else if(player.squaredDistanceTo(boss)<=64d) {
+            } else {
                 guarded=com.rpgstats.balance.ClassBalance.warriorBossDamage(beforeClassGuards,guarded,
-                        com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,tenacity));
+                        com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,tenacity),stats.level);
             }
         }
         return guarded*(1f+HouseRules.vulnerability(stats));
@@ -568,3 +568,4 @@ public final class CombatHandler {
 
     private CombatHandler() {}
 }
+
