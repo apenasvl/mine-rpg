@@ -95,8 +95,19 @@ public final class NativeMageSpecializationGameTests {
    Class.forName("io.redspace.ironsspellbooks.damage.DamageSources").getMethod("applyDamage",Entity.class,float.class,DamageSource.class).invoke(null,t,1f,source);
    c.assertTrue(status.fragilityTicks==60&&Math.abs(status.fragilityAmp-.08f)<.0001f&&status.frost==0f,
        "Level-30 native Ice hit did not resolve purchased Fragility without Deep Freeze");
-   c.assertTrue(status.frozenTicks==0&&!t.hasStatusEffect(net.minecraft.entity.effect.StatusEffects.SLOWNESS),
-       "Level-30 Fragility granted unpurchased level-45 freeze");
+   // Iron's can supply its own chill. Compare to the same native hit below the RPG Frost threshold.
+   var control=EntityType.COW.create(c.getWorld());control.refreshPositionAndAngles(c.getAbsolutePos(new BlockPos(9,3,6)),0,0);c.getWorld().spawnEntity(control);
+   try{
+    DamageSource baselineSource=(DamageSource)Class.forName("io.redspace.ironsspellbooks.api.spells.AbstractSpell")
+        .getMethod("getDamageSource",Entity.class,Entity.class).invoke(spell("CONE_OF_COLD_SPELL"),p,p);
+    Class.forName("io.redspace.ironsspellbooks.damage.DamageSources").getMethod("applyDamage",Entity.class,float.class,DamageSource.class).invoke(null,control,1f,baselineSource);
+    var slow=t.getStatusEffect(net.minecraft.entity.effect.StatusEffects.SLOWNESS);
+    var baseline=control.getStatusEffect(net.minecraft.entity.effect.StatusEffects.SLOWNESS);
+    RPGStatsMod.LOGGER.info("RPG_NATIVE_FROST_EARLY frozen={} nativeSlow={} baselineSlow={}",status.frozenTicks,slow,baseline);
+    c.assertTrue(status.frozenTicks==0&&(slow==null?baseline==null:baseline!=null
+        &&slow.getAmplifier()==baseline.getAmplifier()&&slow.getDuration()==baseline.getDuration()),
+        "Level-30 Fragility added unpurchased freeze/slow beyond the native spell");
+   }finally{control.discard();}
   }catch(ReflectiveOperationException e){throw new AssertionError(e);}finally{t.discard();TestPlayers.finish(c);}c.complete();
  }
  @GameTest(templateName="empty",tickLimit=80)

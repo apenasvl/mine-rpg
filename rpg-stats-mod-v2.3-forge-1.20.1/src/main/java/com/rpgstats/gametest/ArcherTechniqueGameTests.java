@@ -249,6 +249,10 @@ public final class ArcherTechniqueGameTests {
         var dummy = (net.minecraft.entity.LivingEntity) type.create(player.getWorld());
         context.setBlockState(new BlockPos(3, 0, 3), net.minecraft.block.Blocks.STONE.getDefaultState());
         var pos = context.getAbsolutePos(new BlockPos(3, 1, 3)); dummy.refreshPositionAndAngles(pos.getX() + .5, pos.getY(), pos.getZ() + .5, 0, 0); player.getServerWorld().spawnEntity(dummy);
+        // Nearby queries see newly spawned native dummies only after their index is updated.
+        context.runAtTick(2, () -> {
+        context.assertTrue(player.getServerWorld().getEntitiesByClass(net.minecraft.entity.LivingEntity.class,
+                player.getBoundingBox().expand(24), e -> e == dummy).contains(dummy), "Native dummy was not indexed before the signature rotation");
         player.setStackInHand(net.minecraft.util.Hand.MAIN_HAND, new ItemStack(net.minecraft.item.Items.BOW));
         CombatHandler.activateAbility(player, 0);
         var first = new net.minecraft.entity.projectile.ArrowEntity(player.getWorld(), player);
@@ -260,7 +264,7 @@ public final class ArcherTechniqueGameTests {
         context.assertTrue(CombatState.get(player.getUuid()).cooldown("arc_magic_fire_signature") > 0, "Native dummy signature was rejected");
         first.discard();
         // Two arrows in one server tick are one volley. Use distinct launch ticks for the rotation.
-        context.runAtTick(2, () -> {
+        context.runAtTick(4, () -> {
             dummy.timeUntilRegen = 0;
             var second = new net.minecraft.entity.projectile.ArrowEntity(player.getWorld(), player);
             com.rpgstats.combat.ArcherShotTracker.beginLaunch(player, player.getMainHandStack()); player.getServerWorld().spawnEntity(second); com.rpgstats.combat.ArcherShotTracker.endLaunch(player);
@@ -274,6 +278,7 @@ public final class ArcherTechniqueGameTests {
                 context.assertTrue(StatsManager.get(player).resource <= focus + 2f, "Supplement generated an additional training reward");
                 dummy.discard(); complete(context);
             });
+        });
         });
     }
 
