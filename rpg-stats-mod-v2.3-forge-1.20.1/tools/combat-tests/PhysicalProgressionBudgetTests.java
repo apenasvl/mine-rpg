@@ -13,7 +13,16 @@ public final class PhysicalProgressionBudgetTests {
   if(ClassBalance.warriorMeleeMultiplier(1,0,false)!=1f || ClassBalance.assassinMeleeMultiplier(1,0,false)!=1f)throw new AssertionError("Early base damage changed");
   if(GlobalCaps.damageMultiplier(100f)!=2.25f || GlobalCaps.physicalDamageMultiplier(100f,1)!=2.25f || GlobalCaps.physicalDamageMultiplier(100f,50)!=3.5f)throw new AssertionError("Magic or early caps changed / physical conditional headroom missing");
   if(GlobalCaps.physicalDamageMultiplier(2.8f,50)!=2.8f)throw new AssertionError("Cap should not amplify damage itself");
-  if(ClassBalance.warriorBossReduction(50,50)>.3501f || ClassBalance.warriorBossReduction(25,50)>=ClassBalance.warriorBossReduction(50,50)*.3f)throw new AssertionError("Boss defense erases early progression or exceeds its budget");
+  if(ClassBalance.warriorBossReduction(50,50)>.7501f || ClassBalance.warriorBossReduction(500,500)>.7501f || ClassBalance.warriorBossReduction(50,25)<.7399f)throw new AssertionError("Late Warrior boss defense missing or exceeds its budget");
+  for(int level=1;level<=25;level++)for(int tenacity:new int[]{0,25,50}) {
+   float p=ClassBalance.levelProgress(level),early=p*p*(.28f+.07f*tenacity/50f);
+   float role=ClassBalance.warriorBossReduction(level,tenacity);
+   if(Math.abs(role-early)>.0001f)throw new AssertionError("Early boss defense changed");
+   for(float guards:new float[]{10f,50f,100f})
+    if(Math.abs(ClassBalance.warriorBossDamage(100f,guards,role,level)-ClassBalance.warriorBossDamage(100f,guards,role))>.0001f)throw new AssertionError("Early combined cap changed");
+  }
+  if(ClassBalance.warriorBossDamage(100f,10f,1f,50)!=25f || ClassBalance.warriorBossDamage(100f,10f,1f,500)!=25f)throw new AssertionError("Stacked guards exceed late Warrior 75% cap");
+  if(Math.abs(ClassBalance.juggernautBossReduction(50,25)-.79f)>.0001f || ClassBalance.juggernautBossDamage(100f,10f,1f,50)<19.999f)throw new AssertionError("General Warrior rebalance changed Juggernaut");
   if(ClassBalance.warriorBossDamage(100f,10f,.35f)!=40f)throw new AssertionError("Stacked Warrior guards bypass total RPG cap");
   if(ClassBalance.warriorBossDamage(100f,100f,.35f)<64.9f)throw new AssertionError("Role defense alone bypasses cap");
   if(ClassBalance.mobileMoveBonus(50,50,false)<.21f || ClassBalance.mobileMoveBonus(50,50,true)<.27f || ClassBalance.mobileMoveBonus(500,500,true)>.2801f)throw new AssertionError("Mobile roles missing or uncapped");
