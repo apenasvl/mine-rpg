@@ -3,7 +3,7 @@ name: Forge 1.20.1 build audit
 on:
   workflow_dispatch:
   push:
-    branches: [ "audit/forge-1.20.1", "feature/selective-combat-mod-compat", "feature/three-mod-boss-progression" ]
+    branches: [ "main", "audit/forge-1.20.1", "feature/selective-combat-mod-compat", "feature/three-mod-boss-progression" ]
   pull_request:
     branches: [ "main" ]
 
@@ -51,6 +51,8 @@ jobs:
           python3 tests/validate_corruption_guide.py
           javac -d build/corruption-text-tests src/main/java/com/rpgstats/gui/MageCorruptionText.java tests/MageCorruptionTextTest.java
           java -cp build/corruption-text-tests MageCorruptionTextTest
+          javac -d build/frost-tests src/main/java/com/rpgstats/combat/MageFrostCycle.java tests/MageFrostCycleTest.java
+          java -cp build/frost-tests MageFrostCycleTest
 
       - name: Archer balance validation
         run: |
@@ -251,6 +253,19 @@ jobs:
         run: ./gradlew --no-daemon --stacktrace -I tools/production-boss-probe.init.gradle build productionBossProbeJar
       - name: Test original native binaries in installed Forge
         run: python3 tools/run_production_boss_tests.py ${{ matrix.argument }}
+      - name: Preserve the exact native-tested RPG artifact
+        run: |
+          mkdir -p dist
+          cp build/production-boss${{ matrix.profile == 'full' && '-full' || '' }}/mods/rpgstats.jar dist/rpg-stats-forge-1.20.1-mages.jar
+          sha256sum dist/rpg-stats-forge-1.20.1-mages.jar > dist/rpg-stats-forge-1.20.1-mages.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-tested-rpg-${{ matrix.profile }}
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/dist/rpg-stats-forge-1.20.1-mages.jar
+            rpg-stats-mod-v2.3-forge-1.20.1/dist/rpg-stats-forge-1.20.1-mages.sha256
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/upload-artifact@v4
         if: always()
         with:
