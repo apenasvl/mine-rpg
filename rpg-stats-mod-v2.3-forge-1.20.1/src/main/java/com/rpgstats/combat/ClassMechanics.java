@@ -155,10 +155,8 @@ public final class ClassMechanics {
             if (state.timer("war_juggernaut") > 0) reduction += .07f;
             if (state.timer("war_order_defense") > 0) reduction += .05f;
             if (state.timer("war_exhaustion") > 0) amount *= 1.08f;
-            if (state.timer("war_parry") > 0) {
+            if (state.timer("war_parry") > 0 && isDirectMeleeDamage(source)) {
                 reduction += .28f;
-                state.setTimer("war_parry", 0);
-                state.startTimer("war_riposte", 70);
             }
         } else if (stats.clazz == RPGClass.ARQUEIRO) {
             if (state.timer("arc_survival") > 0) reduction += .09f;
@@ -173,12 +171,6 @@ public final class ClassMechanics {
             if (coreHas(stats, "guard") && state.timer("ass_escape") > 0) reduction += .04f;
             if (state.timer("ass_parry") > 0 && isDirectMeleeDamage(source)) {
                 reduction += .32f;
-                state.setTimer("ass_parry", 0);
-                state.startTimer("ass_riposte", 70);
-                state.addGauge("ass_advantage", 1f, 5f);
-                if (pathHas(stats, RPGPath.ASS_DUELIST, "_reaction")) {
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 30, 0));
-                }
             }
         }
 
@@ -239,6 +231,23 @@ public final class ClassMechanics {
     public static void onHurt(ServerPlayerEntity player, PlayerStats stats, float amount, DamageSource source) {
         if (!handles(stats) || amount <= 0f) return;
         CombatState state = CombatState.get(player.getUuid());
+
+        // Scaling may run for a hit that Forge later cancels or armor/absorption fully negates.
+        // Consume the parry and grant its payoff only on the confirmed incoming damage callback.
+        if (isDirectMeleeDamage(source)) {
+            if (stats.clazz == RPGClass.GUERREIRO && state.timer("war_parry") > 0) {
+                state.setTimer("war_parry", 0);
+                state.startTimer("war_riposte", 70);
+                if (specEnabled(stats, RPGSpecialization.DUEL_MASTER) && specHas(stats, "_engine"))
+                    state.addGauge("war_guard", .8f, 10f);
+            } else if (stats.clazz == RPGClass.ASSASSINO && state.timer("ass_parry") > 0) {
+                state.setTimer("ass_parry", 0);
+                state.startTimer("ass_riposte", 70);
+                state.addGauge("ass_advantage", 1f, 5f);
+                if (pathHas(stats, RPGPath.ASS_DUELIST, "_reaction"))
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 30, 0));
+            }
+        }
 
         if (stats.clazz == RPGClass.GUERREIRO) {
             state.addGauge("war_impact", Math.min(1.5f, amount * .12f), GAUGE_CAP);
@@ -1073,6 +1082,15 @@ public final class ClassMechanics {
 
     private static boolean isDirectMeleeDamage(DamageSource source) {
         if (source == null) return false;
+        if (source.isIn(net.minecraft.registry.tag.DamageTypeTags.BYPASSES_RESISTANCE)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_PROJECTILE)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_EXPLOSION)
+                || source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_FIRE)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.THORNS)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.SONIC_BOOM)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.MAGIC)
+                || source.isOf(net.minecraft.entity.damage.DamageTypes.INDIRECT_MAGIC)
+                || com.rpgstats.compat.CompatManager.isIronsSpellDamage(source)) return false;
         Entity attacker = source.getAttacker();
         Entity direct = source.getSource();
         return attacker instanceof LivingEntity && direct == attacker;
@@ -1122,4 +1140,3 @@ public final class ClassMechanics {
         return String.format(Locale.ROOT, "%.1f", value);
     }
 }
-

@@ -175,6 +175,13 @@ public final class CombatHandler {
             ArcherSpecializationHandler.onHit(player, target, stats, source, damageDealt);
         }
 
+        // Prepared Assassin effects need the pre-onHit gauges, but must not run on cancelled or
+        // absorbed attacks. Reload after their refund so the later resource write preserves it.
+        if (!projectile && !magic && source.getSource() == player) {
+            AssassinSpecializationHandler.onConfirmedMeleeStart(player, target, damageDealt);
+            stats = StatsManager.get(player);
+        }
+
         // Mecanicas usam o estado anterior ao touch quando precisam distinguir emboscada/out-of-combat.
         if (ClassMechanics.handles(stats))
             ClassMechanics.onHit(player, target, stats, damageDealt, source, projectile, magic);

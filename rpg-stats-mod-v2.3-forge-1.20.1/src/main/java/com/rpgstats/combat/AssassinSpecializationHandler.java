@@ -33,20 +33,16 @@ import java.util.UUID;
 @Mod.EventBusSubscriber(modid = RPGStatsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class AssassinSpecializationHandler {
     private static final ThreadLocal<Boolean> PROC_GUARD = ThreadLocal.withInitial(() -> false);
-    /** Opening precisa sobreviver ate ClassMechanics.onHit; limpamos somente no LOWEST do mesmo hit. */
+    /** Opening survives ClassMechanics.onHit and is cleaned up in the same confirmed hit. */
     private static final Map<UUID, UUID> OPENING_HIT_PENDING = new HashMap<>();
 
     /**
-     * Antes do pipeline principal registramos a janela preparada e gastamos Combo uma unica vez.
+     * After damage confirmation, before ClassMechanics.onHit, resolve the prepared payoff once.
      * Antes do node Risk (45), Combo melhora economia/rotacao em vez de conceder dano bruto gratis.
      * O bonus ofensivo de Risk ja e calculado no pipeline principal antes deste evento.
      */
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void beforeClassPipeline(LivingHurtEvent event) {
-        if (PROC_GUARD.get() || ProcDamageQueue.isApplying() || event.getEntity().getWorld().isClient) return;
-        LivingEntity target = event.getEntity();
-        if (!(event.getSource().getAttacker() instanceof ServerPlayerEntity player)) return;
-        if (event.getSource().getSource() != player) return; // somente golpe corpo a corpo direto
+    public static void onConfirmedMeleeStart(ServerPlayerEntity player, LivingEntity target, float damage) {
+        if (damage <= 0f || PROC_GUARD.get() || ProcDamageQueue.isApplying() || target.getWorld().isClient) return;
 
         PlayerStats stats = StatsManager.get(player);
         if (stats.clazz != RPGClass.ASSASSINO) return;
