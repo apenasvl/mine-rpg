@@ -47,22 +47,36 @@ public final class ClassBalance {
     public static int mobileRegenDelay(int level) { return Math.round(24f-12f*levelProgress(level)); }
     /** Close boss combat; early levels still need equipment, defense and correct timing. */
     public static float warriorBossReduction(int level,int tenacity) {
+        float late=lateBossProgress(level);
+        return Math.min(.75f,legacyWarriorBossReduction(level,tenacity)
+                +late*late*(.40f+.05f*attributeProgress(tenacity)));
+    }
+    private static float legacyWarriorBossReduction(int level,int tenacity) {
         float progress=levelProgress(level);
         return progress*progress*(.28f+.07f*attributeProgress(tenacity));
     }
+    private static float lateBossProgress(int level) {
+        return Math.max(0f,Math.min(1f,(level-25f)/25f));
+    }
     /** Heavy defensive specialization: late progression preserves the level25 boss pressure. */
     public static float juggernautBossReduction(int level,int tenacity) {
-        float late=Math.max(0f,Math.min(1f,(level-25f)/25f));
-        return Math.min(.80f,warriorBossReduction(level,tenacity)
+        float late=lateBossProgress(level);
+        return Math.min(.80f,legacyWarriorBossReduction(level,tenacity)
                 +late*late*(.45f+.05f*attributeProgress(tenacity)));
     }
     /** All RPG guard layers together may mitigate at most 60%, before native armor. */
     public static float warriorBossDamage(float beforeClass,float afterGuards,float roleReduction) {
         return Math.max(beforeClass*.40f,afterGuards*(1f-Math.max(0f,Math.min(.35f,roleReduction))));
     }
+    /** General Warrior: combined boss-only mitigation grows to 75% at level50. */
+    public static float warriorBossDamage(float beforeClass,float afterGuards,float roleReduction,int level) {
+        float late=lateBossProgress(level);
+        float minimum=.40f-.15f*late*late;
+        return Math.max(beforeClass*minimum,afterGuards*(1f-Math.max(0f,Math.min(.75f,roleReduction))));
+    }
     /** Combined RPG cap progresses from 60% through level25 to 80% at level50. */
     public static float juggernautBossDamage(float beforeClass,float afterGuards,float roleReduction,int level) {
-        float late=Math.max(0f,Math.min(1f,(level-25f)/25f));
+        float late=lateBossProgress(level);
         float minimum=.40f-.20f*late*late;
         return Math.max(beforeClass*minimum,afterGuards*(1f-Math.max(0f,Math.min(.80f,roleReduction))));
     }
@@ -77,3 +91,4 @@ public final class ClassBalance {
 
     private ClassBalance() {}
 }
+
