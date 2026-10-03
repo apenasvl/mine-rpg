@@ -35,6 +35,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -664,12 +665,16 @@ public final class MageCombatHandler {
     }
 
     private static void tickTargetStates(ServerPlayerEntity player, PlayerStats stats, MageState state) {
-        Iterator<Map.Entry<UUID, MageState.TargetState>> it = state.targets.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<UUID, MageState.TargetState> entry = it.next();
-            Entity raw = player.getServerWorld().getEntity(entry.getKey());
-            if (!(raw instanceof LivingEntity target) || !target.isAlive()) { it.remove(); continue; }
+        // Damage/death callbacks can remove, add or replace target states during this tick.
+        // Copy entries and preserve their state identities; newly applied states wait until next tick.
+        for (Map.Entry<UUID, MageState.TargetState> entry : new HashMap<>(state.targets).entrySet()) {
             MageState.TargetState t = entry.getValue();
+            if (state.targets.get(entry.getKey()) != t) continue;
+            Entity raw = player.getServerWorld().getEntity(entry.getKey());
+            if (!(raw instanceof LivingEntity target) || !target.isAlive()) {
+                state.targets.remove(entry.getKey(), t);
+                continue;
+            }
             if (t.fragilityTicks > 0) t.fragilityTicks--;
             if (t.weaknessTicks > 0) t.weaknessTicks--;
             if (t.frozenTicks > 0) t.frozenTicks--;
@@ -685,6 +690,10 @@ public final class MageCombatHandler {
                     periodicDamage(player, stats, target, 1.5f, MageState.School.OCCULT);
                 }
             }
+            if (!target.isAlive() || state.targets.get(entry.getKey()) != t) {
+                state.targets.remove(entry.getKey(), t);
+                continue;
+            }
             if (t.bleedTicks > 0) {
                 t.bleedTicks--;
                 if (++t.bleedPulse >= 40) {
@@ -695,6 +704,10 @@ public final class MageCombatHandler {
             } else {
                 t.bleedStacks = 0;
             }
+            if (!target.isAlive() || state.targets.get(entry.getKey()) != t) {
+                state.targets.remove(entry.getKey(), t);
+                continue;
+            }
 
             if (state.tickCounter % 20 == 0) {
                 t.heat = Math.max(0f, t.heat - 5f);
@@ -704,7 +717,7 @@ public final class MageCombatHandler {
             if (t.heat <= 0f && t.frost <= 0f && t.charge <= 0 && t.fragilityTicks <= 0
                     && t.weaknessTicks <= 0 && t.ruinTicks <= 0 && t.bleedTicks <= 0 && t.frozenTicks <= 0
                     && t.reactionCooldown <= 0 && t.timeLockCooldown <= 0 && t.fateMarkTicks <= 0
-                    && t.markedByHuntTicks <= 0) it.remove();
+                    && t.markedByHuntTicks <= 0) state.targets.remove(entry.getKey(), t);
         }
     }
 
