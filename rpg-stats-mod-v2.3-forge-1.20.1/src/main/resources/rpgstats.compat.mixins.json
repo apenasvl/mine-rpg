@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "package": "com.rpgstats.mixin.compat",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "com.rpgstats.mixin.compat.OptionalCompatMixinPlugin",
+  "mixins": [
+    "CombatRollGateMixin",
+    "ImmersiveArmorPolicyMixin",
+    "SoulsResistanceGateMixin",
+    "SoulsClientDamageGateMixin",
+    "SoulsRpgAbilitiesMixin",
+    "SoulsPlayerProjectileMixin",
+    "SoulsClientActionsGateMixin",
+    "LegendaryPlayerPowersMixin",
+    "LegendaryArmorKeyMixin",
+    "LegendaryArmorTickMixin"
+  ],
+  "client": [
+    "CombatRollClientGateMixin",
+    "CombatRollHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,133 @@
+plugins {
+    id 'dev.architectury.loom' version '1.7.435'
+    id 'java'
+}
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+repositories {
+    maven { url 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content { includeGroup 'com.eliotlash.mclib' }
+    }
+    maven {
+        name = 'CurseMaven'
+        url = 'https://cursemaven.com'
+        content { includeGroup 'curse.maven' }
+    }
+}
+// Yarn is a development mapping only. remapJar targets Forge/SRG.
+// No Fabric Loader, Fabric API or Architectury API runtime dependency.
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    // Exact Forge 1.20.1 Iron's 3.16.3 binary, compile-time only. It is not bundled in RPG Stats.
+    // CurseForge project 855414, file 8680180.
+    modCompileOnly("curse.maven:irons-spells-n-spellbooks-855414:8680180") {
+        transitive = false
+    }
+}
+// Optional compatibility test profile; these mods are never bundled or required by RPG Stats.
+if ((project.hasProperty('archerCompatTests') || project.hasProperty('combinedCompatTests') || project.hasProperty('fullBossCompatTests'))) {
+    dependencies {
+        runtimeOnly('com.eliotlash.mclib:mclib:20') { transitive = false }
+        forgeRuntimeLibrary('com.eliotlash.mclib:mclib:20') { transitive = false }
+        [
+            'more-bows-and-arrows-888468:6843671',
+            'too-many-bows-1141533:8735189',
+            'simply-bear-traps-1643250:8595248',
+            'monolib-968432:8543117',
+            'architectury-api-419699:5137938',
+            'curios-309927:6418456',
+            (project.hasProperty('fullBossCompatTests') ? 'geckolib-388172:7553267' : 'geckolib-388172:8285794')
+        ].each { coordinate -> modRuntimeOnly("curse.maven:${coordinate}") { transitive = false } }
+    }
+}
+
+loom {
+    forge { mixinConfig 'rpgstats.mixins.json'; mixinConfig 'rpgstats.compat.mixins.json' }
+    mixin { defaultRefmapName = 'rpgstats.refmap.json' }
+
+    // Loom 1.7 lowercases fabric.dli.env, while its generated launch.cfg keeps Forge's
+    // case-sensitive gameTestServer section names. Select that exact section so DLI
+    // loads the template's ignoreList (including JarJarFileSystems) and launch target.
+    runs {
+        create("gameTestServer") {
+            environment("gameTestServer")
+            forgeTemplate("gameTestServer")
+            property("fabric.dli.env", "gameTestServer")
+            property("forge.gameTestServer", "true")
+            property("forge.enabledGameTestNamespaces", "rpgstats")
+            property("forge.enableGameTest", "true")
+            property("rpgstats.archerCompatTests", (project.hasProperty("archerCompatTests") || project.hasProperty("combinedCompatTests") || project.hasProperty("fullBossCompatTests")).toString())
+        }
+    }
+}
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') { expand version: project.version }
+}
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+}
+jar { manifest { attributes 'MixinConfigs': 'rpgstats.mixins.json,rpgstats.compat.mixins.json' } }
+tasks.register('verifyForgeJar') {
+    dependsOn tasks.named('remapJar')
+    doLast {
+        def archive = tasks.named('remapJar').get().archiveFile.get().asFile
+        def zip = new java.util.zip.ZipFile(archive)
+        try {
+            ['META-INF/mods.toml', 'rpgstats.mixins.json', 'rpgstats.refmap.json'].each {
+                if (zip.getEntry(it) == null) throw new GradleException("Missing Forge jar entry: $it")
+            }
+            if (zip.getEntry('fabric.mod.json') != null) throw new GradleException('Fabric metadata in Forge jar')
+        } finally { zip.close() }
+    }
+}
+tasks.named('build') { dependsOn tasks.named('verifyForgeJar') }
+
+
+// Server profile: Presence Footsteps is deliberately absent (client ambience only).
+if (project.hasProperty('combatCompatTests') || project.hasProperty('combinedCompatTests') || project.hasProperty('fullBossCompatTests')) {
+    dependencies {
+        ['combat-roll-678036:5625925', 'playeranimator-658587:4587214',
+         'cloth-config-348521:5729105', 'immersive-armors-580681:8076909'].each { coordinate ->
+            modRuntimeOnly("curse.maven:${coordinate}") { transitive = false }
+        }
+    }
+}
+if (project.hasProperty('combatClient')) {
+    dependencies {
+        modRuntimeOnly('curse.maven:presence-footsteps-forge-433068:5015286') { transitive = false }
+    }
+}
+
+// Exact optional native boss binaries; no third-party classes/JARs are packaged.
+if (project.hasProperty('bossCompatTests') || project.hasProperty('fullBossCompatTests')) {
+    apply from: 'tools/legendary-test-input.gradle'
+    dependencies {
+        modRuntimeOnly(files(legendaryTestJar))
+        [ 'mariums-soulslike-weaponry-632066:8946380',
+          'bosses-of-mass-destruction-forge-941573:5067728', 'attributefix-280510:4911084',
+          'ranged-weapon-api-962162:8890972', 'cerbons-api-955605:5050080' ].each { coordinate ->
+            modRuntimeOnly("curse.maven:${coordinate}") { transitive = false }
+        }
+        if (!project.hasProperty('fullBossCompatTests')) {
+            modRuntimeOnly('curse.maven:geckolib-388172:7553267') { transitive = false }
+            modRuntimeOnly('curse.maven:cloth-config-348521:5729105') { transitive = false }
+            runtimeOnly('com.eliotlash.mclib:mclib:20') { transitive = false }
+            forgeRuntimeLibrary('com.eliotlash.mclib:mclib:20') { transitive = false }
+        }
+    }
+}
+
+if (project.hasProperty('fullBossCompatTests')) { dependencies { ['simply-swords-659887:8746028','fzzy-config-1005914:6313552','kotlin-for-forge-351264:5402061'].each { coordinate -> modRuntimeOnly("curse.maven:${coordinate}") { transitive = false } } } }

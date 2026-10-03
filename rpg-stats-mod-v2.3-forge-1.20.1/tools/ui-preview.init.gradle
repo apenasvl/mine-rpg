@@ -1,0 +1,13 @@
+// Opt-in client-only screenshot probe. Never included by a normal build or GameTest run.
+allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('dev.architectury.loom')) {
+            sourceSets.main.java.srcDir('tools/ui-preview/src')
+            def captureDirectory = layout.buildDirectory.dir('ui-preview').get().asFile.absolutePath
+            loom.runs.named('client') {
+                property('rpgstats.uiPreview', 'true')
+                property('rpgstats.uiPreviewDir', captureDirectory)
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "equipment",
+  "entries": [
+    {"tag":"rpgstats:equipment/light","categories":["light"],"weight":4,"dex":5,"attack_speed":1.05},
+    {"tag":"rpgstats:equipment/medium","categories":["medium"],"weight":9,"str":5,"dex":5,"attack_speed":1.0},
+    {"tag":"rpgstats:equipment/heavy","categories":["heavy"],"weight":16,"str":12,"attack_speed":0.92},
+    {"tag":"rpgstats:equipment/magic","categories":["magic","resource"],"weight":5,"int":10,"attack_speed":1.0}
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "type": "bosses",
+  "entries": [
+    {
+      "id": "minecraft:warden",
+      "tier": 5,
+      "xp": 3000,
+      "health_bonus": 0.0,
+      "damage_bonus": 0.0,
+      "health_per_player": 0.0,
+      "damage_per_player": 0.0,
+      "status_resistance": 0.80,
+      "stagger_resistance": 0.90
+    },
+    {
+      "id": "minecraft:ender_dragon",
+      "tier": 5,
+      "xp": 2600,
+      "health_bonus": 0.0,
+      "damage_bonus": 0.0,
+      "health_per_player": 0.0,
+      "damage_per_player": 0.0,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85
+    },
+    {
+      "id": "minecraft:wither",
+      "tier": 5,
+      "xp": 2200,
+      "health_bonus": 0.0,
+      "damage_bonus": 0.0,
+      "health_per_player": 0.0,
+      "damage_per_player": 0.0,
+      "status_resistance": 0.70,
+      "stagger_resistance": 0.80
+    },
+    {
+      "tag": "rpgstats:bosses/tier_3",
+      "tier": 3,
+      "xp": 700,
+      "health_bonus": 0.0,
+      "damage_bonus": 0.0,
+      "health_per_player": 0.0,
+      "damage_per_player": 0.0,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.50
+    }
+  ]
+}

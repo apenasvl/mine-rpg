@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "rpgstats",
+  "version": "${version}",
+  "name": "RPG Stats & Classes",
+  "description": "Core Action RPG com classes, Casas, builds, progressão e integrações opcionais data-driven.",
+  "authors": [
+    "Voce"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/rpgstats/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.rpgstats.RPGStatsMod"
+    ],
+    "client": [
+      "com.rpgstats.RPGStatsClient"
+    ]
+  },
+  "mixins": [
+    "rpgstats.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17"
+  }
+}

@@ -1,0 +1,125 @@
+name: Mage House client preview
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/java/com/rpgstats/gui/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/resources/assets/rpgstats/textures/gui/mage/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/ui-preview/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/mage-preview.init.gradle'
+      - '.github/workflows/mage-house-preview.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - name: Selection and layout behavior
+        run: |
+          python3 tools/run_ui_tests.py
+          python3 tools/run_mage_ui_tests.py
+      - name: Install virtual display
+        run: sudo apt-get update -qq && sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
+      - name: Capture the real Forge client
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          ALSOFT_DRIVERS: 'null'
+        run: xvfb-run -a -s '-screen 0 2560x1440x24' timeout 900 bash gradlew --no-daemon --stacktrace -I tools/mage-preview.init.gradle runClient
+      - name: Require all screenshots
+        run: |
+          python3 - <<'PYTEST'
+          from pathlib import Path
+          files=list(Path('build/mage-preview').glob('*.png'))
+          assert len(files)==23, f'Expected 23 mage screenshots, got {len(files)}'
+          PYTEST
+      - name: Upload elemental captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-elemental
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/mage_elemental.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/pyromancer.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/cryomancer.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/stormcaller.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload arcana captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-arcana
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/mage_arcana.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/runist.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/illusionist.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/telemancer.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload conjuration captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-conjuration
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/mage_conjuration.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/conjurer.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/animist.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/astral_forger.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload occult captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-occult
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/mage_occult.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/bloodmancer.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/curseweaver.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/hexblade.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload temporal captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-temporal
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/mage_temporal.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/accelerator.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/stagnator.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/reverser.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload viewports captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mage-viewports
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/small-gui3.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/4by3.png
+            rpg-stats-mod-v2.3-forge-1.20.1/build/mage-preview/wide-gui4.png
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14

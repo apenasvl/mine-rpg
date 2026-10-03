@@ -1,0 +1,10 @@
+{
+  "type": "spells",
+  "entries": [
+    {"id":"rpgstats:example_lightning_spell","categories":["elemental","lightning"],"resource_cost":18,"power_scale":1.0},
+    {"id":"rpgstats:example_arcane_spell","categories":["arcane"],"resource_cost":16,"power_scale":1.0},
+    {"id":"rpgstats:example_summon_spell","categories":["conjuration","summon"],"resource_cost":24,"power_scale":0.9},
+    {"id":"rpgstats:example_curse_spell","categories":["occult","curse"],"resource_cost":20,"power_scale":0.95},
+    {"id":"rpgstats:example_temporal_spell","categories":["temporal"],"resource_cost":22,"power_scale":0.9}
+  ]
+}

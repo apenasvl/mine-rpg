@@ -1,0 +1,12 @@
+// Opt-in client probe: never compiled into the normal RPG jar.
+allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('dev.architectury.loom')) {
+            sourceSets.main.java.srcDir('tools/combat-client/src')
+            loom.runs.named('client') {
+                property('rpgstats.combatProbe', 'true')
+                property('rpgstats.combatProbeDir', layout.buildDirectory.dir('combat-client').get().asFile.absolutePath)
+            }
+        }
+    }
+}

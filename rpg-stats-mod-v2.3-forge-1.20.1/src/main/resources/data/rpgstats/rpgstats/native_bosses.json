@@ -1,0 +1,397 @@
+{
+  "type": "bosses",
+  "entries": [
+    {
+      "id": "legendary_monsters:overgrown_colossus",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 7.5
+      }
+    },
+    {
+      "id": "soulsweapons:returning_knight",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 3,
+        "damage_factor": 6.5
+      }
+    },
+    {
+      "id": "soulsweapons:night_shade",
+      "tier": 2,
+      "xp": 300,
+      "status_resistance": 0.3,
+      "stagger_resistance": 0.35,
+      "fixed": {
+        "min_level": 11,
+        "max_level": 20,
+        "reference_level": 15,
+        "health_factor": 4,
+        "damage_factor": 2
+      }
+    },
+    {
+      "id": "soulsweapons:draugr_boss",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 4,
+        "damage_factor": 3.5
+      }
+    },
+    {
+      "id": "soulsweapons:chaos_monarch",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 5,
+        "damage_factor": 5.5
+      }
+    },
+    {
+      "id": "soulsweapons:accursed_lord_boss",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 5,
+        "damage_factor": 6
+      }
+    },
+    {
+      "id": "soulsweapons:moonknight",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 3,
+        "damage_factor": 8
+      }
+    },
+    {
+      "id": "soulsweapons:day_stalker",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 2.5,
+        "damage_factor": 6
+      }
+    },
+    {
+      "id": "soulsweapons:night_prowler",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 2.5,
+        "damage_factor": 6
+      }
+    },
+    {
+      "id": "legendary_monsters:cloud_golem",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 5,
+        "damage_factor": 5.5
+      }
+    },
+    {
+      "id": "legendary_monsters:posessed_paladin",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 5,
+        "damage_factor": 7.5
+      }
+    },
+    {
+      "id": "legendary_monsters:the_obliterator",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 6,
+        "damage_factor": 10
+      }
+    },
+    {
+      "id": "bosses_of_mass_destruction:lich",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 4,
+        "damage_factor": 4
+      }
+    },
+    {
+      "id": "bosses_of_mass_destruction:gauntlet",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 6,
+        "damage_factor": 7
+      }
+    },
+    {
+      "id": "bosses_of_mass_destruction:void_blossom",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 5,
+        "damage_factor": 7
+      }
+    },
+    {
+      "id": "bosses_of_mass_destruction:obsidilith",
+      "tier": 5,
+      "xp": 3600,
+      "status_resistance": 0.75,
+      "stagger_resistance": 0.85,
+      "fixed": {
+        "min_level": 41,
+        "max_level": 50,
+        "reference_level": 45,
+        "health_factor": 7,
+        "damage_factor": 8
+      }
+    },
+    {
+      "id": "legendary_monsters:warped_fungussus",
+      "tier": 2,
+      "xp": 300,
+      "status_resistance": 0.3,
+      "stagger_resistance": 0.35,
+      "fixed": {
+        "min_level": 11,
+        "max_level": 20,
+        "reference_level": 15,
+        "health_factor": 2,
+        "damage_factor": 2
+      }
+    },
+    {
+      "id": "legendary_monsters:skeletosaurus",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 2.5,
+        "damage_factor": 3
+      }
+    },
+    {
+      "id": "legendary_monsters:lava_eater",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 2.5,
+        "damage_factor": 3
+      }
+    },
+    {
+      "id": "legendary_monsters:endersent",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 7
+      }
+    },
+    {
+      "id": "legendary_monsters:frostbitten_golem",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 7
+      }
+    },
+    {
+      "id": "legendary_monsters:shulker_mimic",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 2.5,
+        "damage_factor": 3.5
+      }
+    },
+    {
+      "id": "legendary_monsters:withered_abomination",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 7.5
+      }
+    },
+    {
+      "id": "legendary_monsters:ancient_guardian",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 6
+      }
+    },
+    {
+      "id": "legendary_monsters:dune_sentinel",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 2.5,
+        "damage_factor": 3
+      }
+    },
+    {
+      "id": "legendary_monsters:annihilation_pursuer",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 9
+      }
+    },
+    {
+      "id": "legendary_monsters:beheaded_knight",
+      "tier": 4,
+      "xp": 1600,
+      "status_resistance": 0.65,
+      "stagger_resistance": 0.75,
+      "fixed": {
+        "min_level": 31,
+        "max_level": 40,
+        "reference_level": 35,
+        "health_factor": 2.5,
+        "damage_factor": 9
+      }
+    },
+    {
+      "id": "legendary_monsters:resurrected_knight",
+      "tier": 3,
+      "xp": 800,
+      "status_resistance": 0.45,
+      "stagger_resistance": 0.5,
+      "fixed": {
+        "min_level": 21,
+        "max_level": 30,
+        "reference_level": 25,
+        "health_factor": 2.5,
+        "damage_factor": 4
+      }
+    }
+  ]
+}

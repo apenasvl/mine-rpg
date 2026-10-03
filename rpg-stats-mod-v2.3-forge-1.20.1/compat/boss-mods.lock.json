@@ -1,0 +1,252 @@
+{
+  "minecraft": "1.20.1",
+  "forge": "47.4.0",
+  "mods": [
+    {
+      "modId": "legendary_monsters",
+      "version": "1.20.1",
+      "sha256": "a90a3009e502ba4f235e5bd9a7493c2307e4060f0ee21fd02e62f9893912321c",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "1.20.1",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 944035,
+      "fileId": 8902349,
+      "coordinate": "legendary-monsters-944035:8902349",
+      "jarName": "legendary.jar",
+      "library": false,
+      "enabled": true
+    },
+    {
+      "modId": "soulsweapons",
+      "version": "1.4.10-1.20.1-forge}",
+      "sha256": "cdf6552d31f9d40f7e3e3b3bc689ecc3eb5e40d4712f102e1d80a027e96a0fcc",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47.4.0,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckolib",
+          "mandatory": true,
+          "versionRange": "[4.8.3,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "attributefix",
+          "mandatory": true,
+          "versionRange": "[21.0.4,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "ranged_weapon_api",
+          "mandatory": true,
+          "versionRange": "[2.3.4,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 632066,
+      "fileId": 8946380,
+      "coordinate": "mariums-soulslike-weaponry-632066:8946380",
+      "jarName": "marium.jar",
+      "library": false,
+      "enabled": true
+    },
+    {
+      "modId": "bosses_of_mass_destruction",
+      "version": "1.1.2",
+      "sha256": "9d064557007fbf8a48da92034209b209edd99a16a5017ee104cdc13206390441",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,1.21)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "cerbons_api",
+          "mandatory": true,
+          "versionRange": "[1.1.0,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckolib",
+          "mandatory": true,
+          "versionRange": "[4.2.3,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "cloth_config",
+          "mandatory": true,
+          "versionRange": "[11.1.106,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 941573,
+      "fileId": 5067728,
+      "coordinate": "bosses-of-mass-destruction-forge-941573:5067728",
+      "jarName": "bomd.jar",
+      "library": false,
+      "enabled": true
+    },
+    {
+      "modId": "geckolib",
+      "version": "4.8.3",
+      "sha256": "8b90e11871a58b63816e99c529e6c932bc88e6beb3fec97ad618e22217df3250",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckoanimfix",
+          "mandatory": false,
+          "versionRange": "[9.thismodbreaksgeckolibremoveit,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 388172,
+      "fileId": 7553267,
+      "coordinate": "geckolib-388172:7553267",
+      "jarName": "geckolib.jar",
+      "library": true,
+      "enabled": true
+    },
+    {
+      "modId": "attributefix",
+      "version": "21.0.4",
+      "sha256": "5d8cc8928ce480288d5b504663bb13104df56ac72ce5bf36f2743ec27c701112",
+      "dependencies": [],
+      "projectId": 280510,
+      "fileId": 4911084,
+      "coordinate": "attributefix-280510:4911084",
+      "jarName": "attributefix.jar",
+      "library": true,
+      "enabled": true
+    },
+    {
+      "modId": "ranged_weapon_api",
+      "version": "2.3.4+1.20.1",
+      "sha256": "f39b67ba0294dd1fa52c3b62aedcc8e19b972dd76f6eeb234b9c9f001201743d",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 962162,
+      "fileId": 8890972,
+      "coordinate": "ranged-weapon-api-962162:8890972",
+      "jarName": "ranged.jar",
+      "library": true,
+      "enabled": true
+    },
+    {
+      "modId": "cerbons_api",
+      "version": "1.1.0",
+      "sha256": "54a0a20da56ab1af2d0d7f5cf1133c059a7523485d567521084f822e81505dfb",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,1.21)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "projectId": 955605,
+      "fileId": 5050080,
+      "coordinate": "cerbons-api-955605:5050080",
+      "jarName": "cerbons.jar",
+      "library": true,
+      "enabled": true
+    },
+    {
+      "projectId": 348521,
+      "fileId": 5729105,
+      "coordinate": "cloth-config-348521:5729105",
+      "side": "BOTH",
+      "enabled": true,
+      "library": true,
+      "modId": "cloth_config",
+      "version": "11.1.136",
+      "sha256": "1e895e85cf5b1e1905ef3178ec155c8badfe22a1577b92c09143a5aa1f4ce0f2",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[45,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "dependency",
+      "jarName": "cloth_config.jar",
+      "sharedFrom": "combat-mods.lock.json"
+    }
+  ]
+}

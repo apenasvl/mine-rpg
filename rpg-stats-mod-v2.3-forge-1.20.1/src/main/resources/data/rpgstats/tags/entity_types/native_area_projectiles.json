@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "more_bows_and_arrows:tnt_arrow",
+      "required": false
+    }
+  ]
+}

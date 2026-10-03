@@ -1,0 +1,20 @@
+# Archives and local build outputs
+*.zip
+*.jar
+!rpg-stats-mod-v2.3-forge-1.20.1/gradle/wrapper/gradle-wrapper.jar
+**/.gradle/
+**/build/
+**/run/
+
+# Local secrets / credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+local.properties
+**/credentials*.json
+**/secrets*.json

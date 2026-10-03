@@ -1,0 +1,3782 @@
+{
+  "mods": [
+    {
+      "modId": "legendary_monsters",
+      "version": "1.20.1",
+      "sha256": "a90a3009e502ba4f235e5bd9a7493c2307e4060f0ee21fd02e62f9893912321c",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "1.20.1",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [
+        {
+          "id": "legendary_monsters:ambusher",
+          "label": "Ambusher",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:ancient_guardian",
+          "label": "Ancient Guardian",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:annihilation_pursuer",
+          "label": "Annihilation Pursuer",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:beheaded_knight",
+          "label": "Beheaded Knight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:bomb",
+          "label": "Bomb",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:bomber",
+          "label": "Bomber",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:chorusling",
+          "label": "Chorusling",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:cloud_golem",
+          "label": "Cumulonimbus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:dark_cloud_golem",
+          "label": "Cloud Golem",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "legendary_monsters:dune_sentinel",
+          "label": "Dune Sentinel",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:endersent",
+          "label": "Chorusent",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:flame_drifter",
+          "label": "Flame Drifter",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:flameborn_guard",
+          "label": "Flameborn Guard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:flameborn_warrior",
+          "label": "Flameborn Warrior",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:fractured",
+          "label": "Fractured",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:fractured_apostle",
+          "label": "Fractured Apostle",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:frostbitten_golem",
+          "label": "Frostbitten Golem",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:guard",
+          "label": "Guard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:haunted_guard",
+          "label": "Haunted Guard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:haunted_knight",
+          "label": "Haunted Knight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:hovering_hurricane",
+          "label": "Hovering Hurricane",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:ice_spike",
+          "label": "Ice Spike",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:knights_armor",
+          "label": "Knight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:lava_eater",
+          "label": "Lava Eater",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:mossy_golem",
+          "label": "Mossy Golem",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:overgrown_colossus",
+          "label": "Overgrown Colossus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:posessed_paladin",
+          "label": "Possessed Paladin",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:resurrected_knight",
+          "label": "Resurrected Knight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:shulker_mimic",
+          "label": "Shulker Mimic",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:skeletosaurus",
+          "label": "Skeletosaurus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:skeloraptor",
+          "label": "Skeloraptor",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:spiky_bug",
+          "label": "Spiky Worm",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:stratling",
+          "label": "Stratling",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:the_obliterator",
+          "label": "The Obliterator",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:wandering_eye",
+          "label": "Wandering Eye",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:warped_fungussus",
+          "label": "Warped Fungussus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "legendary_monsters:withered_abomination",
+          "label": "Withered Abomination",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        }
+      ],
+      "items": [
+        {
+          "id": "legendary_monsters:air_rune",
+          "label": "Air Rune",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ambusher_spawn_egg",
+          "label": "Ambusher Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ambushers_skin",
+          "label": "Ambusher's Skin",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:anchor_handle",
+          "label": "Anchor Handle",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ancient_detonator",
+          "label": "Ancient Detonator",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ancient_guardian_spawn_egg",
+          "label": "Ancient Guardian Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ancient_sandstone_shard",
+          "label": "Ancient Sandstone Shard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ancient_sandstone_shard1",
+          "label": "\u00a77Obtainable by killing Bombers in the desert, at night",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ancient_spike",
+          "label": "Ancient Spike",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilation_pursuer_spawn_egg",
+          "label": "Annihilation Pursuer Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_boots",
+          "label": "Annihilator's Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:annihilator_boots1",
+          "label": "Protects you against weakness and slowness",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_chestplate",
+          "label": "Annihilator's Chestplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:annihilator_chestplate1",
+          "label": "When you are at half a health or lower an Annihilation Supernova explodes at your position, and you become invulnerable for 3 seconds.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_helmet",
+          "label": "Annihilator's Helmet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:annihilator_helmet1",
+          "label": "You don't aggro endermen when you look at them, Press 'C' key to instantly teleport to position you are looking at (in 15 block range)",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_leggings",
+          "label": "Annihilator's Leggings",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:annihilator_leggings1",
+          "label": "25% Chance of turning your attack into bypass armor AOE, (your current WeaponDamage / 2) upon landing a crit",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_unknown",
+          "label": "Ability Still WIP, will be added soon",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:annihilator_upgrade_smithing_template",
+          "label": "Smithing Template",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:atm_boots1",
+          "label": "\u00a76Special Ability: \u00a7750% Fall Damage Reduction",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:atmospheric_boots",
+          "label": "Atmospheric Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:atom_splitter",
+          "label": "Atom Splitter",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:atom_splitter1",
+          "label": "\u00a77Hold right click for 1.5s to shoot an Annihilation Beam",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:atom_splitter2",
+          "label": "\u00a77Shift + Hold right click for 1.5s to shoot Cluster Annihilation Bomb",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:atom_splitter3",
+          "label": "\u00a77And don't get fooled by the ammo system! it's unbreakable! automatically reloads with Annihilation Bottles in inventory ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:axe_of_lightning",
+          "label": "Axe Of Lightning",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:axe_of_lightning1",
+          "label": "\u00a76Special Ability:\u00a77 right click to summon Lightning Strike\u00a76[9 Damage per Tick, Bypass Armor],",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:axe_of_lightning2",
+          "label": "\u00a77Right Click on block to summon Electric Burst shockwave in the direction",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:axe_of_lightning3",
+          "label": "\u00a77you are looking\u00a76[Damage of this weapon per shockwave hit, Bypass Armor]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:beheaded_knight_spawn_egg",
+          "label": "Beheaded Knight Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:blast_proof_helmet1",
+          "label": "\u00a76Special Ability:\u00a77 35% explosion damage reduction",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:blast_proof_helmet2",
+          "label": "\u00a76(Creeper Jumpscares are not so dangerous anymore!)",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:blastproof_helmet",
+          "label": "Blastproof Helmet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:blastproof_metal_scrap",
+          "label": "Blastproof Metal Scrap",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:bomber_spawn_egg",
+          "label": "Bomber Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:bottle_of_annihilation",
+          "label": "Bottle Of Annihilation",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:bottled_lightning",
+          "label": "Bottled Lightning",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:buckler_of_annihilation",
+          "label": "Buckler Of Annihilation",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:buckler_of_annihilation1",
+          "label": "\u00a77Hold right click + shift for 0.5s to perform area attack, and to shoot 3 small Annihilation Bombs [8 damage bypass armor]. Cooldown appears after hitting an entity with area attack",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chiseled_ancient_dripstone_shard",
+          "label": "Chiseled Ancient Dripstone Shard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_blade",
+          "label": "Chorus Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:chorus_blade1",
+          "label": "\u00a76Special Ability: \u00a77 Teleports player to random location nearby.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_blade2",
+          "label": "\u00a77 for example it can be used to dodge an attack. \u00a76[RIGHT CLICK TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_bomb_projectile",
+          "label": "Chorus Bomb",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_cannon",
+          "label": "Chorus Cannon",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:chorus_cannon1",
+          "label": "\u00a76Special Ability: \u00a77 Hold click for 1.5 sec. to shoot a Chorus Bomb which",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_cannon2",
+          "label": "\u00a77Applies Chorus Infection Effect to your enemies",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_crystal",
+          "label": "Chorus Crystal",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_helmet1",
+          "label": "\u00a76Special Ability:\u00a77 this Mask protects player",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_helmet2",
+          "label": "\u00a77 from Chorus Infection.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:chorus_mask",
+          "label": "Chorus Mask",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:chorusling_spawn_egg",
+          "label": "Chorusling Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:cloud_bread",
+          "label": "Cloud Bread",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:cloud_golem_spawn_egg",
+          "label": "Cumulonimbus, The Cloud Golem Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:cloud_rod",
+          "label": "Cloud Rod",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:corrupted_soul",
+          "label": "Corrupted Soul",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:corrupted_soul1",
+          "label": "I am.. free.. I'll face the final battle once again",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:crystal_of_air",
+          "label": "Crystal Of Air",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:crystal_of_sandstorm",
+          "label": "Crystal Of Sandstorm",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dark_cloud_bread",
+          "label": "Dark Cloud Bread",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:deactivated_guard_summoner",
+          "label": "Deactivated Guard Summoner",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:deactivated_knight_summoner",
+          "label": "Deactivated Knight Summoner",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dino_club1",
+          "label": "\u00a76Special Ability: \u00a77right click on a block to spawn",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dino_club2",
+          "label": "\u00a77shockwaves in circular shape.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dino_shield",
+          "label": "\u00a76Extremely Durable!",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dinosaur_bone",
+          "label": "Dinosaur Bone",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dinosaur_bone_club",
+          "label": "Dinosaur Bone Club",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:dinosaur_bone_meal",
+          "label": "Dinosaur Bone Meal",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:dinosaur_bone_shield",
+          "label": "Dinosaur Bone Shield",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:dune_sentinel_spawn_egg",
+          "label": "Dune Sentinel Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:ender_hammer",
+          "label": "Ender Hammer",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:enderitium_axe",
+          "label": "Enderitium Axe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_gem",
+          "label": "Enderitium Gem",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_hoe",
+          "label": "Enderitium Hoe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_ingot",
+          "label": "Enderitium Ingot",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_pickaxe",
+          "label": "Enderitium Pickaxe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_shovel",
+          "label": "Enderitium Shovel",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_sickle",
+          "label": "Enderitium Sickle",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:enderitium_sword",
+          "label": "Enderitium Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:enderitium_upgrade_smithing_template",
+          "label": "Smithing Template",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:endersent_spawn_egg",
+          "label": "Chorusent Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:entity_warper",
+          "label": "Entity Warper",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:entity_warper1",
+          "label": "\u00a76Special Ability: \u00a77Teleports all entities",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:entity_warper2",
+          "label": "\u00a77in 4 block radius to player! \u00a76[RIGHT CLICK TO USE].",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:explosive_sand",
+          "label": "Explosive Sand",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:eye_crystal",
+          "label": "Eye Crystal",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:eye_of_air",
+          "label": "Eye Of Air",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_annihilation",
+          "label": "Eye Of Annihilation",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_bones",
+          "label": "Eye Of Bones",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_chorus",
+          "label": "Eye Of Chorus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_frost",
+          "label": "Eye Of Frost",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_ghost",
+          "label": "Eye Of Ghost",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_magma",
+          "label": "Eye Of Magma",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_many_ribs",
+          "label": "Eye Of Many Ribs",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_moss",
+          "label": "Eye Of Moss",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_sandstorm",
+          "label": "Eye Of Sandstorm",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_shulker",
+          "label": "Eye Of Shulker",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:eye_of_soul",
+          "label": "Eye Of Soul",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:fatal_mortar",
+          "label": "Fatal Mortar Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fatal_mortar_spawn_egg",
+          "label": "Fatal Mortar Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fiery_boots",
+          "label": "Fiery Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:fiery_boots1",
+          "label": "\u00a76Special Ability: \u00a77Use 'X' Key to spread fire on your position while walking.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fiery_jaw",
+          "label": "Fiery Jaw",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:fiery_jaw1",
+          "label": "\u00a76Special Ability: \u00a77 Fiery jaw Pushes every entity in",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fiery_jaw2",
+          "label": "\u00a77 3 block radius, away from the player, and player starts breathing fire\u00a76[RIGHT CLICK TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:flame_drifter_spawn_egg",
+          "label": "Flame Drifter Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:flameborn_guard_spawn_egg",
+          "label": "Flameborn Guard Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:flameborn_warrior_spawn_egg",
+          "label": "Flameborn Warrior Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fractured_apostle_spawn_egg",
+          "label": "Fractured Apostle Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:fractured_spawn_egg",
+          "label": "Fractured Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:frost_shield1",
+          "label": "\u00a76Special Ability: \u00a77 Freezes your enemy for 3 seconds",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:frost_shield2",
+          "label": "\u00a76[BLOCK TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:frostbitten_golem_spawn_egg",
+          "label": "Frostbitten Golem Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:frostbitten_shield",
+          "label": "Frostbitten Shield",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:frozen_rune",
+          "label": "Frozen Rune",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:golden_halberd1",
+          "label": "\u00a76Special Ability: \u00a77 25% Chance to give 'bleeding' effect to your enemies",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:golden_halberd2",
+          "label": "\u00a77after dealing a critical hit.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:golden_halbert",
+          "label": "Golden Halberd",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:great_frost1",
+          "label": "\u00a76Special Ability: \u00a77Right Click to summon Ice Spikes",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:great_frost2",
+          "label": "\u00a76Special Ability 2: \u00a77Right Click + shift on block to summon Ice Spikes around you",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guard_summoner",
+          "label": "Guard Summoner",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:guard_summoner1",
+          "label": "\u00a77Right Click on the ground to summon a guard ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guard_summoner2",
+          "label": "\u00a77it's Automatically tamed on spawn",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guard_summoner3",
+          "label": "\u00a77Deals more damage and in bigger ARC than knight but is slower.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guard_summoner4",
+          "label": "\u00a77can be easily respawned after death using iron ingots and deactivated summoner",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guard_summoner5",
+          "label": "\u00a77You can re-color him while holding valuable materials or change it's behavior state with shift + right click.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:guide_book",
+          "label": "Guide Book",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:haunted_guard_spawn_egg",
+          "label": "Haunted Guard Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:haunted_knight_spawn_egg",
+          "label": "Haunted Knight Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:heart_of_tornado",
+          "label": "Heart Of Tornado",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:heartoftornado1",
+          "label": "\u00a76Hold Rightclick to shoot a tornado that grabs entities[lasts for 3 seconds]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:hovering_hurricane_spawn_egg",
+          "label": "Hovering Hurricane Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:infected_chorus_fruit",
+          "label": "Infected Chorus Fruit",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knight_summoner",
+          "label": "Knight Summoner",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:knight_summoner1",
+          "label": "\u00a77Right click on block to summon a knight",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knight_summoner2",
+          "label": "\u00a77it's Automatically tamed on spawn",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knight_summoner3",
+          "label": "\u00a77Deals less damage than guard but can do fast combos and can block incoming attacks",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knight_summoner4",
+          "label": "\u00a77can be easily respawned after death using iron ingots and deactivated summoner",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knight_summoner5",
+          "label": "\u00a77You can re-color him while holding valuable materials or change it's behavior state with shift + right click.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:knights_sword",
+          "label": "Knight's Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:knights_sword_blade_half",
+          "label": "Knight's Sword Blade Half",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:large_shulker_shell",
+          "label": "Large Shulker Shell",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:lava_eater_spawn_egg",
+          "label": "Lava Eater Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:lava_eaters_skin",
+          "label": "Lava Eater's Skin",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:long_stick_half",
+          "label": "Long Stick Half",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:m_anchor1",
+          "label": "\u00a76Special Ability: \u00a77hold right click for 1,5 seconds to launch in the air",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:m_anchor2",
+          "label": "\u00a77 and completely stun (for 3 sec. mobs can't attack you and move) all entities around you (in 4 block range).",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:m_anchor3",
+          "label": "\u00a76Special Ability 2: \u00a77Attack to deal 4 damage to nearby entities in 3 block radius ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:metal_debris",
+          "label": "Metal Debris",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:molten_metal_ingot",
+          "label": "Molten Metal Ingot",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:monstrous_anchor",
+          "label": "Monstrous Anchor",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:mossy_chestplate",
+          "label": "Mossy Chestplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:mossy_chestplate1",
+          "label": "\u00a76Special Ability: \u00a77 Use 'R' key to spawn poison clouds around you, ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_chestplate2",
+          "label": "\u00a77that damage mobs and heal you.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_golem_spawn_egg",
+          "label": "Mossy Golem Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer",
+          "label": "Mossy Hammer",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer1",
+          "label": "\u00a76Special Ability: \u00a77 Deals 10 damage to all entities and applies",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer2",
+          "label": "\u00a77poison effect to every entity in 4 block radius, and if player has bone",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer3",
+          "label": "\u00a77 meal in his inventory, moss blocks appear under every damaged entity in 3 block radius!",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer4",
+          "label": "\u00a76[RIGHT CLICK ON BLOCK TO USE] ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:mossy_hammer5",
+          "label": "\u00a77It can be also used as a pickaxe!  ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:music_disc_advance",
+          "label": "Music Disc",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:music_disc_obliterator",
+          "label": "Music Disc",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:music_disc_possessed_paladin",
+          "label": "Music Disc",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:nature_crystal",
+          "label": "Nature Crystal",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:overgrown_colossus_spawn_egg",
+          "label": "Overgrown Colossus Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:portal_shard",
+          "label": "Portal Shard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:posessed_paladin_spawn_egg",
+          "label": "Possessed Paladin Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:primal_ice_shard",
+          "label": "Primal Ice Shard",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:purified_soul",
+          "label": "Purified Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:raw_enderitium",
+          "label": "Raw Enderitium",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:reinforced_monstrous_anchor",
+          "label": "Reinforced Monstrous Anchor",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:resurrected_javelin",
+          "label": "Resurrected Javelin",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:resurrected_knight_spawn_egg",
+          "label": "Resurrected Knight Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:sand_cannon",
+          "label": "Sand Cannon",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:sand_cannon1",
+          "label": "\u00a76Special Ability: \u00a77 Hold click for 1.5 sec. to shoot a Sandstone Bomb",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:sharp_battle_axe",
+          "label": "Sharp Battle Axe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:sharp_sai",
+          "label": "Sharp Sai",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:shattered_greatsword",
+          "label": "Shattered Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:shattered_greatsword1",
+          "label": "'The Knights of the Collapsed Kingdom'",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:shulker_helmet",
+          "label": "Shulker Helmet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:shulker_helmet1",
+          "label": "\u00a77 This helmet protects player from levitation effect.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:shulker_mimic_spawn_egg",
+          "label": "Shulker Mimic Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:shulker_shield",
+          "label": "Shulker Shield",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:shulker_shield1",
+          "label": "\u00a76Special Ability: \u00a7760% to give levitation effect to your enemies",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:shulker_shield2",
+          "label": "\u00a76[BLOCK TO USE",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:sickle_of_harvest",
+          "label": "Sickle Of Harvest",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:skeletosaurus_spawn_egg",
+          "label": "Skeletosaurus Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:skeloraptor_spawn_egg",
+          "label": "Skeloraptor Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:somber_key",
+          "label": "Somber Key",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:somber_key_blade",
+          "label": "Somber Key Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:somber_key_part",
+          "label": "Combine with another key part to create Somber Key",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:somber_key_ring",
+          "label": "Somber Key Ring",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword",
+          "label": "Soul Great Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword1",
+          "label": "Right click to Parry (AOE), deals damage",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword2",
+          "label": " equal to weapon damage + 30% of reflected damage, and heals you 20% of your max HP,",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword3",
+          "label": "can't parry Bypass Armor damage source",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword4",
+          "label": "",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:soul_great_sword5",
+          "label": "Hold Shift + Right click for 1s while looking at an entity in 10 block radius to release homing phantom daggers",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spike_bug_spawn_egg",
+          "label": "Spiky Worm Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spiky_shield",
+          "label": "Spiky Shield",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:spiky_shield1",
+          "label": "\u00a76Special Ability: \u00a77 50% Chance to give 'bleeding' effect to your enemies",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spiky_shield2",
+          "label": "\u00a77of reflecting damage back to your enemy when you are blocking with shield",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spiky_shield3",
+          "label": "\u00a72[Damage: 5 + 25% of your enemy attack damage] ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spiky_shield4",
+          "label": "\u00a76[BLOCK TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:spiky_spear",
+          "label": "Spiky Spear",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:stratling_spawn_egg",
+          "label": "Stratling Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:the_great_frost",
+          "label": "The Great Frost",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:the_obliterator_spawn_egg",
+          "label": "The Obliterator Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:the_tesseract",
+          "label": "The Tesseract",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:the_tesseract1",
+          "label": "\u00a77Hold right click for 1.5s to summon Annihilation Portals in a Star pattern.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:the_tesseract2",
+          "label": "\u00a77During Portal summoning nearby entities are affected by their gravity pull.",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:totem_of_moss",
+          "label": "Totem Of Moss",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:totem_of_moss1",
+          "label": "\u00a76Right - Click on a Block to summon a Mossy Golem that makes crops grow way faster while near ungrown crops ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:totem_of_moss2",
+          "label": "\u00a77and can help you during fights. Golem is automatically tamed. It can be respawned easily after death ",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:totem_of_moss3",
+          "label": "\u00a7fShift + Right Click on golem to enable '\u00a7aStand Still Mode\u00a77'",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:void_entity_warper",
+          "label": "Void Entity Warper",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:void_entity_warper1",
+          "label": "\u00a76Special Ability: \u00a77Lets you pick any",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:void_entity_warper2",
+          "label": "\u00a77entity to teleport to you in 6 block range! \u00a76[RIGHT CLICK TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:void_gem",
+          "label": "Void Gem",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:void_sword",
+          "label": "Void Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:wand_of_clouds",
+          "label": "Wand Of Clouds",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:wand_of_clouds1",
+          "label": "\u00a76Special Ability: \u00a77 Summons 1 Big explosive cloud [14 dmg] and",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:wand_of_clouds2",
+          "label": "\u00a773 small explosive clouds[5 dmg each] above your enemies. \u00a76[RIGHT CLICK ON AN ENTITY TO USE]",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:wandering_eye_spawn_egg",
+          "label": "Wandering Eye Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:warped_fungussus_spawn_egg",
+          "label": "Warped Fungussus Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:warped_mushroom_cap_part",
+          "label": "Warped Mushroom Cap Part",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_abomination_spawn_egg",
+          "label": "Withered Abomination Spawn Egg",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_bone",
+          "label": "Withered Bone",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_horn",
+          "label": "Withered Horn",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_ribcage",
+          "label": "Withered Ribcage",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:withered_ribcage1",
+          "label": "\u00a76Special Ability: \u00a77this chestplate protects player",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_ribcage2",
+          "label": "\u00a77 from wither effect. and applies wither effect to entities that hurt you",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_scythe",
+          "label": "Withered Scythe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "legendary_monsters:withered_scythe1",
+          "label": "\u00a76Special Ability: Hold right click to charge forward",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "legendary_monsters:withered_scythe2",
+          "label": "\u00a77 and damage entities",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        }
+      ],
+      "routesFile": "boss-routes/legendary_monsters.json"
+    },
+    {
+      "modId": "soulsweapons",
+      "version": "1.4.10-1.20.1-forge}",
+      "sha256": "cdf6552d31f9d40f7e3e3b3bc689ecc3eb5e40d4712f102e1d80a027e96a0fcc",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47.4.0,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckolib",
+          "mandatory": true,
+          "versionRange": "[4.8.3,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "attributefix",
+          "mandatory": true,
+          "versionRange": "[21.0.4,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "ranged_weapon_api",
+          "mandatory": true,
+          "versionRange": "[2.3.4,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [
+        {
+          "id": "soulsweapons:absorbed_projectiles_orb_entity",
+          "label": "Orb of Absorbed Projectiles",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:accursed_lord_boss",
+          "label": "The Decaying King",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:air_combustion",
+          "label": "Air Combustion",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:area_effect_sphere",
+          "label": "Area Effect Sphere",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:arrow_storm_entity",
+          "label": "Arrow Storm",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:big_chungus",
+          "label": "Moderately Sized Chungus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:big_moonlight_projectile",
+          "label": "Moonlight Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:blackflame_explosion_entity",
+          "label": "Blackflame Explosion",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:blackflame_snake_entity",
+          "label": "Blackflame Snake",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:cannonball_entity_type",
+          "label": "Silver Cannonball",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:chaos_monarch",
+          "label": "Monarch of Chaos",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:chaos_orb_entity",
+          "label": "Chaos Orb",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:chaos_skull",
+          "label": "Chaos Skull",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:charged_arrow_entity",
+          "label": "Charged Arrow",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:comet_spear_entity",
+          "label": "Comet Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:dark_sorcerer",
+          "label": "Dark Sorcerer",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:day_stalker",
+          "label": "Day Stalker",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:death_spiral",
+          "label": "Death Spiral",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:dragon_staff_projectile",
+          "label": "Dragon Staff Projectile",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:draugr_boss",
+          "label": "Old Champion's Remains",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:draupnir_spear_entity",
+          "label": "Draupnir Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:evil_forlorn",
+          "label": "Invading Forlorn",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:flame_pillar",
+          "label": "Flame Pillar",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:fog_entity",
+          "label": "Engulfing fog",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:forlorn",
+          "label": "Forlorn",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:freyr_sword_entity",
+          "label": "Sword of Freyr",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:frost_giant",
+          "label": "Frost Giant",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:frozen_lightning",
+          "label": "Frozen Lightning",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:ghost_glaive",
+          "label": "Ghost Glaive",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:growing_fireball",
+          "label": "Conflagration",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:holy_moonlight_pillar",
+          "label": "Holy Moonlight Pillar",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:horizontal_moonlight_projectile",
+          "label": "Large Moonlight Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:kraken_slayer_projectile",
+          "label": "Kraken Slayer Bolt",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:leviathan_axe_entity",
+          "label": "Leviathan Axe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:mjolnir_entity",
+          "label": "Mj\u00f6lnir",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:molten_metal",
+          "label": "Molten Metal",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:moonknight",
+          "label": "Fallen Icon",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:moonknight_phase_2",
+          "label": "Harbinger of Moonlight",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "soulsweapons:moonlight_arrow",
+          "label": "Moonlight Arrow",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:moonlight_projectile",
+          "label": "Moonlight Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:moonveil_horizontal",
+          "label": "Moonveil Horizontal Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:moonveil_vertical",
+          "label": "Moonveil Vertical Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:night_prowler",
+          "label": "Night Prowler",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:night_shade",
+          "label": "Frenzied Shade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:night_skull",
+          "label": "Night Skull",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:night_wave",
+          "label": "Night Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:nights_edge",
+          "label": "Night's Edge",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:no_drag_wither_skull",
+          "label": "Wither Skull",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:remnant",
+          "label": "Remnant",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:returning_knight",
+          "label": "Returning Knight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:rime_spectre",
+          "label": "Rime Spectre",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:shadow_orb_entity",
+          "label": "Shadow Orb",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:silver_bullet_entity",
+          "label": "Silver Bullet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:soul_reaper_ghost",
+          "label": "Familiar Ghost",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:soulmass",
+          "label": "Soulmass",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:sunlight_projectile_big",
+          "label": "Sunlight Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:sunlight_projectile_small",
+          "label": "Sunlight Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:swordspear_entity",
+          "label": "Dragonslayer Swordspear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:vertical_moonlight_projectile",
+          "label": "Large Moonlight Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:vertical_sunlight_projectile",
+          "label": "Large Sunlight Wave",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:warmth_entity",
+          "label": "Sphere of Warmth",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:warmup_lightning",
+          "label": "Warmup Lightning",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:withered_demon",
+          "label": "Withered Demon",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "soulsweapons:withered_wabbajack_projectile",
+          "label": "Withered Wabbajack Projectile",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        }
+      ],
+      "items": [
+        {
+          "id": "soulsweapons:accursed_lord_boss_spawn_egg",
+          "label": "The Decaying King Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:arkenplate",
+          "label": "Arkenplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:arkenstone",
+          "label": "Arkenstone",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:big_chungus_spawn_egg",
+          "label": "Moderately Sized Chungus Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:blood_vial",
+          "label": "Blood Vial",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:blood_vial_recipe_page",
+          "label": "Recipe Page",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:bloodlust",
+          "label": "Bloodlust",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:bloodthirster",
+          "label": "Bloodthirster",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:bluemoon_greatsword",
+          "label": "Bluemoon Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:bluemoon_shortsword",
+          "label": "Bluemoon Shortsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:blunderbuss",
+          "label": "Hunter Blunderbuss",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:boss_compass",
+          "label": "Moonstone Compass",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:chaos_crown",
+          "label": "Crown of Chaos",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:chaos_helmet",
+          "label": "Helm of Chaos",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:chaos_monarch_spawn_egg",
+          "label": "Monarch of Chaos Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:chaos_orb",
+          "label": "Chaos Orb",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:chaos_robes",
+          "label": "Cape of Chaos",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:chungus_disc",
+          "label": "Big Chungus Music Disc",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:chungus_emerald",
+          "label": "Chungus Emerald",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:chungus_staff",
+          "label": "Chungus Staff",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:comet_spear",
+          "label": "Comet Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:crimson_ingot",
+          "label": "Crimson Ingot",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:crucible_sword",
+          "label": "Crucible Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:dark_moon_greatsword",
+          "label": "Dark Moon Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:dark_sorcerer_spawn_egg",
+          "label": "Dark Sorcerer Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:darkin_blade",
+          "label": "The Darkin Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:darkin_scythe",
+          "label": "The Darkin Scythe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:darkin_scythe_pre",
+          "label": "The Darkin Scythe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:darkmoon_longbow",
+          "label": "Darkmoon Longbow",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:dawnbreaker",
+          "label": "Dawnbreaker",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:day_stalker_spawn_egg",
+          "label": "Day Stalker Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:demon_chunk",
+          "label": "Demonite Chunk",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:demon_heart",
+          "label": "Demon Heart",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:dragon_staff",
+          "label": "Dragon Staff",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:dragonbane",
+          "label": "Dragonbane",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:dragonslayer_swordspear",
+          "label": "Dragonslayer Swordspear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:draugr",
+          "label": "Draugr",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:draugr_boss_disc",
+          "label": "Champion's Music Disc",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:draugr_boss_spawn_egg",
+          "label": "Old Champion Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:draupnir_spear",
+          "label": "Draupnir Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:empowered_dawnbreaker",
+          "label": "Genesis Fracture",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:enhanced_arkenplate",
+          "label": "Infused Arkenplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:enhanced_withered_chest",
+          "label": "Infused Hallowheart",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:essence_of_eventide",
+          "label": "Essence of Eventide",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:essence_of_luminescence",
+          "label": "Essence of Luminescence",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:evil_forlorn_spawn_egg",
+          "label": "Invading Forlorn Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:excalibur",
+          "label": "Excalibur",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:fallen_icon_disc",
+          "label": "Fallen Icon Music Disc",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:featherlight",
+          "label": "Featherlight",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_boots",
+          "label": "Forlorn Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_chestplate",
+          "label": "Forlorn Chestplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_helmet",
+          "label": "Forlorn Helmet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_leggings",
+          "label": "Forlorn Leggings",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_scythe",
+          "label": "Scythe of the Forlorn",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:forlorn_spawn_egg",
+          "label": "Forlorn Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:frenzied_shade_disc",
+          "label": "Shaded Music Disc",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:freyr_sword",
+          "label": "Sword of Freyr",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:frost_giant_spawn_egg",
+          "label": "Frost Giant Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:frostmourne",
+          "label": "Frostmourne",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:galeforce",
+          "label": "Galeforce",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:gatling_gun",
+          "label": "Gatling Gun",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:glaive_of_hodir",
+          "label": "Glaive of Hodir",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:glass_vial",
+          "label": "Glass Vial",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:guts_sword",
+          "label": "Heap of Raw Iron",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:holy_greatsword",
+          "label": "Ludwig's Holy Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:holy_moonlight_greatsword",
+          "label": "Holy Moonlight Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:holy_moonlight_sword",
+          "label": "Holy Moonlight Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:hunter_cannon",
+          "label": "Hunter Cannon",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:hunter_pistol",
+          "label": "Hunter Pistol",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:iron_skull",
+          "label": "Iron Skull",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:kirkhammer",
+          "label": "Kirkhammer",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:kraken_slayer",
+          "label": "Kraken Slayer Spear Bow",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:kraken_slayer_crossbow",
+          "label": "Kraken Slayer Crossbow",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:leviathan_axe",
+          "label": "Leviathan Axe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:lich_bane",
+          "label": "Lich Bane",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:lord_soul_dark",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_day_stalker",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_night_prowler",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_purple",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_red",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_rose",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_void",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lord_soul_white",
+          "label": "Lord Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:lost_soul",
+          "label": "Lost Soul",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:master_sword",
+          "label": "Master Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:mehrunes_razor",
+          "label": "Mehrunes' Razor",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:mjolnir",
+          "label": "Mj\u00f6lnir",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:molten_demon_heart",
+          "label": "Molten Demon Heart",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonknight_spawn_egg",
+          "label": "Fallen Icon Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:moonlight_greatsword",
+          "label": "Moonlight Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonlight_shortsword",
+          "label": "Moonlight Shortsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone",
+          "label": "Moonstone",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone_axe",
+          "label": "Moonstone Axe",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone_hoe",
+          "label": "Moonstone Hoe",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone_pickaxe",
+          "label": "Moonstone Pickaxe",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone_ring",
+          "label": "Lunar Ring",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonstone_shovel",
+          "label": "Moonstone Shovel",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:moonveil",
+          "label": "Moonveil",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:night_prowler_spawn_egg",
+          "label": "Night Prowler Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:night_shade_spawn_egg",
+          "label": "Frenzied Shade Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:nightfall",
+          "label": "Nightfall",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:nightlords_sword",
+          "label": "Sword of the Nightlord",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:nights_edge_item",
+          "label": "Night's Edge",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:pure_moonlight_greatsword",
+          "label": "Pure Moonlight Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:pure_moonlight_shortsword",
+          "label": "Pure Moonlight Shortsword",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:purified_blood_bucket",
+          "label": "Bucket of Purified Blood",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:rageblade",
+          "label": "Guinsoo's Rageblade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:remnant_spawn_egg",
+          "label": "Remnant Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:returning_knight_spawn_egg",
+          "label": "Returning Knight Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:rime_spectre_spawn_egg",
+          "label": "Rime Spectre Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:shadow_assassin_scythe",
+          "label": "Shadow Assassin Scythe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:shard_of_uncertainty",
+          "label": "Shard of Uncertainty",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:silver_bullet",
+          "label": "Infused Quicksilver Bullet",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:silver_sword",
+          "label": "Silver Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:simons_blade",
+          "label": "Simon's Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:simons_bowblade",
+          "label": "Simon's Bowblade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:skofnung",
+          "label": "Skofnung",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:skofnung_stone",
+          "label": "Skofnung Stone",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_ingot",
+          "label": "Soul Infused Ingot",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_ingot_boots",
+          "label": "Soul Ingot Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_ingot_chestplate",
+          "label": "Soul Ingot Chestplate",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_ingot_helmet",
+          "label": "Soul Ingot Helmet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_ingot_leggings",
+          "label": "Soul Ingot Leggings",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_reaper",
+          "label": "Soul Reaper",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_reaper_ghost_spawn_egg",
+          "label": "Familiar Ghost Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:soul_robes_boots",
+          "label": "Dark Sorcerer Boots",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_robes_chestplate",
+          "label": "Dark Sorcerer Robe",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_robes_helmet",
+          "label": "Dark Sorcerer Hood",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soul_robes_leggings",
+          "label": "Dark Sorcerer Pants",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:soulmass_spawn_egg",
+          "label": "Soulmass Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:sting",
+          "label": "Sting",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:supernova",
+          "label": "Supernova",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:test_item",
+          "label": "Test Item",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:tonitrus",
+          "label": "Tonitrus",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:translucent_double_greatsword",
+          "label": "Translucent Double-Edged Greatsword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:translucent_glaive",
+          "label": "Translucent Glaive",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:translucent_sword",
+          "label": "Translucent Sword",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:twinkling_titanite",
+          "label": "Twinkling Titanite",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:verglas",
+          "label": "Verglas",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:warmth_entity_spawn_egg",
+          "label": "Sphere of Warmth Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:whirligig_sawblade",
+          "label": "Whirligig Sawblade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:withered_chest",
+          "label": "Hallowheart",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "soulsweapons:withered_demon_heart",
+          "label": "Withered Demon Heart",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:withered_demon_spawn_egg",
+          "label": "Withered Demon Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "soulsweapons:withered_wabbajack",
+          "label": "Withered Wabbajack",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        }
+      ],
+      "routesFile": "boss-routes/soulsweapons.json"
+    },
+    {
+      "modId": "bosses_of_mass_destruction",
+      "version": "1.1.2",
+      "sha256": "9d064557007fbf8a48da92034209b209edd99a16a5017ee104cdc13206390441",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,1.21)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "cerbons_api",
+          "mandatory": true,
+          "versionRange": "[1.1.0,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckolib",
+          "mandatory": true,
+          "versionRange": "[4.2.3,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "cloth_config",
+          "mandatory": true,
+          "versionRange": "[11.1.106,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [
+        {
+          "id": "bosses_of_mass_destruction:blue_fireball",
+          "label": "Blue Fireball",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:comet",
+          "label": "Comet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:gauntlet",
+          "label": "Nether Gauntlet",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:lich",
+          "label": "Night Lich",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:obsidilith",
+          "label": "Obsidilith",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:petal_blade",
+          "label": "Petal Blade",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:soul_star",
+          "label": "Soul Star",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:spore_ball",
+          "label": "Spore",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:void_blossom",
+          "label": "Void Blossom",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true
+        }
+      ],
+      "items": [
+        {
+          "id": "bosses_of_mass_destruction:ancient_anima",
+          "label": "Ancient Anima",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "bosses_of_mass_destruction:blazing_eye",
+          "label": "Blazing Eye",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "bosses_of_mass_destruction:brimstone_nectar",
+          "label": "Brimstone Nectar",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:charged_ender_pearl",
+          "label": "Charged Ender Pearl",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:crystal_fruit",
+          "label": "Crystal Fruit",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "bosses_of_mass_destruction:earthdive_spear",
+          "label": "Earthdive Spear",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": true
+        },
+        {
+          "id": "bosses_of_mass_destruction:obsidian_heart",
+          "label": "Obsidian Heart",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "bosses_of_mass_destruction:soul_star",
+          "label": "Soul Star",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        },
+        {
+          "id": "bosses_of_mass_destruction:void_thorn",
+          "label": "Void Thorn",
+          "source": "native-registry-bytecode",
+          "verifiedRegistry": true,
+          "recipeReferenced": false
+        }
+      ],
+      "routesFile": "boss-routes/bosses_of_mass_destruction.json"
+    },
+    {
+      "modId": "geckolib",
+      "version": "4.8.3",
+      "sha256": "8b90e11871a58b63816e99c529e6c932bc88e6beb3fec97ad618e22217df3250",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "geckoanimfix",
+          "mandatory": false,
+          "versionRange": "[9.thismodbreaksgeckolibremoveit,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [
+        {
+          "id": "geckolib:bat",
+          "label": "Bat",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:bike",
+          "label": "Bike",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:cool_kid",
+          "label": "Cool Kid",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:fake_glass",
+          "label": "Fake Glass",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:gremlin",
+          "label": "Gremlin",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:mutant_zombie",
+          "label": "Mutant Zombie",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:parasite",
+          "label": "Parasite",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        },
+        {
+          "id": "geckolib:race_car",
+          "label": "Race Car",
+          "source": "translation-key",
+          "verifiedRegistry": false
+        }
+      ],
+      "items": [
+        {
+          "id": "geckolib:bat_spawn_egg",
+          "label": "Bat Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:bike_spawn_egg",
+          "label": "Bike Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:cool_kid_spawn_egg",
+          "label": "Cool Kid Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:fake_glass_spawn_egg",
+          "label": "Fake Glass Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:gecko_armor_boots",
+          "label": "Gecko Armor Boots",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:gecko_armor_chestplate",
+          "label": "Gecko Armor Chestplate",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:gecko_armor_helmet",
+          "label": "Gecko Armor Helmet",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:gecko_armor_leggings",
+          "label": "Gecko Armor Leggings",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:gremlin_spawn_egg",
+          "label": "Gremlin Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:jack_in_the_box",
+          "label": "Jack-in-the-Box",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:mutant_zombie_spawn_egg",
+          "label": "Mutant Zombie Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:parasite_spawn_egg",
+          "label": "Parasite Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:race_car_spawn_egg",
+          "label": "Race Car Spawn Egg",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:wolf_armor_boots",
+          "label": "Wolf Armor Boots",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:wolf_armor_chestplate",
+          "label": "Wolf Armor Chestplate",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:wolf_armor_helmet",
+          "label": "Wolf Armor Helmet",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        },
+        {
+          "id": "geckolib:wolf_armor_leggings",
+          "label": "Wolf Armor Leggings",
+          "source": "translation-key",
+          "verifiedRegistry": false,
+          "recipeReferenced": false
+        }
+      ]
+    },
+    {
+      "modId": "attributefix",
+      "version": "21.0.4",
+      "sha256": "5d8cc8928ce480288d5b504663bb13104df56ac72ce5bf36f2743ec27c701112",
+      "dependencies": [],
+      "status": "metadata-verified",
+      "entities": [],
+      "items": []
+    },
+    {
+      "modId": "ranged_weapon_api",
+      "version": "2.3.4+1.20.1",
+      "sha256": "f39b67ba0294dd1fa52c3b62aedcc8e19b972dd76f6eeb234b9c9f001201743d",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [],
+      "items": []
+    },
+    {
+      "modId": "cerbons_api",
+      "version": "1.1.0",
+      "sha256": "54a0a20da56ab1af2d0d7f5cf1133c059a7523485d567521084f822e81505dfb",
+      "dependencies": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[47,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.20.1,1.21)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ],
+      "status": "metadata-verified",
+      "entities": [],
+      "items": []
+    }
+  ],
+  "coverage": "native metadata and candidate call-site inventory; runtime adapters and calibration pending"
+}

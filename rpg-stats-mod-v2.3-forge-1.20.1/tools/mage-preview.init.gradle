@@ -1,0 +1,13 @@
+// Opt-in only: normal builds never package screenshot probes.
+allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('dev.architectury.loom')) {
+            sourceSets.main.java.srcDir('tools/ui-preview/src')
+            def captures = layout.buildDirectory.dir('mage-preview').get().asFile.absolutePath
+            loom.runs.named('client') {
+                property('rpgstats.magePreview', 'true')
+                property('rpgstats.magePreviewDir', captures)
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:iron_helmet",
+    "minecraft:iron_chestplate",
+    "minecraft:iron_leggings",
+    "minecraft:iron_boots",
+    {
+      "id": "immersive_armors:prismarine_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:prismarine_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:prismarine_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:prismarine_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:steampunk_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:steampunk_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:steampunk_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:steampunk_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wither_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wither_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wither_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wither_leggings",
+      "required": false
+    }
+  ]
+}

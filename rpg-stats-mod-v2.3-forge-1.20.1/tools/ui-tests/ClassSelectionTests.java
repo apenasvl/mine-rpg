@@ -1,0 +1,55 @@
+import com.rpgstats.gui.ClassSelectionState;
+import com.rpgstats.gui.ClassSelectionLayout;
+import java.util.ArrayList;
+
+public class ClassSelectionTests {
+    private static void check(boolean condition, String message) {
+        if (!condition) throw new AssertionError(message);
+    }
+    public static void main(String[] args) {
+        var state = new ClassSelectionState<String>();
+        var sent = new ArrayList<String>();
+        check(!state.confirm(0, sent::add), "An empty selection must never send a request");
+        state.select("MAGO");
+        check(sent.isEmpty(), "Browsing classes must not commit the choice");
+        state.select("ARQUEIRO");
+        check(state.confirm(100, sent::add), "Confirm must send the selected class");
+        check(sent.equals(java.util.List.of("ARQUEIRO")), "Confirm must send the most recent selection");
+        state.select("GUERREIRO");
+        check(!state.confirm(101, sent::add) && sent.size() == 1, "Double clicks must not send duplicate requests");
+        check(state.selected().equals("ARQUEIRO"), "Selection must not change during the server request");
+        state.tick(8099);
+        check(state.pending(), "A request must remain pending before its deadline");
+        state.tick(8100);
+        check(!state.pending() && state.timedOut(), "A missing server reply must permit a manual retry");
+        check(sent.size() == 1, "A timeout must never automatically resend a class choice");
+        check(state.confirm(8200, sent::add) && sent.size() == 2, "The player must be able to retry explicitly");
+        state.reset();
+        check(state.selected() == null && !state.pending(), "A completed class choice must clear transient UI state");
+        state.select("MAGO");
+        try { state.confirm(9000, value -> { throw new IllegalStateException("offline"); }); }
+        catch (IllegalStateException expected) { }
+        check(!state.pending(), "A send failure must not leave confirmation permanently disabled");
+
+        int[][] sizes = {{960,540},{640,360},{480,270},{320,240},{427,240},{854,480},{1280,360}};
+        for (var size : sizes) {
+            var layout = ClassSelectionLayout.fit(size[0], size[1]);
+            var previous = new ArrayList<ClassSelectionLayout.Rect>();
+            for (int i = 0; i < 4; i++) {
+                var card = layout.card(i);
+                check(card.x() >= 0 && card.y() >= 0 && card.right() <= size[0] && card.bottom() <= size[1],
+                        "Every card must remain inside the viewport at " + size[0] + "x" + size[1]);
+                check(card.width() > 0 && card.height() > 0, "Cards must remain usable");
+                check(card.contains(card.x() + card.width() / 2.0, card.y() + card.height() / 2.0), "Visible center must be clickable");
+                for (var other : previous) check(!card.overlaps(other), "Class hitboxes must never overlap");
+                previous.add(card);
+            }
+            var confirm = layout.confirm();
+            check(confirm.bottom() <= size[1] && confirm.right() <= size[0], "Confirmation must stay onscreen");
+            for (var card : previous) check(!confirm.overlaps(card), "Confirmation must not overlap a class");
+            var a = layout.card(0); var b = layout.card(1); var c = layout.card(2);
+            check(a.x() < b.x() && a.y() == b.y() && c.y() > a.y(), "The reference's 2x2 order must survive resizing");
+        }
+        System.out.println("PASS: selection confirmation, retry, duplicate prevention and seven viewport layouts");
+    }
+}

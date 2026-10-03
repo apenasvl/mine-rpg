@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="rpgstats_production_probe"
+version="1.0.0"
+displayName="RPG production namespace test probe"
+description="CI only. Never delivered or required by RPG Stats."
+[[dependencies.rpgstats_production_probe]]
+modId="rpgstats"
+mandatory=true
+versionRange="[0,)"
+ordering="AFTER"
+side="SERVER"

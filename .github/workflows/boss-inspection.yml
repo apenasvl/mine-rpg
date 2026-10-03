@@ -1,0 +1,43 @@
+name: Inspect boss binaries
+on:
+  push:
+    branches: ["feature/three-mod-boss-progression"]
+    paths: [".github/workflows/boss-inspection.yml"]
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: legendary
+            coordinate: legendary-monsters-944035/8902349/legendary-monsters-944035-8902349.jar
+          - name: marium
+            coordinate: mariums-soulslike-weaponry-632066/8946380/mariums-soulslike-weaponry-632066-8946380.jar
+          - name: bomd
+            coordinate: bosses-of-mass-destruction-forge-941573/5067728/bosses-of-mass-destruction-forge-941573-5067728.jar
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Inspect exact native binary
+        env:
+          COORDINATE: ${{ matrix.coordinate }}
+          MOD_NAME: ${{ matrix.name }}
+        run: |
+          mkdir -p inspection
+          JAR="inspection/$MOD_NAME.jar"
+          curl --fail --location --retry 2 "https://cursemaven.com/curse/maven/$COORDINATE" -o "$JAR"
+          sha256sum "$JAR" > inspection/sha256.txt
+          unzip -p "$JAR" META-INF/mods.toml > inspection/mods.toml
+          unzip -p "$JAR" META-INF/MANIFEST.MF > inspection/manifest.txt
+          unzip -Z1 "$JAR" > inspection/entries.txt
+          unzip -q "$JAR" 'assets/*/lang/en_us.json' 'data/*/recipes/*' 'data/*/loot_tables/*' 'data/*/damage_type/*' -d inspection/resources || true
+          sed -n 's#/#.#g;s/\.class$//p' inspection/entries.txt | grep -v '^META-INF' > inspection/classes.txt
+          xargs -a inspection/classes.txt -n 50 javap -classpath "$JAR" -p -c > inspection/bytecode.txt 2> inspection/javap-errors.txt
+          rm -f "$JAR"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boss-native-${{ matrix.name }}
+          path: inspection/
+          retention-days: 7

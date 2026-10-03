@@ -1,0 +1,45 @@
+name: Inspect boss dependencies
+on:
+  push:
+    branches: ["feature/three-mod-boss-progression"]
+    paths: [".github/workflows/boss-dependencies.yml"]
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: geckolib
+            coordinate: geckolib-388172/7553267/geckolib-388172-7553267.jar
+          - name: attributefix
+            coordinate: attributefix-280510/4911084/attributefix-280510-4911084.jar
+          - name: ranged
+            coordinate: ranged-weapon-api-962162/8890972/ranged-weapon-api-962162-8890972.jar
+          - name: cerbons
+            coordinate: cerbons-api-955605/5050080/cerbons-api-955605-5050080.jar
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Inspect exact native binary
+        env:
+          COORDINATE: ${{ matrix.coordinate }}
+          MOD_NAME: ${{ matrix.name }}
+        run: |
+          mkdir -p inspection
+          JAR="inspection/$MOD_NAME.jar"
+          curl --fail --location --retry 2 "https://cursemaven.com/curse/maven/$COORDINATE" -o "$JAR"
+          sha256sum "$JAR" > inspection/sha256.txt
+          unzip -p "$JAR" META-INF/mods.toml > inspection/mods.toml
+          unzip -p "$JAR" META-INF/MANIFEST.MF > inspection/manifest.txt
+          unzip -Z1 "$JAR" > inspection/entries.txt
+          unzip -q "$JAR" 'assets/*/lang/en_us.json' 'data/*/recipes/*' 'data/*/loot_tables/*' 'data/*/damage_type/*' -d inspection/resources || true
+          sed -n 's#/#.#g;s/\.class$//p' inspection/entries.txt | grep -v '^META-INF' > inspection/classes.txt
+          xargs -a inspection/classes.txt -n 50 javap -classpath "$JAR" -p -c > inspection/bytecode.txt 2> inspection/javap-errors.txt
+          rm -f "$JAR"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boss-dependency-${{ matrix.name }}
+          path: inspection/
+          retention-days: 7

@@ -1,0 +1,58 @@
+// Development-only SRG -> Yarn input repair. The CurseForge binary and delivered RPG jar stay unchanged.
+// Legendary 8902349 declares isSitting()Z and m_21827_()Z with identical bodies;
+// Yarn maps the latter to the former, causing a duplicate method during Loom's test remap.
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath 'org.ow2.asm:asm:9.7.1' }
+}
+import org.objectweb.asm.*
+import java.util.jar.*
+import java.security.MessageDigest
+
+configurations { legendaryNativeTestInput }
+dependencies { legendaryNativeTestInput('curse.maven:legendary-monsters-944035:8902349') { transitive = false } }
+def original = configurations.legendaryNativeTestInput.singleFile
+def originalHash = MessageDigest.getInstance('SHA-256').digest(original.bytes).encodeHex().toString()
+if (originalHash != 'a90a3009e502ba4f235e5bd9a7493c2307e4060f0ee21fd02e62f9893912321c')
+    throw new GradleException('Unexpected native Legendary Monsters binary')
+def owner = 'net/miauczel/legendary_monsters/entity/AnimatedMonster/Mobs/Pets/MossyGolemEntity'
+def renamed = 'rpgstatsTestOnlyNativeSitting'
+def output = layout.buildDirectory.file('native-test-input/legendary-8902349.jar').get().asFile
+output.parentFile.mkdirs()
+int declarations = 0
+int calls = 0
+new JarFile(original).withCloseable { source ->
+    new JarOutputStream(new FileOutputStream(output)).withCloseable { target ->
+        source.entries().each { entry ->
+            byte[] bytes = source.getInputStream(entry).withCloseable { it.bytes }
+            if (entry.name.endsWith('.class') && entry.name.startsWith('net/miauczel/')) {
+                def reader = new ClassReader(bytes)
+                def writer = new ClassWriter(0)
+                reader.accept(new ClassVisitor(Opcodes.ASM9, writer) {
+                    @Override MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+                        String outputName = name
+                        if (reader.className == owner && name == 'isSitting' && descriptor == '()Z') {
+                            outputName = renamed; declarations++
+                        }
+                        return new MethodVisitor(Opcodes.ASM9, super.visitMethod(access, outputName, descriptor, signature, exceptions)) {
+                            @Override void visitMethodInsn(int opcode, String callOwner, String callName, String callDescriptor, boolean isInterface) {
+                                if (callOwner == owner && callName == 'isSitting' && callDescriptor == '()Z') {
+                                    callName = renamed; calls++
+                                }
+                                super.visitMethodInsn(opcode, callOwner, callName, callDescriptor, isInterface)
+                            }
+                        }
+                    }
+                }, 0)
+                bytes = writer.toByteArray()
+            }
+            def copied = new JarEntry(entry.name); copied.time = entry.time
+            target.putNextEntry(copied); target.write(bytes); target.closeEntry()
+        }
+    }
+}
+if (declarations != 1 || calls < 1) throw new GradleException("Unexpected Legendary collision route: ${declarations}/${calls}")
+if (MessageDigest.getInstance('SHA-256').digest(original.bytes).encodeHex().toString() != originalHash)
+    throw new GradleException('Native original changed')
+logger.lifecycle("Legendary test-only name repair: ${declarations} declaration / ${calls} call sites; original SHA-256 ${originalHash}")
+ext.legendaryTestJar = output

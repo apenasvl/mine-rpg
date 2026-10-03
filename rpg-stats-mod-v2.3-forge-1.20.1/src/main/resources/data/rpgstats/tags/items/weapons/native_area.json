@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "too_many_bows:dragons_breath",
+      "required": false
+    },
+    {
+      "id": "too_many_bows:radiance",
+      "required": false
+    },
+    {
+      "id": "too_many_bows:auroras_grace",
+      "required": false
+    },
+    {
+      "id": "too_many_bows:arc_heavens",
+      "required": false
+    },
+    {
+      "id": "too_many_bows:flame_bow",
+      "required": false
+    },
+    {
+      "id": "too_many_bows:verdant_viper",
+      "required": false
+    }
+  ]
+}

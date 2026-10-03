@@ -1,0 +1,1031 @@
+{
+  "modId": "bosses_of_mass_destruction",
+  "routes": [
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.config.mob.GauntletConfig",
+      "method": "com.cerbon.bosses_of_mass_destruction.config.mob.GauntletConfig",
+      "descriptor": "()V",
+      "calls": [
+        "Field energizedPunchExplosionSize:D",
+        "Field normalPunchExplosionMultiplier:D"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.config.mob.LichConfig$Missile",
+      "method": "com.cerbon.bosses_of_mass_destruction.config.mob.LichConfig$Missile",
+      "descriptor": "()V",
+      "calls": [
+        "Field damage:D"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.config.mob.ObsidilithConfig",
+      "method": "com.cerbon.bosses_of_mass_destruction.config.mob.ObsidilithConfig",
+      "descriptor": "()V",
+      "calls": [
+        "Field anvilAttackExplosionStrength:F"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.BMDEntities",
+      "method": "createAttributes",
+      "descriptor": "(Lnet/minecraftforge/event/entity/EntityAttributeCreationEvent;)V",
+      "calls": [
+        "Field com/cerbon/bosses_of_mass_destruction/config/mob/LichConfig$Missile.damage:D"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "descriptor": "(Lnet/minecraft/world/entity/Mob;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+      "calls": [
+        "Field damageMemory:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "trySwitchTarget",
+      "descriptor": "()V",
+      "calls": [
+        "Field damageMemory:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory.getDamageHistory:()Ljava/util/List;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "filterTargetableEntities",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)Z",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.source:()Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "lambda$trySwitchTarget$2",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)Lnet/minecraft/world/entity/Entity;",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.source:()Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "lambda$trySwitchTarget$1",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)Z",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.source:()Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.ai.TargetSwitcher",
+      "method": "lambda$trySwitchTarget$0",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)Z",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.ageWhenDamaged:()I"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.BlindnessAction",
+      "method": "lambda$perform$1",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "calls": [
+        "Method net/minecraft/world/entity/player/Player.m_7292_:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletAttacks",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletAttacks",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity;Lcom/cerbon/cerbons_api/api/general/event/EventScheduler;Lcom/cerbon/bosses_of_mass_destruction/config/mob/GauntletConfig;Lnet/minecraft/server/level/ServerLevel;)V",
+      "calls": [
+        "Field com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity.damageMemory:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletMoveLogic.\"<init>\":(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletEntity",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lcom/cerbon/bosses_of_mass_destruction/config/mob/GauntletConfig;)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+        "Field damageMemory:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler.\"<init>\":([Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory.\"<init>\":(ILnet/minecraft/world/entity/LivingEntity;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletEntity",
+      "method": "setNextDamagedPart",
+      "descriptor": "(Ljava/lang/String;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletHitboxes.setNextDamagedPart:(Ljava/lang/String;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletHitboxes",
+      "method": "setNextDamagedPart",
+      "descriptor": "(Ljava/lang/String;)V",
+      "calls": [
+        "Field nextDamagedPart:Ljava/lang/String;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletHitboxes",
+      "method": "shouldDamage",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "calls": [
+        "Field net/minecraft/tags/DamageTypeTags.f_268415_:Lnet/minecraft/tags/TagKey;",
+        "Field net/minecraft/tags/DamageTypeTags.f_268524_:Lnet/minecraft/tags/TagKey;",
+        "Field net/minecraft/tags/DamageTypeTags.f_268738_:Lnet/minecraft/tags/TagKey;",
+        "Field net/minecraft/tags/DamageTypeTags.f_268745_:Lnet/minecraft/tags/TagKey;",
+        "Field nextDamagedPart:Ljava/lang/String;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_269533_:(Lnet/minecraft/tags/TagKey;)Z",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7270_:()Lnet/minecraft/world/phys/Vec3;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;",
+        "Method net/minecraft/world/entity/LivingEntity.m_147240_:(DDD)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletMoveLogic",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.GauntletMoveLogic",
+      "descriptor": "(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/ai/TargetSwitcher.\"<init>\":(Lnet/minecraft/world/entity/Mob;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.LaserAction",
+      "method": "applyLaserToEntities",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity.m_7327_:(Lnet/minecraft/world/entity/Entity;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.PunchAction",
+      "method": "testBlockPhysicalImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Field com/cerbon/bosses_of_mass_destruction/config/mob/GauntletConfig.normalPunchExplosionMultiplier:D",
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.PunchAction",
+      "method": "testEntityImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity.m_7327_:(Lnet/minecraft/world/entity/Entity;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.ServerGauntletDeathHandler",
+      "method": "tick",
+      "descriptor": "(Lnet/minecraft/server/level/ServerLevel;)V",
+      "calls": [
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/server/level/ServerLevel.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.SwirlPunchAction",
+      "method": "testBlockPhysicalImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Field com/cerbon/bosses_of_mass_destruction/config/mob/GauntletConfig.energizedPunchExplosionSize:D",
+        "Field com/cerbon/bosses_of_mass_destruction/config/mob/GauntletConfig.normalPunchExplosionMultiplier:D",
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;",
+        "Method net/minecraft/world/level/Level.m_255391_:(Lnet/minecraft/world/entity/Entity;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.gauntlet.SwirlPunchAction",
+      "method": "testEntityImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/gauntlet/GauntletEntity.m_7327_:(Lnet/minecraft/world/entity/Entity;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.CometAction",
+      "method": "lambda$new$0",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichEntity;Lcom/cerbon/bosses_of_mass_destruction/config/mob/LichConfig;Lnet/minecraft/world/phys/Vec3;)V",
+      "calls": [
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.CometRageAction",
+      "method": "lambda$new$0",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichEntity;Lcom/cerbon/bosses_of_mass_destruction/config/mob/LichConfig;Lnet/minecraft/world/phys/Vec3;)V",
+      "calls": [
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichEntity",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lcom/cerbon/bosses_of_mass_destruction/config/mob/LichConfig;)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichMoveLogic.\"<init>\":(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler.\"<init>\":([Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory.\"<init>\":(ILnet/minecraft/world/entity/LivingEntity;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamagedAttackerNotSeen.\"<init>\":(Lcom/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichEntity;Ljava/util/function/Consumer;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.\"<init>\":(Ljava/util/List;Ljava/lang/Runnable;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamagedAttackerNotSeen",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichEntity",
+      "method": "m_6667_",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/util/BaseEntity.m_6667_:(Lnet/minecraft/world/damagesource/DamageSource;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichMoveLogic",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichMoveLogic",
+      "descriptor": "(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/lich/LichEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+      "calls": [
+        "Field stagedDamageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/ai/TargetSwitcher.\"<init>\":(Lnet/minecraft/world/entity/Mob;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.\"<init>\":(Ljava/util/List;Ljava/lang/Runnable;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichMoveLogic",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "Field stagedDamageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.afterDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.LichMoveLogic",
+      "method": "beforeDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+      "calls": [
+        "Field stagedDamageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.beforeDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.VolleyAction",
+      "method": "lambda$getMissileThrower$2",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;IILnet/minecraft/world/effect/MobEffect;)V",
+      "calls": [
+        "Method net/minecraft/world/entity/LivingEntity.m_7292_:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.lich.VolleyRageAction",
+      "method": "lambda$getMissileThrower$1",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;IILnet/minecraft/world/effect/MobEffect;)V",
+      "calls": [
+        "Method net/minecraft/world/entity/LivingEntity.m_7292_:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.AnvilAction",
+      "method": "lambda$performAttack$5",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/server/level/ServerLevel;)V",
+      "calls": [
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.BurstAction",
+      "method": "damageEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/BMDUtils.shieldPiercing:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithEntity",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lcom/cerbon/bosses_of_mass_destruction/config/mob/ObsidilithConfig;)V",
+      "calls": [
+        "Field com/cerbon/bosses_of_mass_destruction/config/mob/ObsidilithConfig.anvilAttackExplosionStrength:F",
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/obsidilith/ObsidilithMoveLogic.\"<init>\":(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/obsidilith/ObsidilithEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/obsidilith/ShieldDamageHandler.\"<init>\":(Ljava/util/function/Supplier;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler.\"<init>\":([Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory.\"<init>\":(ILnet/minecraft/world/entity/LivingEntity;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/custom/obsidilith/ShieldDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithEntity",
+      "method": "m_6667_",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/util/BaseEntity.m_6667_:(Lnet/minecraft/world/damagesource/DamageSource;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithMoveLogic",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithMoveLogic",
+      "descriptor": "(Ljava/util/Map;Lcom/cerbon/bosses_of_mass_destruction/entity/custom/obsidilith/ObsidilithEntity;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/ai/TargetSwitcher.\"<init>\":(Lnet/minecraft/world/entity/Mob;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.\"<init>\":(Ljava/util/List;Ljava/lang/Runnable;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithMoveLogic",
+      "method": "beforeDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.beforeDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithMoveLogic",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.afterDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ObsidilithUtils",
+      "method": "onDeath",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "calls": [
+        "Field net/minecraft/world/level/Level$ExplosionInteraction.MOB:Lnet/minecraft/world/level/Level$ExplosionInteraction;",
+        "Method net/minecraft/world/level/Level.m_254849_:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.ShieldDamageHandler",
+      "method": "shouldDamage",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "calls": [
+        "Field net/minecraft/tags/DamageTypeTags.f_268524_:Lnet/minecraft/tags/TagKey;",
+        "Field net/minecraft/tags/DamageTypeTags.f_268738_:Lnet/minecraft/tags/TagKey;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_269533_:(Lnet/minecraft/tags/TagKey;)Z",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;",
+        "Method net/minecraft/world/entity/LivingEntity.m_147240_:(DDD)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.SpikeAction",
+      "method": "damageEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/BMDUtils.shieldPiercing:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/entity/LivingEntity.m_7292_:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.obsidilith.WaveAction",
+      "method": "damageEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/BMDUtils.shieldPiercing:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.Spikes",
+      "method": "damageEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/BMDUtils.shieldPiercing:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.Spikes",
+      "method": "lambda$placeRift$1",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method damageEntity:(Lnet/minecraft/world/entity/LivingEntity;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.VoidBlossomEntity",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.VoidBlossomEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lcom/cerbon/bosses_of_mass_destruction/config/mob/VoidBlossomConfig;)V",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/ai/TargetSwitcher.\"<init>\":(Lnet/minecraft/world/entity/Mob;Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/void_blossom/hitbox/VoidBlossomHitboxes.getDamageHandlers:()Lcom/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler;",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler.\"<init>\":([Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory.\"<init>\":(ILnet/minecraft/world/entity/LivingEntity;)V",
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler.\"<init>\":(Ljava/util/List;Ljava/lang/Runnable;)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/StagedDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.VoidBlossomEntity",
+      "method": "setNextDamagedPart",
+      "descriptor": "(Ljava/lang/String;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/custom/void_blossom/hitbox/NetworkedHitboxManager.setNextDamagedPart:(Ljava/lang/String;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.VoidBlossomMoveLogic",
+      "method": "perform",
+      "descriptor": "()I",
+      "calls": [
+        "Method net/minecraft/world/entity/LivingEntity.m_20270_:(Lnet/minecraft/world/entity/Entity;)F"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.VoidBlossomSpikeTick",
+      "method": "tick",
+      "descriptor": "(Lnet/minecraft/server/level/ServerLevel;)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSources.m_269374_:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.hitbox.NetworkedHitboxManager",
+      "method": "setNextDamagedPart",
+      "descriptor": "()V",
+      "calls": [
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/custom/void_blossom/hitbox/ICompoundHitbox.setNextDamagedPart:(Ljava/lang/String;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.hitbox.VoidBlossomCompoundHitbox",
+      "method": "setNextDamagedPart",
+      "descriptor": "(Ljava/lang/String;)V",
+      "calls": [
+        "Field nextDamagedPart:Ljava/lang/String;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.hitbox.VoidBlossomCompoundHitbox",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "Field net/minecraft/tags/DamageTypeTags.f_268524_:Lnet/minecraft/tags/TagKey;",
+        "Field nextDamagedPart:Ljava/lang/String;",
+        "Method net/minecraft/world/damagesource/DamageSource.m_269533_:(Lnet/minecraft/tags/TagKey;)Z",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;",
+        "Method net/minecraft/world/damagesource/DamageSources.m_269374_:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/Entity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.hitbox.VoidBlossomHitboxes",
+      "method": "getDamageHandlers",
+      "descriptor": "()Lcom/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler;",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler.\"<init>\":([Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;)V",
+        "class \"[Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;\"",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/CompositeDamageHandler",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.custom.void_blossom.hitbox.VoidBlossomHitboxes",
+      "method": "lambda$getDamageHandlers$1",
+      "descriptor": "(I)[Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+      "calls": [
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.CompositeDamageHandler",
+      "method": "beforeDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+      "calls": [
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.beforeDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.CompositeDamageHandler",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.afterDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.CompositeDamageHandler",
+      "method": "shouldDamage",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "calls": [
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.shouldDamage:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "descriptor": "(FLnet/minecraft/world/damagesource/DamageSource;I)V",
+      "calls": [
+        "Field ageWhenDamaged:I",
+        "Field source:Lnet/minecraft/world/damagesource/DamageSource;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "toString",
+      "descriptor": "()Ljava/lang/String;",
+      "calls": [
+        "InvokeDynamic #0:toString:(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)Ljava/lang/String;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "hashCode",
+      "descriptor": "()I",
+      "calls": [
+        "InvokeDynamic #0:hashCode:(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;)I"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "equals",
+      "descriptor": "(Ljava/lang/Object;)Z",
+      "calls": [
+        "InvokeDynamic #0:equals:(Lcom/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory;Ljava/lang/Object;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "source",
+      "descriptor": "()Lnet/minecraft/world/damagesource/DamageSource;",
+      "calls": [
+        "Field source:Lnet/minecraft/world/damagesource/DamageSource;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory$DamageHistory",
+      "method": "ageWhenDamaged",
+      "descriptor": "()I",
+      "calls": [
+        "Field ageWhenDamaged:I"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory",
+      "method": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory",
+      "descriptor": "(ILnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.\"<init>\":(FLnet/minecraft/world/damagesource/DamageSource;I)V",
+        "Method net/minecraft/world/damagesource/DamageSources.m_269341_:()Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamageMemory",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory.\"<init>\":(FLnet/minecraft/world/damagesource/DamageSource;I)V",
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;",
+        "class com/cerbon/bosses_of_mass_destruction/entity/damage/DamageMemory$DamageHistory"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.damage.DamagedAttackerNotSeen",
+      "method": "afterDamage",
+      "descriptor": "(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.entity.util.BaseEntity",
+      "method": "m_6469_",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "calls": [
+        "Field damageHandler:Lcom/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler;",
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.afterDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;FZ)V",
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.beforeDamage:(Lcom/cerbon/bosses_of_mass_destruction/entity/util/IEntityStats;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+        "InterfaceMethod com/cerbon/bosses_of_mass_destruction/entity/damage/IDamageHandler.shouldDamage:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/entity/PathfinderMob.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.event.BMDEvents$CommonEvents",
+      "method": "onCommonSetup",
+      "descriptor": "(Lnet/minecraftforge/fml/event/lifecycle/FMLCommonSetupEvent;)V",
+      "calls": [
+        "Method net/minecraftforge/fml/event/lifecycle/FMLCommonSetupEvent.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.event.ForgeEvents",
+      "method": "onLivingDeath",
+      "descriptor": "(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSource.m_7639_:()Lnet/minecraft/world/entity/Entity;",
+        "Method net/minecraftforge/event/entity/living/LivingDeathEvent.getSource:()Lnet/minecraft/world/damagesource/DamageSource;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.ChargedEnderPearlEntity",
+      "method": "m_5790_",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSources.m_269390_:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/Entity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.ChargedEnderPearlEntity",
+      "method": "serverCollision",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.ChargedEnderPearlEntity",
+      "method": "applyMobEffects",
+      "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+      "calls": [
+        "Method net/minecraft/world/entity/LivingEntity.m_147240_:(DDD)V",
+        "Method net/minecraft/world/entity/LivingEntity.m_7292_:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.ChargedEnderPearlEntity",
+      "method": "m_8119_",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.ChargedEnderPearlEntity",
+      "method": "m_5489_",
+      "descriptor": "(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;",
+      "calls": [
+        "Method m_5602_:(Lnet/minecraft/world/entity/Entity;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.item.custom.SoulStarEntity",
+      "method": "m_8119_",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.mixin.ExplosionMixin",
+      "method": "Explosion",
+      "descriptor": "(FLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)F",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/block/custom/MonolithBlock.getExplosionPower:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;F)F"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.mixin.LivingEntityMixin",
+      "method": "bmd_makeShieldPiercingUnshieldable",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSource.m_276093_:(Lnet/minecraft/resources/ResourceKey;)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.BMDPacketHandler",
+      "method": "sendToServer",
+      "descriptor": "(Ljava/lang/Object;)V",
+      "calls": [
+        "Method net/minecraftforge/network/simple/SimpleChannel.sendToServer:(Ljava/lang/Object;)V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.BlindnessS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.ChangeHitboxS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.ChargedEnderPearlS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.HealS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.ObsidilithReviveS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.PlaceS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.SendDeltaMovementS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.SendParticleS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.SendVec3S2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.SpikeS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.packet.custom.VoidBlossomReviveS2CPacket",
+      "method": "handle",
+      "descriptor": "(Ljava/util/function/Supplier;)V",
+      "calls": [
+        "Method net/minecraftforge/network/NetworkEvent$Context.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.MagicMissileProjectile",
+      "method": "entityHit",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "calls": [
+        "Method m_146870_:()V",
+        "Method net/minecraft/world/damagesource/DamageSources.m_269390_:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/Entity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.MagicMissileProjectile",
+      "method": "m_8060_",
+      "descriptor": "(Lnet/minecraft/world/phys/BlockHitResult;)V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.PetalBladeProjectile",
+      "method": "entityHit",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "calls": [
+        "Method m_146870_:()V",
+        "Method net/minecraft/world/damagesource/DamageSources.m_269390_:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/Entity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.PetalBladeProjectile",
+      "method": "m_8060_",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.SporeBallProjectile",
+      "method": "onImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Method doExplosion:(Lnet/minecraft/world/entity/LivingEntity;)V",
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.SporeBallProjectile",
+      "method": "entityHit",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSources.m_269390_:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/Entity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Method net/minecraft/world/level/Level.m_269111_:()Lnet/minecraft/world/damagesource/DamageSources;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.SporeBallProjectile",
+      "method": "lambda$doExplosion$3",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.SporeBallProjectile",
+      "method": "lambda$doExplosion$2",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)V",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/BMDUtils.shieldPiercing:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "Method net/minecraft/world/entity/LivingEntity.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.comet.CometProjectile",
+      "method": "m_6469_",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/projectile/BaseThrownItemProjectile.m_6469_:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.projectile.comet.CometProjectile",
+      "method": "onImpact",
+      "descriptor": "()V",
+      "calls": [
+        "Method m_146870_:()V"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.util.BMDUtils",
+      "method": "shieldPiercing",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+      "calls": [
+        "Method com/cerbon/bosses_of_mass_destruction/util/VanillaCopiesServer.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    },
+    {
+      "class": "com.cerbon.bosses_of_mass_destruction.util.VanillaCopiesServer",
+      "method": "create",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+      "calls": [
+        "Method net/minecraft/world/damagesource/DamageSource.\"<init>\":(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;)V",
+        "class net/minecraft/world/damagesource/DamageSource"
+      ],
+      "status": "needs-owner-and-runtime-verification"
+    }
+  ]
+}

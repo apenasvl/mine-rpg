@@ -1,0 +1,262 @@
+name: Forge 1.20.1 build audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "audit/forge-1.20.1", "feature/selective-combat-mod-compat", "feature/three-mod-boss-progression" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Static Forge and compat validation
+        run: python3 tools/validate_forge.py
+
+      - name: Progression and boss XP validation
+        run: python3 tools/validate_progression.py
+
+      - name: RPG progression curve validation
+        run: python3 tools/validate_progression_curve.py
+
+      - name: Boss support contribution validation
+        run: python3 tools/validate_support.py
+
+      - name: Mage + Iron mana/damage validation
+        run: python3 tools/validate_mage_irons_balance.py
+
+      - name: Iron per-target damage budget validation
+        run: |
+          python3 tools/validate_irons_target_budget.py
+          python3 tools/run_mage_boss_tests.py
+          python3 tools/run_mage_intelligence_tests.py
+
+      - name: Mage Houses + specs on Iron validation
+        run: |
+          python3 tools/validate_mage_irons_classes.py
+          python3 tests/validate_corruption_guide.py
+          javac -d build/corruption-text-tests src/main/java/com/rpgstats/gui/MageCorruptionText.java tests/MageCorruptionTextTest.java
+          java -cp build/corruption-text-tests MageCorruptionTextTest
+
+      - name: Archer balance validation
+        run: |
+          python3 tools/validate_archer_balance.py
+          python3 tools/run_physical_progression_tests.py
+
+      - name: Assassin balance validation
+        run: python3 tools/validate_assassin_balance.py
+
+      - name: Assassin specialization validation
+        run: python3 tools/validate_assassin_specializations.py
+
+      - name: RPG runtime debug validation
+        run: python3 tools/validate_rpg_debug.py
+
+      - name: Warrior complete pass validation
+        run: python3 tools/validate_warrior_balance.py
+
+      - name: Cross-class level audit validation
+        run: python3 tools/validate_cross_class_levels.py
+
+      - name: Paladin removal validation
+        run: python3 tools/validate_no_paladin.py
+
+      - name: Illustrated UI routing tests
+        run: |
+          python3 tools/run_ui_tests.py
+          python3 tools/run_mage_ui_tests.py
+          python3 tools/run_warrior_ui_tests.py
+          python3 tools/run_archer_ui_tests.py
+          python3 tools/run_arcane_hud_tests.py
+          python3 tools/run_assassin_ui_tests.py
+          python3 tools/run_palette_ui_tests.py
+
+      - name: House domain tests
+        run: |
+          python3 tools/run_house_tests.py
+          python3 tools/run_combat_tests.py
+          python3 tools/run_weapon_balance_tests.py
+          python3 tools/test_combat_inspection.py
+          python3 tools/test_combat_installer.py
+          python3 tools/test_boss_inspection.py
+          python3 tools/test_boss_routes.py
+          python3 tools/run_boss_balance_tests.py
+
+      - name: GameTest wiring validation
+        run: python3 tools/validate_gametest.py
+
+      - name: Runtime regression validation
+        run: python3 tools/validate_runtime_regressions.py
+
+      - name: RPG guide book validation
+        run: python3 tools/validate_guide_book.py
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Minecraft runtime GameTests
+        run: ./gradlew --no-daemon --info --stacktrace runGameTestServer
+
+      - name: Archer mods runtime GameTests
+        if: ${{ !cancelled() }}
+        run: ./gradlew --no-daemon --info --stacktrace -ParcherCompatTests runGameTestServer
+
+      - name: Build
+        run: ./gradlew --no-daemon --stacktrace build
+
+      - name: Prepare test jar
+        run: |
+          mkdir -p dist
+          JAR=$(find build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-sources.jar' | head -n 1)
+          test -n "$JAR"
+          cp "$JAR" dist/rpg-stats-forge-1.20.1-test.jar
+
+      - name: Upload test jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: rpg-stats-forge-test
+          path: rpg-stats-mod-v2.3-forge-1.20.1/dist/rpg-stats-forge-1.20.1-test.jar
+          if-no-files-found: error
+          retention-days: 7
+
+  archer-mod-inspection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Inspect exact optional trap binary
+        run: |
+          mkdir -p inspection
+          curl --fail --location --retry 2 https://cursemaven.com/curse/maven/simply-bear-traps-1643250/8595248/simply-bear-traps-1643250-8595248.jar -o inspection/beartrap.jar
+          curl --fail --location --retry 2 https://cursemaven.com/curse/maven/more-bows-and-arrows-888468/6843671/more-bows-and-arrows-888468-6843671.jar -o inspection/morebows.jar
+          unzip -p inspection/morebows.jar META-INF/mods.toml > inspection/morebows-mods.toml
+          for CLS in $(unzip -Z1 inspection/morebows.jar | sed -n 's#/#.#g;s/\.class$//p' | grep -v '^META-INF'); do
+            javap -classpath inspection/morebows.jar -p -c "$CLS" >> inspection/morebows-bytecode.txt 2>/dev/null || true
+          done
+          unzip -l inspection/beartrap.jar > inspection/entries.txt
+          unzip -p inspection/beartrap.jar META-INF/mods.toml > inspection/mods.toml
+          for CLS in $(unzip -Z1 inspection/beartrap.jar | sed -n 's#/#.#g;s/\.class$//p' | grep -v '^META-INF'); do
+            javap -classpath inspection/beartrap.jar -p -c "$CLS" >> inspection/bytecode.txt 2>/dev/null || true
+          done
+          rm -f inspection/beartrap.jar inspection/morebows.jar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archer-mod-inspection
+          path: inspection/
+          retention-days: 7
+
+
+  combat-runtime:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [combatCompatTests, combinedCompatTests]
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - run: chmod +x gradlew
+      - run: ./gradlew --no-daemon --stacktrace -P${{ matrix.profile }} runGameTestServer
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: combat-runtime-${{ matrix.profile }}
+          path: rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+          retention-days: 7
+
+  combat-client:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - run: chmod +x gradlew
+      - name: Prepare real world
+        run: |
+          ./gradlew --no-daemon -PcombinedCompatTests runGameTestServer
+          WORLD=$(find run -name level.dat -type f | head -n 1)
+          test -n "$WORLD"
+          mkdir -p run/saves/CombatProbe
+          cp -a "$(dirname "$WORLD")"/. run/saves/CombatProbe/
+      - run: sudo apt-get update -qq && sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
+      - name: Exercise combined client
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          ALSOFT_DRIVERS: 'null'
+        run: xvfb-run -a timeout 1000 ./gradlew --no-daemon --stacktrace -PcombinedCompatTests -PcombatClient -I tools/combat-client.init.gradle runClient
+      - run: test -f build/combat-client/result.txt && test -f build/combat-client/roll.png
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: combat-client-probe
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/combat-client/
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+          retention-days: 7
+
+  boss-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: boss
+            argument: ''
+          - profile: full
+            argument: '--full'
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - run: chmod +x gradlew
+      - name: Build separate production namespace probe
+        run: ./gradlew --no-daemon --stacktrace -I tools/production-boss-probe.init.gradle build productionBossProbeJar
+      - name: Test original native binaries in installed Forge
+        run: python3 tools/run_production_boss_tests.py ${{ matrix.argument }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boss-production-${{ matrix.profile }}
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/logs/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/result.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/native-manifest.json
+          retention-days: 7

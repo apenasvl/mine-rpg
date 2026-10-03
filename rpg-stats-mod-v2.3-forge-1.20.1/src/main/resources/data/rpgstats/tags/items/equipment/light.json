@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:leather_helmet",
+    "minecraft:leather_chestplate",
+    "minecraft:leather_leggings",
+    "minecraft:leather_boots",
+    {
+      "id": "immersive_armors:bone_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:bone_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:bone_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:bone_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:slime_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:slime_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:slime_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:slime_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wooden_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wooden_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wooden_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:wooden_leggings",
+      "required": false
+    }
+  ]
+}

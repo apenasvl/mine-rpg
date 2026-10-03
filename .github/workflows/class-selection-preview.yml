@@ -1,0 +1,56 @@
+name: Class selection client preview
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/java/com/rpgstats/gui/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/resources/assets/rpgstats/textures/gui/class_selection/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/ui-preview/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/ui-preview.init.gradle'
+      - '.github/workflows/class-selection-preview.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - name: Selection and layout behavior
+        run: python3 tools/run_ui_tests.py
+      - name: Install virtual display
+        run: sudo apt-get update -qq && sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
+      - name: Capture the real Forge client
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          ALSOFT_DRIVERS: 'null'
+        run: xvfb-run -a -s '-screen 0 2560x1440x24' timeout 900 bash gradlew --no-daemon --stacktrace -I tools/ui-preview.init.gradle runClient
+      - name: Require all screenshots
+        run: |
+          test -f build/ui-preview/01-1080p-gui2.png
+          test -f build/ui-preview/02-1080p-gui4-mage.png
+          test -f build/ui-preview/03-720p-gui3-warrior.png
+          test -f build/ui-preview/04-4by3-assassin.png
+          test -f build/ui-preview/05-wide-archer-houses.png
+      - name: Upload captures and client log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-class-selection-client
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/ui-preview/
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log
+          if-no-files-found: warn
+          retention-days: 14

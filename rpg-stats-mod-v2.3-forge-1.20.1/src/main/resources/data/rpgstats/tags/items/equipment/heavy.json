@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:netherite_helmet",
+    "minecraft:netherite_chestplate",
+    "minecraft:netherite_leggings",
+    "minecraft:netherite_boots",
+    {
+      "id": "immersive_armors:divine_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:divine_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:divine_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:divine_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:heavy_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:heavy_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:heavy_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:heavy_leggings",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:warrior_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:warrior_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:warrior_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:warrior_leggings",
+      "required": false
+    }
+  ]
+}

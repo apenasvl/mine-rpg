@@ -1,0 +1,28 @@
+// Separate CI source set and artifact. Never extends sourceSets.main.
+allprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin('dev.architectury.loom')) {
+            sourceSets {
+                productionBossProbe {
+                    java.srcDir('tools/production-boss-probe/src')
+                    resources.srcDir('tools/production-boss-probe/resources')
+                    compileClasspath += sourceSets.main.compileClasspath
+                }
+            }
+            configurations { productionForgeInstaller }
+            dependencies { productionForgeInstaller('net.minecraftforge:forge:1.20.1-47.4.0:installer@jar') { transitive = false } }
+            tasks.register('prepareProductionForgeInstaller', Copy) {
+                from configurations.productionForgeInstaller
+                into layout.buildDirectory.dir('production-probe')
+                rename { 'forge-installer.jar' }
+            }
+            tasks.register('productionBossProbeJar', Jar) {
+                dependsOn 'prepareProductionForgeInstaller'
+                from sourceSets.productionBossProbe.output
+                archiveFileName = 'rpgstats-production-probe.jar'
+                destinationDirectory = layout.buildDirectory.dir('production-probe')
+                manifest { attributes 'MixinConfigs': 'rpgstats.production-test.mixins.json' }
+            }
+        }
+    }
+}

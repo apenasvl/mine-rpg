@@ -1,0 +1,1325 @@
+{
+  "type": "equipment_rules",
+  "entries": [
+    {
+      "id": "soulsweapons:bluemoon_shortsword",
+      "enabled": true,
+      "min_level": 11,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 15
+      },
+      "damage_factor": 0.65,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:bluemoon_greatsword",
+      "enabled": true,
+      "min_level": 11,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 15
+      },
+      "damage_factor": 0.65,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:moonlight_shortsword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:moonlight_greatsword",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:pure_moonlight_greatsword",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "MAGO"
+      ],
+      "stats": {
+        "int": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:bloodthirster",
+      "enabled": true,
+      "min_level": 21,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 0.75,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:darkin_blade",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:dragon_staff",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "MAGO"
+      ],
+      "stats": {
+        "int": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:withered_wabbajack",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "MAGO"
+      ],
+      "stats": {
+        "int": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:whirligig_sawblade",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:dragonslayer_swordspear",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:rageblade",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:guts_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:nightfall",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:comet_spear",
+      "enabled": true,
+      "min_level": 21,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 0.75,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:lich_bane",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:galeforce",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ARQUEIRO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:translucent_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:translucent_glaive",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:translucent_double_greatsword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:draugr",
+      "enabled": true,
+      "min_level": 21,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 0.75,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:dawnbreaker",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:soul_reaper",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:forlorn_scythe",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:leviathan_axe",
+      "enabled": false,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:skofnung",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:mjolnir",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:freyr_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:sting",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:featherlight",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:crucible_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:darkin_scythe_pre",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:darkin_scythe",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:shadow_assassin_scythe",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:kirkhammer",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:silver_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:holy_greatsword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:draupnir_spear",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:holy_moonlight_greatsword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:holy_moonlight_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:frostmourne",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:master_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:nights_edge_item",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:empowered_dawnbreaker",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:kraken_slayer",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "ARQUEIRO"
+      ],
+      "stats": {
+        "dex": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:kraken_slayer_crossbow",
+      "enabled": true,
+      "min_level": 45,
+      "classes": [
+        "ARQUEIRO"
+      ],
+      "stats": {
+        "dex": 35
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:darkmoon_longbow",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ARQUEIRO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:chungus_staff",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "MAGO"
+      ],
+      "stats": {
+        "int": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:dark_moon_greatsword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:glaive_of_hodir",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:excalibur",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:moonveil",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:simons_bowblade",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ARQUEIRO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:simons_blade",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:dragonbane",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:supernova",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:mehrunes_razor",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:tonitrus",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:bloodlust",
+      "enabled": true,
+      "min_level": 21,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 0.75,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:nightlords_sword",
+      "enabled": true,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:hunter_pistol",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:blunderbuss",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:gatling_gun",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "soulsweapons:hunter_cannon",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:chorus_blade",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:the_great_frost",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:dinosaur_bone_club",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:void_sword",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:chorus_cannon",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:monstrous_anchor",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:sharp_sai",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:anchor_handle",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:soul_great_sword",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:knights_sword",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:sand_cannon",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:enderitium_sword",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:enderitium_sickle",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:the_tesseract",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:somber_key",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:shattered_greatsword",
+      "enabled": false,
+      "min_level": 31,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 25
+      },
+      "damage_factor": 0.85,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:entity_warper",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:void_entity_warper",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:dinosaur_bone_shield",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:shulker_shield",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:frostbitten_shield",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:spiky_shield",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:mossy_hammer",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:fiery_jaw",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:withered_scythe",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:sharp_battle_axe",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:wand_of_clouds",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:axe_of_lightning",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:golden_halbert",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:knight_summoner",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:guard_summoner",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:totem_of_moss",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:atom_splitter",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:bottle_of_annihilation",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:buckler_of_annihilation",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "legendary_monsters:resurrected_javelin",
+      "enabled": false,
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO",
+        "MAGO",
+        "ARQUEIRO",
+        "ASSASSINO"
+      ],
+      "stats": {},
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    }
+  ]
+}

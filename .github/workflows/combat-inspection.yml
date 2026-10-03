@@ -1,0 +1,49 @@
+name: Inspect combat binaries
+on:
+  push:
+    branches: ["feature/selective-combat-mod-compat"]
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Inspect pinned Forge binaries
+        run: |
+          mkdir inspection
+          for PAIR in combat-roll-678036:5625925 simply-swords-659887:8746028 immersive-armors-580681:8076909 rogues-and-warriors-1048409:8891443 presence-footsteps-forge-433068:5015286 playeranimator-658587:4587214 cloth-config-348521:5729105; do
+            NAME=${PAIR%:*}
+            FILE=${PAIR#*:}
+            curl --fail --location --retry 2 "https://cursemaven.com/curse/maven/$NAME/$FILE/$NAME-$FILE.jar" -o "inspection/$NAME.jar"
+            unzip -p "inspection/$NAME.jar" META-INF/mods.toml > "inspection/$NAME.toml"
+            unzip -Z1 "inspection/$NAME.jar" > "inspection/$NAME.entries"
+            sha256sum "inspection/$NAME.jar" >> inspection/sha256.txt
+          done
+          for CLS in $(unzip -Z1 inspection/combat-roll-678036.jar | sed -n 's#/#.#g;s/\.class$//p' | grep -v '^META-INF'); do
+            javap -classpath inspection/combat-roll-678036.jar -p -c "$CLS" >> inspection/combatroll-bytecode.txt 2>/dev/null || true
+          done
+      - name: Record binary metadata
+        run: |
+          PYTHONPATH=rpg-stats-mod-v2.3-forge-1.20.1/tools python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from inspect_combat_mods import inspect_jar
+          rows=[dict(coordinate=p.stem,**inspect_jar(p,{'library':p.stem=='cloth-config-348521'})) for p in Path('inspection').glob('*.jar')]
+          Path('inspection/manifest.json').write_text(json.dumps(rows,indent=2))
+          PY
+      - name: Verify complete selected installer
+        run: |
+          python3 rpg-stats-mod-v2.3-forge-1.20.1/tools/inspect_combat_mods.py --lock rpg-stats-mod-v2.3-forge-1.20.1/compat/combat-mods.lock.json --jars inspection --output inspection/verified
+          python3 rpg-stats-mod-v2.3-forge-1.20.1/tools/install_combat_profile.py --destination inspection/installed --client
+      - name: Remove third-party binaries before artifact upload
+        if: always()
+        run: find inspection -type f -name '*.jar' -delete
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: combat-binaries
+          path: inspection/
+          retention-days: 7

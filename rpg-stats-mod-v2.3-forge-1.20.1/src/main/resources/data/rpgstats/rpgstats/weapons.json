@@ -1,0 +1,10 @@
+{
+  "type": "weapons",
+  "entries": [
+    {"tag":"rpgstats:weapons/greatsword","categories":["greatsword","heavy"],"weight":14,"str":18,"dex":7,"stamina_cost":24,"attack_speed":0.75,"status_buildup":15},
+    {"tag":"rpgstats:weapons/dagger","categories":["dagger","light"],"weight":2,"str":4,"dex":14,"stamina_cost":8,"attack_speed":1.35,"status_buildup":25},
+    {"tag":"rpgstats:weapons/staff","categories":["staff","magic"],"weight":4,"int":14,"stamina_cost":6,"attack_speed":1.0,"status_buildup":0},
+    {"tag":"rpgstats:weapons/holy","categories":["holy"],"weight":7,"str":8,"faith":14,"stamina_cost":14,"attack_speed":1.0,"status_buildup":10},
+    {"tag":"rpgstats:weapons/arcane","categories":["arcane"],"weight":5,"dex":8,"arc":14,"stamina_cost":12,"attack_speed":1.1,"status_buildup":20}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "immersive_armors:robe_boots",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:robe_chestplate",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:robe_helmet",
+      "required": false
+    },
+    {
+      "id": "immersive_armors:robe_leggings",
+      "required": false
+    }
+  ]
+}
