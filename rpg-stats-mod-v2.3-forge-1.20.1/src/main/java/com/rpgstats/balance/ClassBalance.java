@@ -60,9 +60,11 @@ public final class ClassBalance {
     public static float warriorBossDamage(float beforeClass,float afterGuards,float roleReduction) {
         return Math.max(beforeClass*.40f,afterGuards*(1f-Math.max(0f,Math.min(.35f,roleReduction))));
     }
-    /** Juggernaut's RPG reductions together cap at 80%; native armor still applies afterwards. */
-    public static float juggernautBossDamage(float beforeClass,float afterGuards,float roleReduction) {
-        return Math.max(beforeClass*.20f,afterGuards*(1f-Math.max(0f,Math.min(.80f,roleReduction))));
+    /** Combined RPG cap progresses from 60% through level25 to 80% at level50. */
+    public static float juggernautBossDamage(float beforeClass,float afterGuards,float roleReduction,int level) {
+        float late=Math.max(0f,Math.min(1f,(level-25f)/25f));
+        float minimum=.40f-.20f*late*late;
+        return Math.max(beforeClass*minimum,afterGuards*(1f-Math.max(0f,Math.min(.80f,roleReduction))));
     }
 
     private static float attributeProgress(int points) {

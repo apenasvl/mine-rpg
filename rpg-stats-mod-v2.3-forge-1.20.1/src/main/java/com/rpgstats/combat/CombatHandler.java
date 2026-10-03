@@ -160,7 +160,7 @@ public final class CombatHandler {
             if(juggernaut) {
                 // Boss area attacks remain attributable even after the melee fighter retreats.
                 guarded=com.rpgstats.balance.ClassBalance.juggernautBossDamage(beforeClassGuards,guarded,
-                        com.rpgstats.balance.ClassBalance.juggernautBossReduction(stats.level,tenacity));
+                        com.rpgstats.balance.ClassBalance.juggernautBossReduction(stats.level,tenacity),stats.level);
             } else if(player.squaredDistanceTo(boss)<=64d) {
                 guarded=com.rpgstats.balance.ClassBalance.warriorBossDamage(beforeClassGuards,guarded,
                         com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,tenacity));

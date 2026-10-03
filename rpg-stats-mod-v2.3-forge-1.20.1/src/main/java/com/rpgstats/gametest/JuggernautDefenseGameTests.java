@@ -76,5 +76,19 @@ public final class JuggernautDefenseGameTests {
     public static void juggernautSurvivesNativeKnightEruptionBeyondMeleeRange(TestContext c){encounter(c,52,false);}
     @GameTest(templateName="empty",tickLimit=160)
     public static void nativeKnightEruptionCanBeEvadedOutsideArea(TestContext c){encounter(c,52,true);}
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void juggernautGuardCapPreservesEarlyPressureAndProgressesLate(TestContext c) {
+        for(int level:new int[]{1,25})for(int tenacity:new int[]{0,25,50})for(float guards:new float[]{10,35.75f,100}) {
+            float old=com.rpgstats.balance.ClassBalance.warriorBossDamage(100,guards,
+                    com.rpgstats.balance.ClassBalance.warriorBossReduction(level,tenacity));
+            float juggernaut=com.rpgstats.balance.ClassBalance.juggernautBossDamage(100,guards,
+                    com.rpgstats.balance.ClassBalance.juggernautBossReduction(level,tenacity),level);
+            c.assertTrue(Math.abs(old-juggernaut)<.001f,"Juggernaut changed early-level stacked guard budget");
+        }
+        float middle=com.rpgstats.balance.ClassBalance.juggernautBossDamage(100,0,1,35);
+        float end=com.rpgstats.balance.ClassBalance.juggernautBossDamage(100,0,1,50);
+        c.assertTrue(middle<40&&middle>20&&Math.abs(end-20)<.001f,"Late defense lost progression or exceeded 80% cap");
+        c.complete();
+    }
     private JuggernautDefenseGameTests(){}
 }
