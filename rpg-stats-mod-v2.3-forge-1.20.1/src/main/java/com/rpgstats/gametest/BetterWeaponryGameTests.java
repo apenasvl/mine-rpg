@@ -129,6 +129,18 @@ public final class BetterWeaponryGameTests {
    for(var slot:slots)p.equipStack(slot,ItemStack.EMPTY);p.playerTick();p.tick();StatsApplier.apply(p);c.assertTrue(Math.abs(tough.getValue()-11.55)<.00001,"Removing RPG armor changed native multiplicative toughness");
   }finally{TestPlayers.finish(c);}c.complete();
  }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void mageActiveGuardsRespectCombinedBossCap(TestContext c) {
+  if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.MAGO;s.stats.put(Stat.TENACIDADE,25);StatsManager.finish(p,s);
+  var boss=(net.minecraft.entity.mob.MobEntity)Registries.ENTITY_TYPE.get(new Identifier("soulsweapons:returning_knight")).create(c.getWorld());boss.setAiDisabled(true);c.getWorld().spawnEntity(boss);
+  try {
+   var state=com.rpgstats.combat.MageState.get(p.getUuid());state.parryTicks=20;
+   float baseline=100*com.rpgstats.boss.BossScaler.getDamageMultiplier(boss);
+   float guarded=com.rpgstats.combat.CombatHandler.modifyIncomingDamage(p,100,p.getDamageSources().mobAttack(boss));
+   c.assertTrue(guarded>=baseline*.27f-.001 && guarded<baseline,"Mage active guard bypassed the combined 73% boss mitigation cap");
+  }finally{boss.discard();com.rpgstats.boss.BossScaler.untrack(boss);TestPlayers.finish(c);}c.complete();
+ }
  private static ItemStack ArcherWeapon(net.minecraft.entity.damage.DamageSource source,net.minecraft.server.network.ServerPlayerEntity p){return com.rpgstats.combat.ArcherShotTracker.launchWeapon(source,p);}
  private BetterWeaponryGameTests(){}
 }

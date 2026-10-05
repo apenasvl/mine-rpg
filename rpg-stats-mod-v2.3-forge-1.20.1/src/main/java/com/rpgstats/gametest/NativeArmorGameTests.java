@@ -137,7 +137,7 @@ public final class NativeArmorGameTests {
                 com.rpgstats.combat.CombatState.get(p.getUuid()).startCooldown("internal_second_chance",2400);
             }
             for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();com.rpgstats.compat.ClassArmorBonuses.apply(p);stable(c,p,g);
-            var pos=c.getAbsolutePos(new BlockPos(131072+players.size()*64,3,49152+clazz.ordinal()*8192+phase*64+(juggernaut?4096:0)));var chunk=new ChunkPos(pos);
+            var pos=c.getAbsolutePos(new BlockPos(131072+(allMageSpecs?65536:0)+players.size()*64,3,49152+clazz.ordinal()*8192+phase*64+(juggernaut?4096:0)));var chunk=new ChunkPos(pos);
             if(!c.getWorld().getForcedChunks().contains(chunk.toLong())){forced.add(chunk);c.getWorld().setChunkForced(chunk.x,chunk.z,true);}
             for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)c.getWorld().setBlockState(pos.add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());
             var boss=(MobEntity)Registries.ENTITY_TYPE.get(new Identifier("soulsweapons:returning_knight")).create(c.getWorld());boss.setAiDisabled(true);boss.setNoGravity(true);
