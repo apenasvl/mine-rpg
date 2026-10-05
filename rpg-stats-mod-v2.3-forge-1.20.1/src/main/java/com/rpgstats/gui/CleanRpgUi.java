@@ -14,7 +14,7 @@ public final class CleanRpgUi {
         c.fill(x,y,x+1,y+h,BORDER); c.fill(x+w-1,y,x+w,y+h,BORDER);
     }
     public static String icon(RPGClass clazz) {
-        return switch(clazz) {case GUERREIRO->"sword";case MAGO->"star";case ARQUEIRO->"bow";case ASSASSINO->"dagger";};
+        return switch(clazz) {case GUERREIRO->"shield";case MAGO->"star";case ARQUEIRO->"bow";case ASSASSINO->"dagger";};
     }
     public static void text(DrawContext c,TextRenderer font,String text,int x,int y,int color,int maxWidth) {
         c.drawTextWithShadow(font,font.trimToWidth(text,Math.max(0,maxWidth)),x,y,color);

@@ -84,7 +84,7 @@ public final class UiClientPreview {
         }
         if(++age>=36)capture=true;
     }
-    private static String shortName(RPGPath p){return p.display.replace("Casa da ","").replace("Casa do ","").replace("Casa dos ","").replace("Casa de ","");}
+    private static String shortName(RPGPath p){return p.display.replace("Casa da ","").replace("Casa do ","").replace("Casa dos ","").replace("Casa de ","").replace("Casa ","");}
     private static ButtonWidget button(StatsScreen screen,String label){return screen.children().stream().filter(ButtonWidget.class::isInstance).map(ButtonWidget.class::cast).filter(b->b.getMessage().getString().equals(label)).findFirst().orElseThrow(()->new IllegalStateException("Missing button "+label));}
     private static void click(StatsScreen screen,ButtonWidget button,boolean scaled){
         double x=button.getX()+button.getWidth()/2.0,y=button.getY()+button.getHeight()/2.0;

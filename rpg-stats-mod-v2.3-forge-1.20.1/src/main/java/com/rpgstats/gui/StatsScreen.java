@@ -226,7 +226,7 @@ public class StatsScreen extends Screen {
                 case CLASS_TREE -> "Classe";
                 case PATH_TREE -> "Casa";
                 case SPECIALIZATION_TREE -> "Especial.";
-                case AFFINITY -> "Casa 2";
+                case AFFINITY -> "Afinidade";
             };
             int tabAccent = switch (target) {
                 case CLASS_TREE -> RpgUiTheme.accent(stats.clazz);
