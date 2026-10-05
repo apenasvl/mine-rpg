@@ -141,6 +141,7 @@ public final class ForgeEvents {
         ProcDamageQueue.tick(server);
         BossScaler.tick(server);
         com.rpgstats.combat.WarriorSustain.tick(server);
+        com.rpgstats.compat.BetterWeaponrySustain.tick(server);
         com.rpgstats.combat.ArcherAimAssist.tick(server);
     }
 
@@ -166,6 +167,7 @@ public final class ForgeEvents {
         for (ServerPlayerEntity p:event.getServer().getPlayerManager().getPlayerList()) forget(p);
         ProcDamageQueue.clear(); com.rpgstats.combat.ArcherShotTracker.clear();
         com.rpgstats.combat.WarriorSustain.clear();
+        com.rpgstats.compat.BetterWeaponrySustain.clear();
         com.rpgstats.combat.ArcherAimAssist.clear(); com.rpgstats.integration.ArcherTrapCompat.clear(); com.rpgstats.combat.ArcherTechniqueHandler.clear();
         EncounterManager.clear(); BossScaler.clear(); RpgNetwork.clear();
     }

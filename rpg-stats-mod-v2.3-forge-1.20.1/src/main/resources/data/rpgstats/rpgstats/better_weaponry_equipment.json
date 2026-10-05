@@ -1,0 +1,1625 @@
+{
+  "type": "equipment_rules",
+  "entries": [
+    {
+      "id": "better_weaponry:wooden_dagger",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_dagger",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_dagger",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_dagger",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_dagger",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_dagger",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_dagger",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_dagger",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_dagger",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_scythe",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_scythe",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_scythe",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_scythe",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_scythe",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_scythe",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_scythe",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_scythe",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_scythe",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_rapier",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_rapier",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_rapier",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_rapier",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_rapier",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_rapier",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_rapier",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_rapier",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_rapier",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_cutlass",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_cutlass",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_cutlass",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_cutlass",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_cutlass",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_cutlass",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_cutlass",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_cutlass",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_cutlass",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_sickle",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_sickle",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_sickle",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_sickle",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_sickle",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_sickle",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_sickle",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_sickle",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_sickle",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_spear",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_spear",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_spear",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_spear",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_spear",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_spear",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_spear",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_spear",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_spear",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_katana",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_katana",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_katana",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_katana",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_katana",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_katana",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_katana",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_katana",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_katana",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_battleaxe",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_battleaxe",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_battleaxe",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_battleaxe",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_battleaxe",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_battleaxe",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_battleaxe",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_battleaxe",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_battleaxe",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_glaive",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_glaive",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_glaive",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_glaive",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_glaive",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_glaive",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_glaive",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_glaive",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_glaive",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_hammer",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_hammer",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_hammer",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_hammer",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_hammer",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_hammer",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_hammer",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_hammer",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_hammer",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_broadsword",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_broadsword",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_broadsword",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_broadsword",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_broadsword",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_broadsword",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_broadsword",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_broadsword",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_broadsword",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_claymore",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_claymore",
+      "min_level": 1,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_claymore",
+      "min_level": 10,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_claymore",
+      "min_level": 8,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_claymore",
+      "min_level": 20,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_claymore",
+      "min_level": 35,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_claymore",
+      "min_level": 5,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_claymore",
+      "min_level": 25,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_claymore",
+      "min_level": 15,
+      "classes": [
+        "GUERREIRO"
+      ],
+      "stats": {
+        "str": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_shuriken",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_shuriken",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_shuriken",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_shuriken",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_shuriken",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_shuriken",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_shuriken",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_shuriken",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_shuriken",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_chakram",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_chakram",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_chakram",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_chakram",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_chakram",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_chakram",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_chakram",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_chakram",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_chakram",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:wooden_sai",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:stone_sai",
+      "min_level": 1,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 0
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:iron_sai",
+      "min_level": 10,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 8
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:golden_sai",
+      "min_level": 8,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 5
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:diamond_sai",
+      "min_level": 20,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 16
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:netherite_sai",
+      "min_level": 35,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 28
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:copper_sai",
+      "min_level": 5,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 4
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:emerald_sai",
+      "min_level": 25,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 20
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    },
+    {
+      "id": "better_weaponry:amethyst_sai",
+      "min_level": 15,
+      "classes": [
+        "ASSASSINO"
+      ],
+      "stats": {
+        "dex": 12
+      },
+      "damage_factor": 1,
+      "attack_speed_factor": 1
+    }
+  ]
+}

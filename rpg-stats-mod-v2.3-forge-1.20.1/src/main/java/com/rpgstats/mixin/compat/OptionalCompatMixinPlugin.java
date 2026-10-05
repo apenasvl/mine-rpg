@@ -9,8 +9,8 @@ public final class OptionalCompatMixinPlugin implements IMixinConfigPlugin {
     public void onLoad(String p) {}
     public String getRefMapperConfig() { return null; }
     public boolean shouldApplyMixin(String target,String mixin) {
-        String mod=mixin.contains("Legendary") ? "legendary_monsters" : mixin.contains("Souls") ? "soulsweapons" : mixin.contains("CombatRoll") ? "combatroll" : "immersive_armors";
-        String version=mod.equals("legendary_monsters") ? "1.20.1" : mod.equals("soulsweapons") ? "1.4.10-1.20.1-forge}" : mod.equals("combatroll") ? "1.3.3+1.20.1" : "1.7.2+1.20.1";
+        String mod=mixin.contains("BetterWeaponry") ? "better_weaponry" : mixin.contains("Legendary") ? "legendary_monsters" : mixin.contains("Souls") ? "soulsweapons" : mixin.contains("CombatRoll") ? "combatroll" : "immersive_armors";
+        String version=mod.equals("better_weaponry") ? "1.1.3" : mod.equals("legendary_monsters") ? "1.20.1" : mod.equals("soulsweapons") ? "1.4.10-1.20.1-forge}" : mod.equals("combatroll") ? "1.3.3+1.20.1" : "1.7.2+1.20.1";
         var loading=FMLLoader.getLoadingModList();
         if (loading == null) return false;
         return loading.getMods().stream().anyMatch(m -> m.getModId().equals(mod) && m.getVersion().toString().equals(version));

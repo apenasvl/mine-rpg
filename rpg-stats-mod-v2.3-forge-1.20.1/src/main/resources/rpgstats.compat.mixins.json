@@ -13,7 +13,8 @@
     "SoulsClientActionsGateMixin",
     "LegendaryPlayerPowersMixin",
     "LegendaryArmorKeyMixin",
-    "LegendaryArmorTickMixin"
+    "LegendaryArmorTickMixin",
+    "BetterWeaponryVampirismMixin"
   ],
   "client": [
     "CombatRollClientGateMixin",

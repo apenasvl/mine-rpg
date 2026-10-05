@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "better_weaponry:wooden_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_shuriken",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_shuriken",
+      "required": false
+    }
+  ]
+}

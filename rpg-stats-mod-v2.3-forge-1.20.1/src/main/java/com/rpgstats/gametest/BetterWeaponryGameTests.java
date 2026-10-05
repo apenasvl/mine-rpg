@@ -51,5 +51,37 @@ public final class BetterWeaponryGameTests {
    c.assertTrue(profile!=null && profile.categories().contains("class_"+row[1].toLowerCase(java.util.Locale.ROOT)),"Armor class profile missing "+id);
   }c.complete();
  }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void confirmedNativeVampirismSharesWarriorBudget(TestContext c) {
+  if(!ModList.get().isLoaded("better_weaponry")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.GUERREIRO;StatsManager.finish(p,s);
+  var weapon=new ItemStack(Registries.ITEM.get(new Identifier("better_weaponry","diamond_dagger")));weapon.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","vampirism")),3);p.setStackInHand(Hand.MAIN_HAND,weapon);p.setHealth(4);
+  var target=EntityType.ZOMBIE.create(c.getWorld());target.setAiDisabled(true);target.getAttributeInstance(net.minecraft.entity.attribute.EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(100000);target.setHealth(100000);c.getWorld().spawnEntity(target);
+  try {
+   float before=target.getHealth();target.damage(p.getDamageSources().playerAttack(p),100);
+   c.assertTrue(target.getHealth()<before,"Vampirism fixture hit was not confirmed");
+   c.assertTrue(Math.abs(p.getHealth()-5.5f)<.001,"Confirmed Vampirism escaped the rolling healing cap");
+   com.rpgstats.combat.WarriorSustain.heal(p,2,new ItemStack(Items.IRON_SWORD));
+   c.assertTrue(Math.abs(p.getHealth()-5.5f)<.001,"Native and RPG Vampirism used separate budgets");
+   p.heal(2);c.assertTrue(Math.abs(p.getHealth()-7.5f)<.001,"Ordinary healing was capped by weapon sustain");
+  }finally{target.discard();TestPlayers.finish(c);}c.complete();
+ }
+ @GameTest(templateName="empty",tickLimit=60)
+ public static void armorRoleBonusesApplyOnceAndLeaveWhenUnequipped(TestContext c) {
+  if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.ARQUEIRO;StatsManager.finish(p,s);
+  var move=net.minecraft.entity.attribute.EntityAttributes.GENERIC_MOVEMENT_SPEED;double bare=p.getAttributeValue(move);
+  try {
+   var slots=new net.minecraft.entity.EquipmentSlot[]{net.minecraft.entity.EquipmentSlot.HEAD,net.minecraft.entity.EquipmentSlot.CHEST,net.minecraft.entity.EquipmentSlot.LEGS,net.minecraft.entity.EquipmentSlot.FEET};
+   var suffixes=new String[]{"helmet","chestplate","leggings","boots"};
+   for(int j=0;j<4;j++)p.equipStack(slots[j],new ItemStack(Registries.ITEM.get(new Identifier("soulsweapons","soul_robes_"+suffixes[j]))));
+   p.playerTick();p.tick();StatsApplier.apply(p);double equipped=p.getAttributeValue(move);
+   c.assertTrue(Math.abs(equipped/bare-1.08)<.001,"Archer light armor did not grant its bounded mobility bonus");
+   for(int j=0;j<3;j++)StatsApplier.apply(p);c.assertTrue(Math.abs(p.getAttributeValue(move)-equipped)<.00001,"Armor role bonus stacked on refresh");
+   s=StatsManager.get(p);s.clazz=RPGClass.GUERREIRO;StatsManager.finish(p,s);c.assertTrue(p.getAttributeValue(move)<equipped,"Armor bonus persisted after changing class");
+   s.clazz=RPGClass.ARQUEIRO;StatsManager.finish(p,s);for(var slot:slots)p.equipStack(slot,ItemStack.EMPTY);p.playerTick();p.tick();StatsApplier.apply(p);
+   c.assertTrue(Math.abs(p.getAttributeValue(move)-bare)<.00001,"Armor role bonus remained after unequipping");
+  }finally{TestPlayers.finish(c);}c.complete();
+ }
  private BetterWeaponryGameTests(){}
 }

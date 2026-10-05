@@ -183,6 +183,7 @@ public final class CombatHandler {
         boolean projectile = isProjectile(source);
         boolean magic = isMagic(source) && !ArcherShotTracker.isBowShot(source);
         boolean resourceChanged = false;
+        com.rpgstats.compat.BetterWeaponrySustain.confirmedHit(player,damageDealt,source);
 
         if (stats.clazz == RPGClass.ARQUEIRO && ArcherShotTracker.isBowShot(source)) {
             ArcherTechniqueHandler.onHit(player, target, stats, damageDealt, source);
