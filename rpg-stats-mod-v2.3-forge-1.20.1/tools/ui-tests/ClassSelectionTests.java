@@ -1,4 +1,5 @@
 import com.rpgstats.gui.ClassSelectionState;
+import com.rpgstats.gui.ProgressionSelectionState;
 import com.rpgstats.gui.ClassSelectionLayout;
 import java.util.ArrayList;
 
@@ -30,6 +31,20 @@ public class ClassSelectionTests {
         try { state.confirm(9000, value -> { throw new IllegalStateException("offline"); }); }
         catch (IllegalStateException expected) { }
         check(!state.pending(), "A send failure must not leave confirmation permanently disabled");
+
+        var choices=new ProgressionSelectionState<String,String>();
+        var spec=choices.forPage("specialization");
+        spec.select("JUGGERNAUT");
+        var requests=new ArrayList<String>();
+        spec.confirm(100,requests::add);
+        choices.forPage("affinity").select("BERSERKER");
+        var returning=choices.forPage("specialization");
+        returning.select("OTHER_SPEC");
+        check(returning.pending() && returning.selected().equals("JUGGERNAUT"),"Changing choice pages must retain the in-flight permanent selection");
+        check(!returning.confirm(101,requests::add) && requests.size()==1,"Returning to a choice page must not permit duplicate permanent requests");
+        returning.tick(8100);
+        check(returning.confirm(8101,requests::add),"A retained pending page must still allow explicit retry after timeout");
+        check(choices.forPage("affinity").selected().equals("BERSERKER"),"Independent choice previews must remain available");
 
         int[][] sizes = {{960,540},{640,360},{480,270},{320,240},{427,240},{854,480},{1280,360}};
         for (var size : sizes) {

@@ -39,16 +39,17 @@ jobs:
         run: xvfb-run -a -s '-screen 0 2560x1440x24' timeout 900 bash gradlew --no-daemon --stacktrace -I tools/ui-preview.init.gradle runClient
       - name: Require all screenshots
         run: |
-          test -f build/ui-preview/01-1080p-gui2.png
-          test -f build/ui-preview/02-1080p-gui4-mage.png
-          test -f build/ui-preview/03-720p-gui3-warrior.png
-          test -f build/ui-preview/04-4by3-assassin.png
-          test -f build/ui-preview/05-wide-archer-houses.png
+          test -f build/ui-preview/result.txt
+          python3 - <<'PYTEST'
+          from pathlib import Path
+          files=list(Path('build/ui-preview').glob('*.png'))
+          assert len(files)==28, f'Expected 28 UI screenshots, got {len(files)}'
+          PYTEST
       - name: Upload captures and client log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cosmic-class-selection-client
+          name: clean-rpg-ui-client
           path: |
             rpg-stats-mod-v2.3-forge-1.20.1/build/ui-preview/
             rpg-stats-mod-v2.3-forge-1.20.1/run/logs/latest.log

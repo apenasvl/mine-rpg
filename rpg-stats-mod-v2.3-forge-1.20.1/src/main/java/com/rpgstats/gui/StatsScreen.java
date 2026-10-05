@@ -65,7 +65,8 @@ public class StatsScreen extends Screen {
     private String inspectedNode = "";
     private int detailScroll, choiceScroll;
     private Page choicePage;
-    private final ClassSelectionState<String> choice = new ClassSelectionState<>();
+    private final ProgressionSelectionState<Page,String> choices = new ProgressionSelectionState<>();
+    private ClassSelectionState<String> choice = new ClassSelectionState<>();
     private final List<RpgButton> choiceCards = new ArrayList<>();
     private RpgButton choiceConfirm;
     private record ChoiceOption(String id,String title,String description,List<SkillNode> nodes,int accent,String icon) {}
@@ -316,7 +317,7 @@ public class StatsScreen extends Screen {
                 .map(p->new ChoiceOption(p.name(),p.display,p.desc,p.nodes,specColor(p),"star")).toList());
     }
     private void addChoiceButtons(Layout l,List<ChoiceOption> options) {
-        if(choicePage!=page) {choice.reset();choicePage=page;choiceScroll=0;}
+        if(choicePage!=page) {choice=choices.forPage(page);choicePage=page;choiceScroll=0;}
         choiceOptions=options;
         if(choice.selected()!=null && options.stream().noneMatch(o->o.id.equals(choice.selected()))) choice.reset();
         int gap=5, count=options.size(), cardW=(l.contentW-gap*(count-1))/Math.max(1,count);

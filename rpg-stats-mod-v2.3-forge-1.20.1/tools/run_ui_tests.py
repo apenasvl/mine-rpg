@@ -5,7 +5,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 GUI = ROOT / "src/main/java/com/rpgstats/gui"
-sources = [GUI / "ClassSelectionState.java", GUI / "ClassSelectionLayout.java",
+sources = [GUI / "ClassSelectionState.java", GUI / "ClassSelectionLayout.java", GUI / "ProgressionSelectionState.java",
            ROOT / "tools/ui-tests/ClassSelectionTests.java"]
 if not all(path.exists() for path in sources):
     raise AssertionError("RED: class selection confirmation and viewport layout are not implemented")
