@@ -34,6 +34,8 @@ public final class ClassSelectionView {
         update();c.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
         var font=MinecraftClient.getInstance().textRenderer;
         c.getMatrices().push();c.getMatrices().translate(layout.x(),layout.y(),0);c.getMatrices().scale((float)layout.scale(),(float)layout.scale(),1);
+        CleanRpgUi.panel(c,34,20,732,66,0xFFB9ACDE);
+        CleanRpgUi.panel(c,34,384,532,32,0xFFB9ACDE);
         CosmicSelectionArt.centered(c,font,"ESCOLHA SUA CLASSE",400,36,2f,CleanRpgUi.TEXT,730);
         CosmicSelectionArt.centered(c,font,"Compare os estilos. A escolha só acontece ao confirmar.",400,70,1.2f,CleanRpgUi.MUTED,730);
         var chosen=selection.selected();

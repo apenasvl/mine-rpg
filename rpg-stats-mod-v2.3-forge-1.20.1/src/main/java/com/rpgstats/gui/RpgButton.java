@@ -82,10 +82,10 @@ public class RpgButton extends ButtonWidget {
         CleanRpgUi.surface(context,x,y,width,height,fill,edge);
         int titleColor=state==State.BLOCKED?CleanRpgUi.MUTED:CleanRpgUi.TEXT;
         if(kind==Kind.CHOICE) {
-            int size=Math.min(20,height-31);
+            int size=Math.min(36,height-39);
             RpgUiTheme.drawIcon(context,icon,x+(width-size)/2,y+7,size,RpgUiTheme.darken(accent,.28f));
             var lines=font.wrapLines(getMessage(),Math.max(1,width-10));
-            for(int i=0;i<Math.min(2,lines.size());i++) context.drawText(font,lines.get(i),x+(width-font.getWidth(lines.get(i)))/2,y+27+i*10,titleColor,false);
+            for(int i=0;i<Math.min(2,lines.size());i++) context.drawText(font,lines.get(i),x+(width-font.getWidth(lines.get(i)))/2,y+height-29+i*10,titleColor,false);
             return;
         }
         if(kind==Kind.TAB||kind==Kind.SMALL||kind==Kind.ACTION||height<=24) {

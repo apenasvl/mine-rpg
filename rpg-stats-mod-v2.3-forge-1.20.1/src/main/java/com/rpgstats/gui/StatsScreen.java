@@ -168,7 +168,7 @@ public class StatsScreen extends Screen {
         if(lx>=l.sidebarX && lx<l.sidebarX+l.sidebarW && ly>=l.sidebarY && ly<l.sidebarY+l.sidebarH) {
             detailScroll=Math.max(0,detailScroll-(int)Math.signum(amount)*3);return true;
         }
-        if(!choiceOptions.isEmpty() && lx>=l.contentX && lx<l.contentX+l.contentW && ly>=l.contentY+89 && ly<l.contentY+l.contentH-37) {
+        if(!choiceOptions.isEmpty() && lx>=l.contentX && lx<l.contentX+l.contentW && ly>=l.contentY+123 && ly<l.contentY+l.contentH-37) {
             choiceScroll=Math.max(0,choiceScroll-(int)Math.signum(amount)*3);return true;
         }
         return super.mouseScrolled(lx,ly,amount);
@@ -323,7 +323,7 @@ public class StatsScreen extends Screen {
         int gap=5, count=options.size(), cardW=(l.contentW-gap*(count-1))/Math.max(1,count);
         for(int i=0;i<count;i++) {
             ChoiceOption o=options.get(i);
-            RpgButton card=new RpgButton(l.contentX+i*(cardW+gap),l.contentY+30,cardW,51,Text.literal(o.title),
+            RpgButton card=new RpgButton(l.contentX+i*(cardW+gap),l.contentY+30,cardW,85,Text.literal(o.title),
                     b->{if(!choice.pending()) {choice.select(o.id);choiceScroll=0;}},RpgButton.Kind.CHOICE,o.accent).icon(o.icon);
             choiceCards.add(card);addDrawableChild(card);
         }
@@ -834,7 +834,7 @@ public class StatsScreen extends Screen {
         String title=page==Page.AFFINITY?"AFINIDADE SECUNDÁRIA":page==Page.PATH_TREE?"ESCOLHA SUA CASA":"ESCOLHA SUA ESPECIALIZAÇÃO";
         drawTrimmed(c,title,l.contentX+3,l.contentY+2,CleanRpgUi.TEXT,l.contentW-6);
         drawTrimmed(c,"Compare antes de confirmar. A escolha é permanente.",l.contentX+3,l.contentY+16,CleanRpgUi.MUTED,l.contentW-6);
-        int x=l.contentX,y=l.contentY+89,w=l.contentW,h=l.contentH-126;
+        int x=l.contentX,y=l.contentY+123,w=l.contentW,h=l.contentH-160;
         CleanRpgUi.panel(c,x,y,w,h,CleanRpgUi.BORDER);
         ChoiceOption selected=choiceOptions.stream().filter(o->o.id.equals(choice.selected())).findFirst().orElse(null);
         if(selected==null) {drawTrimmed(c,"Selecione um emblema para abrir a ficha.",x+12,y+16,CleanRpgUi.MUTED,w-24);return;}
