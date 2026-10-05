@@ -141,6 +141,37 @@ public final class BetterWeaponryGameTests {
    c.assertTrue(guarded>=baseline*.27f-.001 && guarded<baseline,"Mage active guard bypassed the combined 73% boss mitigation cap");
   }finally{boss.discard();com.rpgstats.boss.BossScaler.untrack(boss);TestPlayers.finish(c);}c.complete();
  }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void nativeOffhandShurikenUsesActiveStackEnchantments(TestContext c) {
+  if(!ModList.get().isLoaded("better_weaponry")){c.complete();return;}
+  var p=TestPlayers.create(c);var stats=new PlayerStats();stats.awakened=true;stats.clazz=RPGClass.ASSASSINO;stats.level=50;StatsManager.finish(p,stats);p.getAbilities().creativeMode=true;
+  var shots=new java.util.ArrayList<net.minecraft.entity.projectile.PersistentProjectileEntity>();
+  try {
+   for(var levels:new int[][]{{5,0},{0,2}}) {
+    var item=Registries.ITEM.get(new Identifier("better_weaponry","diamond_shuriken"));var main=new ItemStack(item);var off=new ItemStack(item);var enchant=Registries.ENCHANTMENT.get(new Identifier("better_weaponry","damage"));
+    if(levels[0]>0)main.addEnchantment(enchant,levels[0]);if(levels[1]>0)off.addEnchantment(enchant,levels[1]);p.setStackInHand(Hand.MAIN_HAND,main);p.setStackInHand(Hand.OFF_HAND,off);p.setCurrentHand(Hand.OFF_HAND);
+    item.usageTick(c.getWorld(),p,off,72000);
+    var spawned=c.getWorld().getEntitiesByClass(net.minecraft.entity.projectile.PersistentProjectileEntity.class,p.getBoundingBox().expand(4),e->e.getOwner()==p && !shots.contains(e));
+    c.assertTrue(spawned.size()==1,"Native offhand use did not spawn exactly one shuriken");var shot=spawned.get(0);shots.add(shot);
+    c.assertTrue(com.rpgstats.compat.BetterWeaponrySustain.projectileDamage(p,10,p.getDamageSources().arrow(shot,p))==10+2*levels[1],"Offhand shuriken inherited main-hand enchantments");
+   }
+  }finally{p.clearActiveItem();for(var shot:shots)shot.discard();TestPlayers.finish(c);}c.complete();
+ }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void unstampedArrowsCannotAcquireHeldWeaponEnchantments(TestContext c) {
+  if(!ModList.get().isLoaded("better_weaponry")){c.complete();return;}
+  var p=TestPlayers.create(c);var weapon=new ItemStack(Items.BOW);weapon.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","damage")),5);p.setStackInHand(Hand.MAIN_HAND,weapon);var shot=new net.minecraft.entity.projectile.ArrowEntity(c.getWorld(),p);
+  try{c.assertTrue(com.rpgstats.compat.BetterWeaponrySustain.projectileDamage(p,10,p.getDamageSources().arrow(shot,p))==10,"Unstamped arrow acquired a later held weapon's Damage enchantment");}
+  finally{shot.discard();TestPlayers.finish(c);}c.complete();
+ }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void mageBossFloorCannotUndoSecondChance(TestContext c) {
+  if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.clazz=RPGClass.MAGO;s.level=50;s.unlockedNodes.add("mag_rev_second_chance");StatsManager.finish(p,s);p.setHealth(10);
+  var boss=(net.minecraft.entity.mob.MobEntity)Registries.ENTITY_TYPE.get(new Identifier("soulsweapons:returning_knight")).create(c.getWorld());boss.setAiDisabled(true);c.getWorld().spawnEntity(boss);
+  try{float damage=com.rpgstats.combat.CombatHandler.modifyIncomingDamage(p,100,p.getDamageSources().mobAttack(boss));c.assertTrue(com.rpgstats.combat.CombatState.get(p.getUuid()).cooldown("internal_second_chance")>0,"Second Chance did not activate");c.assertTrue(damage>0 && damage<=9,"Boss damage floor undid Second Chance death prevention");}
+  finally{boss.discard();com.rpgstats.boss.BossScaler.untrack(boss);TestPlayers.finish(c);}c.complete();
+ }
  private static ItemStack ArcherWeapon(net.minecraft.entity.damage.DamageSource source,net.minecraft.server.network.ServerPlayerEntity p){return com.rpgstats.combat.ArcherShotTracker.launchWeapon(source,p);}
  private BetterWeaponryGameTests(){}
 }
