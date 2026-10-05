@@ -905,8 +905,8 @@ public class StatsScreen extends Screen {
             int iconSize = Math.min(26, r.h - 10);
             int iconX = r.x + 8;
             int iconY = r.y + (r.h - iconSize) / 2;
-            CleanRpgUi.surface(context, iconX, iconY, iconSize, iconSize, RpgUiTheme.alpha(color, 60), color);
-            context.drawText(textRenderer,statAbbr(stat),iconX+(iconSize-textRenderer.getWidth(statAbbr(stat)))/2,iconY+(iconSize-8)/2,RpgUiTheme.accessibleAccent(color,RpgUiTheme.composite(RpgUiTheme.alpha(color,60),CleanRpgUi.PANEL)),false);
+            String symbol=switch(stat){case VITALIDADE->"heart";case TENACIDADE->"shield";case FORCA->"axe";case DESTREZA->"feather";case INTELIGENCIA->"book";case FE->"star";case ARCANO->"rune";};
+            ReferenceIcons.draw(context,symbol,iconX,iconY,iconSize,color);
 
             int textX = iconX + iconSize + 8;
             context.drawTextWithShadow(textRenderer, Text.literal(stat.display), textX, r.y + 6, CleanRpgUi.TEXT);

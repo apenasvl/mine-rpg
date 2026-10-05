@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/java/com/rpgstats/gui/**'
-      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/resources/assets/rpgstats/textures/gui/class_selection/**'
+      - 'rpg-stats-mod-v2.3-forge-1.20.1/src/main/resources/assets/rpgstats/textures/gui/**'
       - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/ui-preview/**'
       - 'rpg-stats-mod-v2.3-forge-1.20.1/tools/ui-preview.init.gradle'
       - '.github/workflows/class-selection-preview.yml'

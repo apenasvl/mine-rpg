@@ -4,6 +4,7 @@ import com.rpgstats.classes.RPGPath;
 import com.rpgstats.classes.RPGClass;
 import com.rpgstats.classes.RPGSpecialization;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.util.Identifier;
 
 /** Crisp, shaded pixel silhouettes for classes and all twenty Houses. */
 public final class ReferenceIcons {
@@ -21,7 +22,7 @@ public final class ReferenceIcons {
         var roster=RPGSpecialization.forPath(spec.parent);
         int index=roster.indexOf(spec);
         return switch(spec.parent) {
-            case WAR_VANGUARD->new String[]{"helmet","banner","shield"}[index];
+            case WAR_VANGUARD->new String[]{"shield","banner","helmet"}[index];
             case WAR_BERSERKER->new String[]{"skull","flame","axe"}[index];
             case WAR_WEAPONMASTER->new String[]{"swords","rapier","axe"}[index];
             case WAR_RUNIC->new String[]{"sword","rune","flame"}[index];
@@ -32,9 +33,9 @@ public final class ReferenceIcons {
             case MAGE_OCCULT->new String[]{"poison","skull","dagger"}[index];
             case MAGE_TEMPORAL->new String[]{"bolt","hourglass","rune"}[index];
             case ARC_MARKSMAN->new String[]{"target","feather","bow"}[index];
-            case ARC_WARDEN->new String[]{"wolf","book","trap"}[index];
+            case ARC_WARDEN->new String[]{"wolf","trap","helmet"}[index];
             case ARC_SKIRMISHER->new String[]{"feather","bow","bolt"}[index];
-            case ARC_ARCANE->new String[]{"arcane_bow","star","rune"}[index];
+            case ARC_ARCANE->new String[]{"flame","snowflake","bolt"}[index];
             case ARC_ARTIFICER->new String[]{"trap","bomb","poison"}[index];
             case ASS_SHADOW->new String[]{"hood","dagger","eye"}[index];
             case ASS_VENOM->new String[]{"poison","skull","bomb"}[index];
@@ -47,6 +48,7 @@ public final class ReferenceIcons {
         c.getMatrices().push();c.getMatrices().translate(x,y,0);c.getMatrices().scale(size/32f,size/32f,1);
         int light=RpgUiTheme.lighten(accent,.36f),shade=RpgUiTheme.darken(accent,.30f);
         switch(icon) {
+            case "heart" -> {poly(c,accent,3,8,7,4,12,4,16,9,20,4,25,4,29,8,29,15,16,29,3,15);rect(c,6,7,6,2,light);}
             case "shield" -> {
                 poly(c,accent,4,5,16,2,28,5,27,20,23,26,16,31,9,26,5,20);
                 poly(c,shade,16,5,25,7,24,20,21,24,16,28);line(c,7,8,16,5,2,light);rect(c,14,9,4,17,GOLD);rect(c,8,14,16,4,GOLD);
@@ -68,8 +70,9 @@ public final class ReferenceIcons {
                 poly(c,accent,18,5,23,5,28,9,29,15,24,19,20,16,17,17,15,13);
                 poly(c,light,24,6,28,9,29,15,26,17,25,12,22,8);rect(c,18,7,3,4,shade);
             }
-            case "swords" -> {sword(c,accent);c.getMatrices().push();c.getMatrices().translate(32,0,0);c.getMatrices().scale(-1,1,1);sword(c,GOLD);c.getMatrices().pop();}
-            case "sword","dagger","rapier" -> {sword(c,icon.equals("rapier")?METAL:accent);if(icon.equals("rapier")) {line(c,6,24,12,28,2,GOLD);line(c,12,28,15,22,2,GOLD);}}
+            case "swords" -> {sword(c,accent);poly(c,GOLD,3,2,5,2,24,20,20,24,3,6);line(c,5,4,21,20,1,METAL);line(c,18,27,26,19,3,GOLD);line(c,23,23,29,29,3,shade);rect(c,27,27,3,3,GOLD);}
+            case "dagger" -> {poly(c,accent,24,5,25,14,14,23,10,19);line(c,13,19,23,8,1,METAL);line(c,7,18,17,27,3,GOLD);line(c,5,28,10,23,3,shade);rect(c,3,27,4,3,GOLD);}
+            case "sword","rapier" -> {sword(c,icon.equals("rapier")?METAL:accent);if(icon.equals("rapier")) {line(c,6,24,12,28,2,GOLD);line(c,12,28,15,22,2,GOLD);}}
             case "rune","star","spec","crystal" -> {
                 if(icon.equals("rune")) {int[][] points={{16,3},{23,7},{27,14},{25,23},{17,28},{8,24},{5,17},{8,10},{15,8},{21,12},{21,18},{16,21},{12,18},{13,14},{17,14}};for(int i=1;i<points.length;i++)line(c,points[i-1][0],points[i-1][1],points[i][0],points[i][1],3,i%3==0?light:accent);}
                 else {poly(c,accent,16,2,20,11,30,16,20,20,16,30,12,20,2,16,12,11);poly(c,light,16,4,16,16,5,16,13,12);rect(c,14,14,4,4,METAL);}
@@ -145,14 +148,15 @@ public final class ReferenceIcons {
             xs.sort(Double::compare);for(int i=0;i+1<xs.size();i+=2)c.fill((int)Math.ceil(xs.get(i)),y,(int)Math.ceil(xs.get(i+1)),y+1,color);
         }
     }
+    private static final Identifier ILLUSTRATIONS=new Identifier("rpgstats","textures/gui/reference/illustrations.png");
     public static void scene(DrawContext c,RPGClass clazz,String icon,int x,int y,int w,int h,int accent) {
-        // Illustrative voxel vignette, not a screenshot or a promise of a specific skill effect.
-        CleanRpgUi.surface(c,x,y,w,h,0xFF273646,CleanRpgUi.BORDER);
-        c.fill(x+2,y+h/2,x+w-2,y+h-2,0xFF344A39);
-        for(int i=0;i<5;i++){int tx=x+8+i*(w-16)/5;int ty=y+20+(i%2)*13;c.fill(tx+4,ty+17,tx+8,y+h-3,0xFF3A3432);c.fill(tx,ty,tx+13,ty+23,0xFF263D33);}
-        int cx=x+w/2-8,cy=y+h-53;c.fill(cx,cy,cx+16,cy+16,0xFFBEB1A0);c.fill(cx+2,cy+5,cx+14,cy+11,0xFF4A4C5A);
-        c.fill(cx-3,cy+17,cx+19,cy+35,0xFF777987);c.fill(cx,cy+35,cx+6,cy+49,0xFF292F3B);c.fill(cx+10,cy+35,cx+16,cy+49,0xFF292F3B);
-        draw(c,icon,x+w-51,y+9,39,accent);c.fill(cx+18,cy+22,cx+38,cy+25,accent);
+        // Illustrative texture, not a screenshot or a promise of a specific skill effect.
+        CleanRpgUi.surface(c,x,y,w,h,CleanRpgUi.PANEL,accent);
+        int cellIndex=switch(clazz){case GUERREIRO->0;case MAGO->1;case ARQUEIRO->2;case ASSASSINO->3;};
+        int cell=1254/2,sh=Math.min(cell,Math.round(cell*(h-4)/(float)(w-4)));
+        c.getMatrices().push();c.getMatrices().translate(x+2,y+2,0);c.getMatrices().scale((w-4)/(float)cell,(h-4)/(float)sh,1);
+        c.drawTexture(ILLUSTRATIONS,0,0,(cellIndex%2)*cell,(cellIndex/2)*cell+(cell-sh)/2,cell,sh,1254,1254);
+        c.getMatrices().pop();
     }
     private ReferenceIcons(){}
 }
