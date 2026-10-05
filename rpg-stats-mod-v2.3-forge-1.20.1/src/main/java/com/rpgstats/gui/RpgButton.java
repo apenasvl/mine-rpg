@@ -22,6 +22,8 @@ public class RpgButton extends ButtonWidget {
     private String footer = "";
     private String icon = "";
     private boolean selected = false;
+    private String illustration = "";
+    public RpgButton illustration(String id) {illustration=id;return this;}
     private State state = State.DEFAULT;
 
     public RpgButton(int x, int y, int width, int height, Text message, PressAction action, Kind kind, int accent) {
@@ -73,19 +75,22 @@ public class RpgButton extends ButtonWidget {
         int x = getX();
         int y = getY();
 
-        int pastel=RpgUiTheme.mix(accent,CleanRpgUi.PANEL,.32f);
-        int fill=RpgUiTheme.mix(CleanRpgUi.PANEL,pastel,selected||state==State.EQUIPPED?.65f:.30f);
-        if(kind==Kind.ACTION||kind==Kind.SMALL) fill=pastel;
-        if(hovered&&active) fill=RpgUiTheme.lighten(fill,.10f);
-        if(!active||state==State.BLOCKED) fill=RpgUiTheme.mix(CleanRpgUi.PANEL,CleanRpgUi.BORDER,.18f);
-        int edge=selected||isFocused()||hovered?RpgUiTheme.darken(pastel,.40f):CleanRpgUi.BORDER;
+        int pastel=accent;
+        int fill=RpgUiTheme.mix(CleanRpgUi.PANEL,accent,selected||state==State.EQUIPPED?.11f:.025f);
+        if(kind==Kind.ACTION||kind==Kind.SMALL) fill=0xFF30353D;
+        if(hovered&&active) fill=RpgUiTheme.lighten(fill,.07f);
+        if(!active||state==State.BLOCKED) fill=0xFF181D22;
+        int edge=selected||isFocused()||hovered?pastel:CleanRpgUi.BORDER;
         CleanRpgUi.surface(context,x,y,width,height,fill,edge);
         int titleColor=state==State.BLOCKED?CleanRpgUi.MUTED:CleanRpgUi.TEXT;
         if(kind==Kind.CHOICE) {
-            int size=Math.min(36,height-39);
-            RpgUiTheme.drawIcon(context,icon,x+(width-size)/2,y+7,size,RpgUiTheme.darken(accent,.28f));
-            var lines=font.wrapLines(getMessage(),Math.max(1,width-10));
-            for(int i=0;i<Math.min(2,lines.size());i++) context.drawText(font,lines.get(i),x+(width-font.getWidth(lines.get(i)))/2,y+height-29+i*10,titleColor,false);
+            int size=Math.min(66,height-50);
+            ReferenceIcons.draw(context,icon,x+(width-size)/2,y+13,size,accent);
+            if(!illustration.isBlank() && illustration.matches(".*_[123]$"))
+                CleanRpgUi.text(context,font,illustration.substring(illustration.length()-1),x+width-14,y+8,CleanRpgUi.MUTED,8);
+            var lines=font.wrapLines(getMessage(),Math.max(1,width-12));
+            for(int i=0;i<Math.min(3,lines.size());i++) context.drawText(font,lines.get(i),x+(width-font.getWidth(lines.get(i)))/2,y+height-42+i*11,titleColor,false);
+            if(selected) context.fill(x+5,y+height-4,x+width-5,y+height-2,accent);
             return;
         }
         if(kind==Kind.TAB||kind==Kind.SMALL||kind==Kind.ACTION||height<=24) {
@@ -95,7 +100,7 @@ public class RpgButton extends ButtonWidget {
         int inset=0;
         if(!icon.isBlank()&&width>=76) {
             int size=Math.min(24,height-12);
-            RpgUiTheme.drawIcon(context,icon,x+8,y+(height-size)/2,size,RpgUiTheme.darken(accent,.28f));
+            ReferenceIcons.draw(context,icon,x+8,y+(height-size)/2,size,accent);
             inset=size+16;
         }
         int cx=x+inset+(width-inset)/2;

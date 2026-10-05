@@ -15,7 +15,7 @@ public final class AwakeningView {
         layout=ClassSelectionLayout.fit(width,height);request.select(Boolean.TRUE);
         var r=layout.project(new ClassSelectionLayout.Rect(300,330,200,34));
         button=new RpgButton(r.x(),r.y(),r.width(),r.height(),Text.literal("Despertar"),
-                b->request.confirm(Util.getMeasuringTimeMs(),ignored->send.run()),RpgButton.Kind.ACTION,0xFF8EBBFF);
+                b->request.confirm(Util.getMeasuringTimeMs(),ignored->send.run()),RpgButton.Kind.ACTION,0xFF91C178);
         add.accept(button);update();
     }
     private void update() {request.tick(Util.getMeasuringTimeMs());if(button!=null) button.active=!request.pending();}
@@ -24,7 +24,7 @@ public final class AwakeningView {
         update();c.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
         c.getMatrices().push();c.getMatrices().translate(layout.x(),layout.y(),0);c.getMatrices().scale((float)layout.scale(),(float)layout.scale(),1);
         var font=MinecraftClient.getInstance().textRenderer;
-        CleanRpgUi.panel(c,160,54,480,342,0xFFB9ACDE);
+        CleanRpgUi.panel(c,190,54,420,342,0xFFB9ACDE);
         CosmicSelectionArt.centered(c,font,"DESPERTE SUA ESSÊNCIA",400,87,2f,CleanRpgUi.TEXT,450);
         CosmicSelectionArt.centered(c,font,"O primeiro passo da sua jornada.",400,125,1.2f,CleanRpgUi.MUTED,450);
         CartoonClassArt.essence(c,351,167,98);

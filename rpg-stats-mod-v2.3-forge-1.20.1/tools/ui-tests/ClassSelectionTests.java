@@ -65,7 +65,7 @@ public class ClassSelectionTests {
             for (var card : previous) check(!confirm.overlaps(card), "Confirmation must not overlap a class");
             var a = layout.card(0); var b = layout.card(1); var c = layout.card(2);
             check(a.x() < b.x() && b.x() < c.x() && a.y() == c.y(), "Compact class previews must share a row");
-            var detail = layout.project(new ClassSelectionLayout.Rect(34,278,732,94));
+            var detail = layout.project(new ClassSelectionLayout.Rect(110,294,580,77));
             for(var card : previous) check(!detail.overlaps(card), "The selected detail sheet must not cover a class hitbox");
             check(!detail.overlaps(confirm), "Details must not cover confirmation");
         }

@@ -26,6 +26,8 @@ public final class UiClientPreview {
         for(RPGClass c:RPGClass.values()) {
             String id=c.name().toLowerCase();
             CASES.add(new Sample(c,"class",1920,1080,2,id+"-class"));
+            CASES.add(new Sample(c,"Stats",1920,1080,2,id+"-attributes"));
+            CASES.add(new Sample(c,"Resumo",1920,1080,2,id+"-house-overview"));
             CASES.add(new Sample(c,"Casa",1920,1080,2,id+"-houses"));
             CASES.add(new Sample(c,"Especial.",1920,1080,2,id+"-specializations"));
             CASES.add(new Sample(c,"Afinidade",1920,1080,2,id+"-affinity"));
@@ -58,11 +60,11 @@ public final class UiClientPreview {
                 var cards=screen.children().stream().filter(ClassCardWidget.class::isInstance).map(ClassCardWidget.class::cast).toList();
                 if(cards.size()!=4)throw new IllegalStateException("Expected four class previews");
                 click(screen,cards.get(sample.clazz.ordinal()),false);
-            } else if(!sample.page.equals("awakening"))click(screen,button(screen,sample.page.equals("locked")?"Classe":sample.page),true);
+            } else if(!sample.page.equals("awakening"))click(screen,button(screen,sample.page.equals("locked")?"Classe":sample.page.equals("Resumo")?"Casa":sample.page),true);
         }
         if(age==25&&c.currentScreen instanceof StatsScreen screen){
-            if(sample.page.equals("Casa")||sample.page.equals("Especial.")||sample.page.equals("Afinidade")) {
-                String name=sample.page.equals("Casa")?shortName(RPGPath.forClass(sample.clazz).get(0)):
+            if(sample.page.equals("Casa")||sample.page.equals("Resumo")||sample.page.equals("Especial.")||sample.page.equals("Afinidade")) {
+                String name=sample.page.equals("Casa")||sample.page.equals("Resumo")?shortName(RPGPath.forClass(sample.clazz).get(0)):
                         sample.page.equals("Especial.")?RPGSpecialization.forPath(ClientStatsStore.stats.path).get(0).display:
                         shortName(RPGPath.forClass(sample.clazz).get(1));
                 click(screen,button(screen,name),true);
@@ -78,12 +80,13 @@ public final class UiClientPreview {
             }
         }
         if(age==27 && sample.page.equals("Casa") && c.currentScreen instanceof StatsScreen screen) {
+            click(screen,button(screen,"Ver talentos"),true);
             var v=MageViewport.fit(screen.width,screen.height);screen.mouseScrolled(v.x()+300*v.scale(),v.y()+280*v.scale(),-1);
         }
         if(age==30&&c.currentScreen instanceof StatsScreen screen){
             if(sample.page.equals("class")) {
                 if(ClientStatsStore.stats.clazz!=null||!button(screen,"Confirmar classe").active)throw new IllegalStateException("Class preview/confirmation contract broken");
-            } else if(!sample.page.equals("awakening")&&!sample.page.equals("Classe")&&!sample.page.equals("locked")&&!button(screen,"Confirmar escolha").active)
+            } else if(!sample.page.equals("awakening")&&!sample.page.equals("Classe")&&!sample.page.equals("Stats")&&!sample.page.equals("locked")&&!button(screen,"Confirmar escolha").active)
                 throw new IllegalStateException("Eligible preview cannot confirm");
             if(sample.page.equals("Casa")) {
                 var f=StatsScreen.class.getDeclaredField("choiceScroll");f.setAccessible(true);
@@ -104,7 +107,7 @@ public final class UiClientPreview {
         capture=false;var c=MinecraftClient.getInstance();Path out=Path.of(System.getProperty("rpgstats.uiPreviewDir"));Files.createDirectories(out);
         try(NativeImage image=ScreenshotRecorder.takeScreenshot(c.getFramebuffer())){image.writeTo(out.resolve(CASES.get(index).file+".png"));}
         System.out.println("RPG_UI_CAPTURE "+CASES.get(index).file);index++;age=0;
-        if(index==CASES.size()){Files.writeString(out.resolve("result.txt"),"PASS: 28 real Forge UI cases; awakening, four classes, House/spec/affinity previews, confirmation eligibility, locked/learned talent inspection, reachable scrolling, scaled hitboxes and resizing.\n");c.scheduleStop();}
+        if(index==CASES.size()){Files.writeString(out.resolve("result.txt"),"PASS: 36 real Forge UI cases; awakening, four classes, House/spec/affinity previews, confirmation eligibility, locked/learned talent inspection, reachable scrolling, scaled hitboxes and resizing.\n");c.scheduleStop();}
     }
     private UiClientPreview(){}
 }

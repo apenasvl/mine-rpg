@@ -35,12 +35,12 @@ public final class ClassCardWidget extends ButtonWidget {
         CosmicSelectionArt.begin(c,new ClassSelectionLayout.Rect(getX(),getY(),width,height),source);
         boolean selected=selection.selected()==clazz;
         int accent=CleanRpgUi.accent(clazz);
-        int fill=RpgUiTheme.mix(CleanRpgUi.PANEL,accent,selected?.60f:.28f);
-        int edge=selected||hovered||isFocused()?RpgUiTheme.darken(accent,.35f):CleanRpgUi.BORDER;
+        int fill=RpgUiTheme.mix(CleanRpgUi.PANEL,accent,selected?.10f:.035f);
+        int edge=selected||hovered||isFocused()?accent:CleanRpgUi.BORDER;
         CleanRpgUi.surface(c,0,0,source.width(),source.height(),fill,edge);
-        CartoonClassArt.emblem(c,clazz,49,14,76);
+        ReferenceIcons.draw(c,CleanRpgUi.icon(clazz),39,18,76,accent);
         CosmicSelectionArt.centered(c,font,clazz.display.toUpperCase(java.util.Locale.ROOT),source.width()/2,103,1.45f,CleanRpgUi.TEXT,source.width()-14);
-        CosmicSelectionArt.centered(c,font,tagline(clazz),source.width()/2,128,1f,CleanRpgUi.MUTED,source.width()-16);
+        CosmicSelectionArt.centered(c,font,tagline(clazz),source.width()/2,130,.95f,CleanRpgUi.MUTED,source.width()-16);
         CosmicSelectionArt.centered(c,font,selected?"SELECIONADO":"VER CLASSE",source.width()/2,149,.8f,CleanRpgUi.MUTED,source.width()-16);
         c.getMatrices().pop();
     }

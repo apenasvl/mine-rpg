@@ -34,24 +34,19 @@ public final class ClassSelectionView {
         update();c.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
         var font=MinecraftClient.getInstance().textRenderer;
         c.getMatrices().push();c.getMatrices().translate(layout.x(),layout.y(),0);c.getMatrices().scale((float)layout.scale(),(float)layout.scale(),1);
-        CleanRpgUi.panel(c,34,20,732,66,0xFFB9ACDE);
-        CleanRpgUi.panel(c,34,384,532,32,0xFFB9ACDE);
-        CosmicSelectionArt.centered(c,font,"ESCOLHA SUA CLASSE",400,36,2f,CleanRpgUi.TEXT,730);
-        CosmicSelectionArt.centered(c,font,"Compare os estilos. A escolha só acontece ao confirmar.",400,70,1.2f,CleanRpgUi.MUTED,730);
+        CosmicSelectionArt.centered(c,font,"RPG",400,23,2.8f,CleanRpgUi.TEXT,730);
+        CosmicSelectionArt.centered(c,font,"ESCOLHA SUA CLASSE",400,59,1.5f,CleanRpgUi.TEXT,730);
+        CosmicSelectionArt.centered(c,font,"Escolha o caminho que define sua jornada.",400,83,1f,CleanRpgUi.MUTED,730);
         var chosen=selection.selected();
         int accent=chosen==null?CleanRpgUi.BORDER:CleanRpgUi.accent(chosen);
-        CleanRpgUi.panel(c,34,278,732,94,accent);
-        if(chosen==null) CosmicSelectionArt.centered(c,font,"Selecione uma classe para ver sua ficha.",400,315,1.4f,CleanRpgUi.MUTED,700);
+        CleanRpgUi.panel(c,110,294,580,77,accent);
+        if(chosen==null) CosmicSelectionArt.centered(c,font,"Selecione uma classe para conhecer seu estilo.",400,326,1.1f,CleanRpgUi.MUTED,550);
         else {
-            CartoonClassArt.emblem(c,chosen,48,295,49);
-            CosmicSelectionArt.label(c,font,chosen.display.toUpperCase(java.util.Locale.ROOT),111,289,1.4f,CleanRpgUi.TEXT);
-            CosmicSelectionArt.wrapped(c,font,ClassCardWidget.description(chosen),111,309,1.1f,CleanRpgUi.MUTED,632,2);
-            CosmicSelectionArt.label(c,font,"RECURSO  "+chosen.resourceName(),111,344,1f,CleanRpgUi.TEXT);
-            CosmicSelectionArt.label(c,font,"ATRIBUTOS  "+ClassCardWidget.attributes(chosen),330,344,1f,CleanRpgUi.TEXT);
-
+            CosmicSelectionArt.centered(c,font,chosen.display,400,306,1.4f,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL),550);
+            CosmicSelectionArt.wrapped(c,font,ClassCardWidget.description(chosen),130,330,1.1f,CleanRpgUi.MUTED,540,2);
         }
         String hint=selection.pending()?"Aguardando o servidor...":selection.timedOut()?"Sem resposta. Confirme para tentar novamente.":"Casa no nível 10 · Especialização no 25 · Afinidade no 30";
-        CosmicSelectionArt.wrapped(c,font,hint,34,392,1.1f,CleanRpgUi.MUTED,520,2);
+        CosmicSelectionArt.centered(c,font,hint,400,436,.9f,CleanRpgUi.MUTED,700);
         c.getMatrices().pop();
     }
     public void renderTooltip(DrawContext c,int x,int y) {}

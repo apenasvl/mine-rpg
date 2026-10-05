@@ -24,7 +24,7 @@ public record ClassSelectionLayout(double scale, int x, int y) {
 
     public static Rect sourceCard(int index) {
         if (index < 0 || index > 3) throw new IllegalArgumentException("Class card index: " + index);
-        return new Rect(34 + index * 186, 94, 174, 168);
+        return new Rect(68 + index * 170, 106, 154, 172);
     }
 
     public Rect project(Rect source) {
@@ -36,5 +36,5 @@ public record ClassSelectionLayout(double scale, int x, int y) {
     }
 
     public Rect card(int index) { return project(sourceCard(index)); }
-    public Rect confirm() { return project(new Rect(580, 384, 186, 32)); }
+    public Rect confirm() { return project(new Rect(270, 389, 260, 34)); }
 }

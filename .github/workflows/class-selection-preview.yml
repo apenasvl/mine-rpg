@@ -43,7 +43,7 @@ jobs:
           python3 - <<'PYTEST'
           from pathlib import Path
           files=list(Path('build/ui-preview').glob('*.png'))
-          assert len(files)==28, f'Expected 28 UI screenshots, got {len(files)}'
+          assert len(files)==36, f'Expected 36 UI screenshots, got {len(files)}'
           PYTEST
       - name: Upload captures and client log
         if: always()
