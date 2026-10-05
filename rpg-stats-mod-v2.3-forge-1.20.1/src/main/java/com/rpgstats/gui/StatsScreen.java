@@ -69,7 +69,7 @@ public class StatsScreen extends Screen {
     private final ProgressionSelectionState<Page,String> choices = new ProgressionSelectionState<>();
     private ClassSelectionState<String> choice = new ClassSelectionState<>();
     private final List<RpgButton> choiceCards = new ArrayList<>();
-    private RpgButton choiceConfirm;
+    private RpgButton choiceConfirm, choiceDetailButton;
     private record ChoiceOption(String id,String title,String description,List<SkillNode> nodes,int accent,String icon) {}
     private List<ChoiceOption> choiceOptions = List.of();
     private int activeEquipSlot = 0;
@@ -95,6 +95,7 @@ public class StatsScreen extends Screen {
         hintVisuals.clear();
         choiceCards.clear();
         choiceConfirm = null;
+        choiceDetailButton = null;
         choiceOptions = List.of();
         PlayerStats stats = ClientStatsStore.stats;
         if(stats.awakened || stats.clazz != null) awakening.reset();
@@ -112,7 +113,8 @@ public class StatsScreen extends Screen {
             else if(page==Page.AFFINITY) addAffinitySelection(l,stats);
             else addSpecializationSelectionButtons(l,stats);
             addDrawableChild(new RpgButton(610,417,90,26,Text.literal("← Voltar"),b->changePage(Page.ATTRIBUTES),RpgButton.Kind.ACTION,accent));
-            addDrawableChild(new RpgButton(120,417,140,26,Text.literal("Ver talentos"),b->{choiceDetails=!choiceDetails;choiceScroll=0;b.setMessage(Text.literal(choiceDetails?"Ver resumo":"Ver talentos"));},RpgButton.Kind.ACTION,accent));
+            choiceDetailButton=new RpgButton(120,417,140,26,Text.literal(choiceDetails?"Ver resumo":"Ver talentos"),b->{choiceDetails=!choiceDetails;choiceScroll=0;},RpgButton.Kind.ACTION,accent);
+            addDrawableChild(choiceDetailButton);
             return;
         }
         addTabs(l, stats, accent);
@@ -846,6 +848,7 @@ public class StatsScreen extends Screen {
         choice.tick(net.minecraft.util.Util.getMeasuringTimeMs());
         String error=choiceError(stats);
         choiceConfirm.active=error.isEmpty()&&!choice.pending();
+        choiceDetailButton.setMessage(Text.literal(choiceDetails?"Ver resumo":"Ver talentos"));
         for(int i=0;i<choiceCards.size();i++){var b=choiceCards.get(i);b.active=!choice.pending();b.selected(choiceOptions.get(i).id.equals(choice.selected()));}
         int accent=RpgUiTheme.accent(stats.clazz);
         CleanRpgUi.panel(c,l.panelX,l.panelY,l.panelW,l.panelH,CleanRpgUi.BORDER);
