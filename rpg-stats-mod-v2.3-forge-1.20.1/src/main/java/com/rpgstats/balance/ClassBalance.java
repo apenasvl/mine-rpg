@@ -81,6 +81,17 @@ public final class ClassBalance {
         return Math.max(beforeClass*minimum,afterGuards*(1f-Math.max(0f,Math.min(.80f,roleReduction))));
     }
 
+    /** Archer/Assassin boss-only margin for one mistake; earned after level25. */
+    public static float mobileBossReduction(int level,int tenacity) {
+        float late=lateBossProgress(level);
+        return Math.min(.74f,late*late*(.68f+.10f*attributeProgress(tenacity)));
+    }
+    /** Preserve early guards; combined late RPG mitigation is capped at 74%, before armor. */
+    public static float mobileBossDamage(float beforeClass,float afterGuards,int level,int tenacity) {
+        if(level<=25)return afterGuards;
+        return Math.max(beforeClass*.26f,afterGuards*(1f-mobileBossReduction(level,tenacity)));
+    }
+
     private static float attributeProgress(int points) {
         return Math.max(0f, Math.min(1f, points / 50f));
     }

@@ -152,8 +152,9 @@ public final class CombatHandler {
         if (state.smokeTicks > 0) reduction += 0.25f;
         reduction = GlobalCaps.damageReduction(reduction);
         float guarded=amount*(1f-reduction);
-        if(stats.clazz==RPGClass.GUERREIRO && attacker instanceof LivingEntity boss
+        if(attacker instanceof LivingEntity boss
                 && !(boss instanceof PlayerEntity) && BossScaler.getTier(boss)>0) {
+          if(stats.clazz==RPGClass.GUERREIRO) {
             boolean juggernaut=stats.specialization==RPGSpecialization.JUGGERNAUT
                     && stats.hasNode(RPGSpecialization.JUGGERNAUT.nodes.get(0).id());
             int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
@@ -165,6 +166,10 @@ public final class CombatHandler {
                 guarded=com.rpgstats.balance.ClassBalance.warriorBossDamage(beforeClassGuards,guarded,
                         com.rpgstats.balance.ClassBalance.warriorBossReduction(stats.level,tenacity),stats.level);
             }
+          } else if(stats.clazz==RPGClass.ARQUEIRO || stats.clazz==RPGClass.ASSASSINO) {
+              int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
+              guarded=com.rpgstats.balance.ClassBalance.mobileBossDamage(beforeClassGuards,guarded,stats.level,tenacity);
+          }
         }
         return guarded*(1f+HouseRules.vulnerability(stats));
     }

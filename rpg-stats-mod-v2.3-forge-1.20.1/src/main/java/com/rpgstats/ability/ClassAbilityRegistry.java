@@ -73,6 +73,14 @@ public final class ClassAbilityRegistry {
 
     /** Tooltip honesto: mecanica anunciada aqui precisa existir em ClassMechanics. */
     public static String description(String id) {
+        String text=baseDescription(id);
+        if(!text.isEmpty() && (id.startsWith("arc_") || id.startsWith("ass_"))
+                && (id.endsWith("_core_guard") || id.endsWith("_initiation")))
+            return text + " DEFESA DA CLASSE: toda a classe, com qualquer especializacao, ganha protecao contra bosses entre niveis 25 e 50, independentemente deste talento. No nivel 50 e com 25 Tenacidade: 73% de reducao antes da armadura; protecoes do RPG juntas respeitam o limite de 74%. Inclui area e projeteis atribuidos ao boss. Este bonus nao se aplica a jogadores nem a mobs comuns. Esquiva e reposicionamento continuam essenciais.";
+        return text;
+    }
+
+    private static String baseDescription(String id) {
         if (!isExpandedClassNode(id)) return "";
 
         String archer = archerDescription(id);
