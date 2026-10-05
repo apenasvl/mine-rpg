@@ -141,6 +141,7 @@ public final class NativeArmorGameTests {
                     Map<String,Object> row=new LinkedHashMap<>();row.put("class",clazz.name());row.put("spec",juggernaut?"JUGGERNAUT":clazz==RPGClass.MAGO?"ACCELERATOR":"BASE");row.put("set",g.id);row.put("pieces",ids(g));row.put("phase",phase);row.put("armor",p.getArmor());row.put("toughness",p.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));row.put("hp",hp);row.put("loss",loss);row.put("remaining",p.getHealth());row.put("alive",p.isAlive());row.put("effects",effects);row.put("attributes",attrs);
                     RPGStatsMod.LOGGER.info("RPG_ARMOR_RESULT {}",new com.google.gson.Gson().toJson(row));
                     c.assertTrue(loss>0,"Native attack did not deal confirmed damage: "+clazz+" "+g.id+" phase="+phase);
+                    if(clazz==RPGClass.MAGO && g.pieces.size()==4)c.assertTrue(p.isAlive(),"Complete native mage armor died to one reference boss hit: "+g.id+" phase="+phase);
                 }
             }catch(ReflectiveOperationException e){throw new AssertionError(e);}
             finally{for(var b:bosses){b.discard();BossScaler.untrack(b);}for(var chunk:forced)c.getWorld().setChunkForced(chunk.x,chunk.z,false);TestPlayers.finish(c);}c.complete();
