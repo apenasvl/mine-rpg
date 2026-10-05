@@ -47,7 +47,7 @@ public final class WeaponTypeResolver {
 
     public static boolean isNativeWeapon(ItemStack stack) {
         return stack != null && !stack.isEmpty()
-                && Registries.ITEM.getId(stack.getItem()).getNamespace().equals("simplyswords");
+                && Set.of("simplyswords","better_weaponry").contains(Registries.ITEM.getId(stack.getItem()).getNamespace());
     }
 
     /** Atomic replacement also removes stale classifications after a datapack reload. */
@@ -69,7 +69,7 @@ public final class WeaponTypeResolver {
         });
         Map<Identifier, WeaponTypePolicy.Kind> result = new HashMap<>();
         metadata.forEach((id, ignored) -> {
-            if (!id.getNamespace().equals("simplyswords")) return;
+            if (!Set.of("simplyswords","better_weaponry").contains(id.getNamespace())) return;
             Resolved resolved = resolve(id, metadata, new HashSet<>());
             WeaponTypePolicy.Kind kind = WeaponTypePolicy.classify(
                     resolved.category() == null ? "" : resolved.category(), Boolean.TRUE.equals(resolved.twoHanded()));

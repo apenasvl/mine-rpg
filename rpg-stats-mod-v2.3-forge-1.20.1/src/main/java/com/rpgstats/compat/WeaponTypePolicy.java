@@ -6,7 +6,7 @@ import java.util.Set;
 public final class WeaponTypePolicy {
     public enum Kind { RAPID, TWO_HANDED, MELEE, UNKNOWN }
     private static final Set<String> RAPID = Set.of("dagger", "soul_knife", "rapier", "sai");
-    private static final Set<String> HEAVY = Set.of("claymore", "glaive", "greataxe", "greathammer", "halberd", "scythe", "spear", "twinblade", "warglaive", "staff");
+    private static final Set<String> HEAVY = Set.of("battlestaff", "double_axe", "claymore", "glaive", "greataxe", "greathammer", "halberd", "scythe", "spear", "twinblade", "warglaive", "staff");
     private static final Set<String> MELEE = Set.of("sword", "longsword", "katana", "cutlass", "axe", "mace", "hammer", "chakram", "sickle", "trident");
     public static Kind classify(String category, boolean twoHanded) {
         if (twoHanded) return Kind.TWO_HANDED;

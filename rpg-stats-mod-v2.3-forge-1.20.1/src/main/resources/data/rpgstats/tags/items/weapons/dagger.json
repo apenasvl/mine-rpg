@@ -1,1 +1,186 @@
-{"replace":false,"values":["minecraft:golden_sword"]}
+{
+  "replace": false,
+  "values": [
+    "minecraft:golden_sword",
+    {
+      "id": "better_weaponry:wooden_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_dagger",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_rapier",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_sickle",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_chakram",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_sai",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_sai",
+      "required": false
+    }
+  ]
+}

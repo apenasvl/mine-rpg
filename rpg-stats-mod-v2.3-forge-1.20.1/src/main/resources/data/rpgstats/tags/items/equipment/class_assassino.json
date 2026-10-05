@@ -1,0 +1,105 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:shadowwalker_boots",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:shadowwalker_chestplate",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:shadowwalker_helmet",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:shadowwalker_leggings",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:speed_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:atmospheric_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:chorus_mask",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:withered_ribcage",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:chaos_crown",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:chaos_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:chaos_robes",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:enhanced_withered_chest",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_boots",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_chestplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_leggings",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_boots",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_chestplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_leggings",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:withered_chest",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_boots",
+      "required": false
+    }
+  ]
+}

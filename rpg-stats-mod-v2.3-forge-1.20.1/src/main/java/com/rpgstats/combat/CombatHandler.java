@@ -45,6 +45,7 @@ public final class CombatHandler {
 
     public static float modifyOutgoingDamage(ServerPlayerEntity player, Entity target, float amount, DamageSource source) {
         if (source.isOf(DamageTypes.THORNS)) return amount;
+        amount=com.rpgstats.compat.BetterWeaponrySustain.projectileDamage(player,amount,source);
 
         PlayerStats stats = StatsManager.get(player);
         float weaponAffinity=com.rpgstats.compat.bosses.WeaponAffinity.damageFactor(stats,
@@ -128,11 +129,14 @@ public final class CombatHandler {
         if (attacker instanceof LivingEntity living && !(attacker instanceof PlayerEntity))
             amount *= BossScaler.getDamageMultiplier(living);
 
+        float beforeClassGuards=amount;
+        int secondChanceBefore=CombatState.get(player.getUuid()).cooldown("internal_second_chance");
         amount = MageCombatHandler.modifyIncomingDamage(player, amount, source);
         if (amount <= 0f) return 0f;
+        // A one-use fatal rescue is an explicit exception to ordinary mitigation floors.
+        if(secondChanceBefore<=0 && CombatState.get(player.getUuid()).cooldown("internal_second_chance")>0)return amount;
         if (source.isIn(DamageTypeTags.BYPASSES_RESISTANCE)) return amount;
 
-        float beforeClassGuards=amount;
         PlayerStats stats = StatsManager.get(player);
         if (ClassMechanics.handles(stats)) amount = ClassMechanics.modifyIncomingDamage(player, stats, amount, source);
 
@@ -169,6 +173,9 @@ public final class CombatHandler {
           } else if(stats.clazz==RPGClass.ARQUEIRO || stats.clazz==RPGClass.ASSASSINO) {
               int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
               guarded=com.rpgstats.balance.ClassBalance.mobileBossDamage(beforeClassGuards,guarded,stats.level,tenacity);
+          } else if(stats.clazz==RPGClass.MAGO) {
+              int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
+              guarded=com.rpgstats.balance.ClassBalance.mageBossDamage(beforeClassGuards,guarded,stats.level,tenacity);
           }
         }
         return guarded*(1f+HouseRules.vulnerability(stats));
@@ -183,6 +190,7 @@ public final class CombatHandler {
         boolean projectile = isProjectile(source);
         boolean magic = isMagic(source) && !ArcherShotTracker.isBowShot(source);
         boolean resourceChanged = false;
+        com.rpgstats.compat.BetterWeaponrySustain.confirmedHit(player,damageDealt,source);
 
         if (stats.clazz == RPGClass.ARQUEIRO && ArcherShotTracker.isBowShot(source)) {
             ArcherTechniqueHandler.onHit(player, target, stats, damageDealt, source);

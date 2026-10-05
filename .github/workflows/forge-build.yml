@@ -157,6 +157,14 @@ jobs:
           for CLS in $(unzip -Z1 inspection/beartrap.jar | sed -n 's#/#.#g;s/\.class$//p' | grep -v '^META-INF'); do
             javap -classpath inspection/beartrap.jar -p -c "$CLS" >> inspection/bytecode.txt 2>/dev/null || true
           done
+          curl --fail --location --retry 2 https://cursemaven.com/curse/maven/better-weaponry-better-combat-990523/6046452/better-weaponry-better-combat-990523-6046452.jar -o inspection/better-weaponry.jar
+          unzip -l inspection/better-weaponry.jar > inspection/better-weaponry-entries.txt
+          unzip -p inspection/better-weaponry.jar META-INF/mods.toml | tee inspection/better-weaponry-mods.toml
+          unzip -p inspection/better-weaponry.jar assets/better_weaponry/lang/en_us.json > inspection/better-weaponry-lang.json || true
+          for CLS in $(unzip -Z1 inspection/better-weaponry.jar | sed -n 's#/#.#g;s/\\.class$//p' | grep -v '^META-INF'); do
+            javap -classpath inspection/better-weaponry.jar -p -c "$CLS" >> inspection/better-weaponry-bytecode.txt 2>/dev/null || true
+          done
+          sha256sum inspection/better-weaponry.jar
           rm -f inspection/beartrap.jar inspection/morebows.jar
       - uses: actions/upload-artifact@v4
         with:

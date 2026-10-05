@@ -69,6 +69,7 @@ public class StatsApplier {
                 assassin ? com.rpgstats.balance.ClassBalance.assassinSpeedBonus(ps.level,dexterity) : 0,
                 EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 
+        com.rpgstats.compat.ClassArmorBonuses.apply(player);
         if (player.getHealth() > player.getMaxHealth()) player.setHealth(player.getMaxHealth());
         StatsManager.save(player, ps);
     }

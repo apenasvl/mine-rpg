@@ -33,6 +33,13 @@ import net.minecraftforge.fml.common.Mod;
 /** Forge event bus. All game-state writes happen on the logical server. */
 @Mod.EventBusSubscriber(modid=RPGStatsMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public final class ForgeEvents {
+    @SubscribeEvent public static void armorAffinityTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
+        var stack=event.getItemStack();if(!(stack.getItem() instanceof net.minecraft.item.ArmorItem))return;
+        for(var row:new String[][]{{"guerreiro","Guerreiro: +0,5 tenacidade de armadura e +3% resistência a recuo"},{"arqueiro","Arqueiro: +2% movimento"},{"assassino","Assassino: +1% movimento e +2% velocidade de ataque"},{"mago","Mago: +0,25 tenacidade de armadura"}}) {
+            var tag=net.minecraft.registry.tag.TagKey.of(net.minecraft.registry.RegistryKeys.ITEM,new net.minecraft.util.Identifier("rpgstats","equipment/class_"+row[0]));
+            if(stack.isIn(tag))event.getToolTip().add(net.minecraft.text.Text.literal(row[1]+" por peça no nv. 50").formatted(net.minecraft.util.Formatting.AQUA));
+        }
+    }
     @SubscribeEvent public static void commands(RegisterCommandsEvent event) { RPGStatsMod.registerCommands(event); }
     @SubscribeEvent public static void resources(AddReloadListenerEvent event) { DataDrivenRegistry.register(event); }
     @SubscribeEvent public static void started(net.minecraftforge.event.server.ServerStartedEvent event) {
@@ -85,7 +92,7 @@ public final class ForgeEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void nativeArmorAttributes(net.minecraftforge.event.ItemAttributeModifierEvent event) {
         var stack=event.getItemStack();String namespace=net.minecraft.registry.Registries.ITEM.getId(stack.getItem()).getNamespace();
-        if(!java.util.Set.of("soulsweapons","legendary_monsters").contains(namespace)
+        if(!java.util.Set.of("soulsweapons","legendary_monsters","better_weaponry").contains(namespace)
                 || !(stack.getItem() instanceof net.minecraft.item.ArmorItem armor))return;
         var slot=armor.getSlotType();if(event.getSlotType()!=slot)return;
         double max=switch(slot){case CHEST->8;case LEGS->6;case HEAD->3;default->3;};
@@ -137,10 +144,12 @@ public final class ForgeEvents {
         var server=event.getServer();
         for (ServerPlayerEntity p:server.getPlayerManager().getPlayerList()) {
             CombatHandler.tickPlayer(p); StatsManager.tickRecovery(p);
+            com.rpgstats.compat.ClassArmorBonuses.apply(p);
         }
         ProcDamageQueue.tick(server);
         BossScaler.tick(server);
         com.rpgstats.combat.WarriorSustain.tick(server);
+        com.rpgstats.compat.BetterWeaponrySustain.tick(server);
         com.rpgstats.combat.ArcherAimAssist.tick(server);
     }
 
@@ -166,6 +175,7 @@ public final class ForgeEvents {
         for (ServerPlayerEntity p:event.getServer().getPlayerManager().getPlayerList()) forget(p);
         ProcDamageQueue.clear(); com.rpgstats.combat.ArcherShotTracker.clear();
         com.rpgstats.combat.WarriorSustain.clear();
+        com.rpgstats.compat.BetterWeaponrySustain.clear();
         com.rpgstats.combat.ArcherAimAssist.clear(); com.rpgstats.integration.ArcherTrapCompat.clear(); com.rpgstats.combat.ArcherTechniqueHandler.clear();
         EncounterManager.clear(); BossScaler.clear(); RpgNetwork.clear();
     }

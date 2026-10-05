@@ -56,6 +56,19 @@ public final class ArcherShotTracker {
                 || !(projectile.getOwner() instanceof ServerPlayerEntity player)) return;
         // Loaded entities already carry the original weapon and shot, even after a relog.
         if (projectile.getPersistentData().contains(KEY)) return;
+        // Native ItemSupplier is stripped on dedicated servers by @OnlyIn(CLIENT).
+        // Original 1.1.3 registers <material>_shuriken_entity for <material>_shuriken.
+        var nativeId=net.minecraft.registry.Registries.ENTITY_TYPE.getId(projectile.getType());
+        if(nativeId.getNamespace().equals("better_weaponry") && nativeId.getPath().endsWith("_shuriken_entity")) {
+            var itemId=new Identifier("better_weaponry",nativeId.getPath().substring(0,nativeId.getPath().length()-"_entity".length()));
+            if(!net.minecraft.registry.Registries.ITEM.containsId(itemId))return;
+            ItemStack weapon=new ItemStack(net.minecraft.registry.Registries.ITEM.get(itemId));
+            if(player.getActiveItem().isOf(weapon.getItem()))weapon=player.getActiveItem().copy();
+            else if(player.getMainHandStack().isOf(weapon.getItem()))weapon=player.getMainHandStack().copy();
+            else if(player.getOffHandStack().isOf(weapon.getItem()))weapon=player.getOffHandStack().copy();
+            NbtCompound shot=new NbtCompound();shot.putLong("tick",event.getLevel().getTime());shot.putUuid("owner",player.getUuid());
+            shot.put("weapon",weapon.writeNbt(new NbtCompound()));shot.putBoolean("thrown",true);projectile.getPersistentData().put(KEY,shot);return;
+        }
         var scope = LAUNCHES.get(player.getUuid());
         if (scope == null || scope.isEmpty()) return;
         ItemStack weapon = scope.peek();
@@ -72,6 +85,7 @@ public final class ArcherShotTracker {
     public static boolean isBowShot(DamageSource source) {
         return source.getSource() instanceof ProjectileEntity projectile
                 && projectile.getPersistentData().contains(KEY)
+                && !projectile.getPersistentData().getCompound(KEY).getBoolean("thrown")
                 && !source.isIn(DamageTypeTags.IS_EXPLOSION) && !source.isIn(DamageTypeTags.IS_FIRE);
     }
 
@@ -88,6 +102,14 @@ public final class ArcherShotTracker {
         return source.getSource() instanceof ProjectileEntity projectile
                 && projectile.getPersistentData().contains(KEY)
                 && (source.isIn(DamageTypeTags.IS_EXPLOSION) || source.isIn(DamageTypeTags.IS_FIRE));
+    }
+
+    /** Optional native enchantments require a verified launch, never the current held weapon. */
+    public static java.util.Optional<ItemStack> storedLaunchWeapon(DamageSource source,ServerPlayerEntity player) {
+        if(!(source.getSource() instanceof ProjectileEntity projectile) || !projectile.getPersistentData().contains(KEY))return java.util.Optional.empty();
+        var shot=projectile.getPersistentData().getCompound(KEY);
+        if(!shot.containsUuid("owner") || !player.getUuid().equals(shot.getUuid("owner")))return java.util.Optional.empty();
+        var weapon=ItemStack.fromNbt(shot.getCompound("weapon"));return weapon.isEmpty()?java.util.Optional.empty():java.util.Optional.of(weapon);
     }
 
     public static ItemStack launchWeapon(DamageSource source, ServerPlayerEntity player) {

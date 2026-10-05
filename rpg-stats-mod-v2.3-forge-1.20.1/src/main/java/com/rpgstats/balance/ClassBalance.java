@@ -92,6 +92,16 @@ public final class ClassBalance {
         return Math.max(beforeClass*.26f,afterGuards*(1f-mobileBossReduction(level,tenacity)));
     }
 
+    /** Mage mistake margin, earned after level25; lower than physical defensive roles. */
+    public static float mageBossReduction(int level,int tenacity) {
+        float late=lateBossProgress(level);
+        return Math.min(.73f,late*late*(.68f+.08f*attributeProgress(tenacity)));
+    }
+    public static float mageBossDamage(float beforeClass,float afterGuards,int level,int tenacity) {
+        if(level<=25)return afterGuards;
+        return Math.max(beforeClass*.27f,afterGuards*(1f-mageBossReduction(level,tenacity)));
+    }
+
     private static float attributeProgress(int points) {
         return Math.max(0f, Math.min(1f, points / 50f));
     }

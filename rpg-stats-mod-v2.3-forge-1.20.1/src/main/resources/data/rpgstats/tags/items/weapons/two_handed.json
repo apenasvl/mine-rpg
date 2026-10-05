@@ -1,0 +1,221 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "better_weaponry:wooden_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_scythe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_spear",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_battleaxe",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_glaive",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_broadsword",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:wooden_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:stone_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:iron_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:golden_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:diamond_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:netherite_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_claymore",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_claymore",
+      "required": false
+    }
+  ]
+}

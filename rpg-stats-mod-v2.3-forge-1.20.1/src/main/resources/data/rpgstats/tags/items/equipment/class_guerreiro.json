@@ -1,0 +1,105 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:paladin_chestplate",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:annihilator_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:annihilator_chestplate",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:annihilator_helmet",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:annihilator_leggings",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:blastproof_helmet",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:fiery_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:mossy_chestplate",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:shulker_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:arkenplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:enhanced_arkenplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:enhanced_withered_chest",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_boots",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_chestplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:forlorn_leggings",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_ingot_boots",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_ingot_chestplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_ingot_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_ingot_leggings",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:withered_chest",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:copper_armor_boots",
+      "required": false
+    }
+  ]
+}

@@ -87,13 +87,13 @@ public final class MobileBossDefenseGameTests {
     public static void mobileBossProgressionDoesNotApplyToPlayersOrOrdinaryMobs(TestContext c) {
         var low=TestPlayers.create(c);var high=TestPlayers.create(c);var attacker=TestPlayers.create(c);var cow=c.spawnMob(EntityType.COW,1,1,2);
         try {
-            for(var clazz:new RPGClass[]{RPGClass.ARQUEIRO,RPGClass.ASSASSINO}) {
+            for(var clazz:new RPGClass[]{RPGClass.ARQUEIRO,RPGClass.ASSASSINO,RPGClass.MAGO}) {
               var builds=new ArrayList<RPGSpecialization>();builds.add(null);
               for(var spec:RPGSpecialization.values())if(spec.parent.parent==clazz)builds.add(spec);
               for(var spec:builds) {
                 configure(low,clazz,spec,25);configure(high,clazz,spec,50);CombatState.remove(low.getUuid());CombatState.remove(high.getUuid());
                 for(var source:new net.minecraft.entity.damage.DamageSource[]{high.getDamageSources().playerAttack(attacker),high.getDamageSources().mobAttack(cow)}) {
-                    float a=CombatHandler.modifyIncomingDamage(low,100,source),b=CombatHandler.modifyIncomingDamage(high,100,source);
+                    float a=CombatHandler.modifyIncomingDamage(low,3,source),b=CombatHandler.modifyIncomingDamage(high,3,source);
                     c.assertTrue(a>0&&Math.abs(a-b)<.001f,"Boss defense leaked into PvP or ordinary mobs: "+spec+" "+source);
                 }
               }

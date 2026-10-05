@@ -31,7 +31,7 @@ def main():
   jar=coordinate_jar(x['coordinate'],mods/(x['modId']+'.jar'))
   reports.append(inspect_jar(jar,x,installed))
  if args.full:
-  for coordinate in ['simply-swords-659887:8746028','fzzy-config-1005914:6313552','kotlin-for-forge-351264:5402061','more-bows-and-arrows-888468:6843671','too-many-bows-1141533:8735189',
+  for coordinate in ['better-weaponry-better-combat-990523:6046452','simply-swords-659887:8746028','fzzy-config-1005914:6313552','kotlin-for-forge-351264:5402061','more-bows-and-arrows-888468:6843671','too-many-bows-1141533:8735189',
    'simply-bear-traps-1643250:8595248','monolib-968432:8543117','architectury-api-419699:5137938','curios-309927:6418456',
    'irons-spells-n-spellbooks-855414:8680180','playeranimator-658587:4587214',
    'irons-lib-1492763:9003169','caelus-308989:5281700',
