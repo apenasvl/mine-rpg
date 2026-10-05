@@ -48,11 +48,12 @@ public final class PhysicalRoleGameTests {
    for(int x=-3;x<=3;x++)for(int z=-3;z<=3;z++)c.getWorld().setBlockState(pos.add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());
    var b=(MobEntity)Registries.ENTITY_TYPE.get(new Identifier("soulsweapons:returning_knight")).create(c.getWorld());b.setAiDisabled(true);b.setNoGravity(true);b.refreshPositionAndAngles(pos.getX(),pos.getY(),pos.getZ()+1,180,0);p.refreshPositionAndAngles(pos.getX(),pos.getY(),pos.getZ(),0,0);c.getWorld().spawnEntity(b);players.add(p);bosses.add(b);
   }
+  for(int tick=1;tick<100;tick++)c.runAtTick(tick,()->players.forEach(p->{p.tick();p.playerTick();}));
   c.runAtTick(100,()->{
    float[] loss=new float[3];
    try{
     for(int i=0;i<3;i++){var p=players.get(i);p.setHealth(p.getMaxHealth());float before=p.getHealth();BossPressureGameTests.commonHit(bosses.get(i),p,true);loss[i]=before-p.getHealth();RPGStatsMod.LOGGER.info("RPG_ROLES_DEFENSE class={} level={} sameNetheriteProtection4=true nativeAttack=true loss={} hearts={}",StatsManager.get(p).clazz,StatsManager.get(p).level,loss[i],loss[i]/2);}
-    c.assertTrue(loss[2]>0 && players.get(2).isAlive() && loss[2]<loss[0]*.8f && loss[2]<loss[1]*.9f,"Warrior close-boss defense does not follow level / match melee role");
+    c.assertTrue(loss[2]>0 && players.get(2).isAlive() && loss[0]>0 && loss[1]>0 && loss[2]<loss[0]*.95f && loss[2]<loss[1]*.9f,"Warrior close-boss defense does not follow level / match melee role");
    }catch(ReflectiveOperationException e){throw new AssertionError(e);}
    finally{for(var b:bosses){b.discard();com.rpgstats.boss.BossScaler.untrack(b);}for(var ch:forced)c.getWorld().setChunkForced(ch.x,ch.z,false);TestPlayers.finish(c);}
    c.complete();

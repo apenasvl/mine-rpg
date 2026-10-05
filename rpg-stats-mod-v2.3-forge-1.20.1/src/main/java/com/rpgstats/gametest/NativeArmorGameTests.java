@@ -20,7 +20,7 @@ import java.util.*;
 /** Audit original registered pieces, equipped attributes and individual native hits. */
 @GameTestHolder(RPGStatsMod.MOD_ID) @PrefixGameTestTemplate(false)
 public final class NativeArmorGameTests {
-    private static final List<String> MODS=List.of("soulsweapons","bosses_of_mass_destruction","legendary_monsters","irons_spellbooks");
+    private static final List<String> MODS=List.of("soulsweapons","bosses_of_mass_destruction","legendary_monsters","irons_spellbooks","better_weaponry");
     private record Gear(String id,Map<EquipmentSlot,Item> pieces) {}
     private static String family(Identifier id) {
         if(id.toString().equals("soulsweapons:chaos_robes"))return "soulsweapons:chaos";
@@ -112,13 +112,30 @@ public final class NativeArmorGameTests {
         goal.tick();
         RPGStatsMod.LOGGER.debug("RPG_NATIVE_BRANCH_END phase={} postStatus={} velocity={}",phase,status.get(goal),p.getVelocity());
     }
-    private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase) {
+    private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase) {encounter(c,clazz,juggernaut,phase,false);}
+    private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase,boolean allMageSpecs) {
         if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
         var sets=gear(c,clazz==RPGClass.MAGO);
+        var mageBuilds=new ArrayList<RPGSpecialization>();
+        if(allMageSpecs && !sets.isEmpty()) {
+            var wizard=sets.stream().filter(g->g.id.equals("irons_spellbooks:wizard")).findFirst().orElseThrow();
+            mageBuilds.add(null);for(var spec:RPGSpecialization.values())if(spec.parent.parent==RPGClass.MAGO)mageBuilds.add(spec);
+            sets=new ArrayList<>(Collections.nCopies(mageBuilds.size(),wizard));
+        }
+        final var encounterSets=sets;
         if(sets.isEmpty()){c.assertTrue(clazz!=RPGClass.MAGO || !ModList.get().isLoaded("irons_spellbooks"),"Loaded Iron's has no native armor fixtures");c.complete();return;}
         var players=new ArrayList<ServerPlayerEntity>();var bosses=new ArrayList<MobEntity>();var forced=new HashSet<ChunkPos>();
         for(var g:sets) {
             var p=TestPlayers.create(c);configure(p,clazz,juggernaut);
+            if(allMageSpecs) {
+                var stats=StatsManager.get(p);var spec=mageBuilds.get(players.size());stats.specialization=spec;stats.path=spec==null?null:spec.parent;stats.unlockedNodes.clear();
+                for(var n:RPGClass.MAGO.nodes)stats.unlockedNodes.add(n.id());
+                if(spec!=null){for(var n:spec.parent.nodes)stats.unlockedNodes.add(n.id());for(var n:spec.nodes)stats.unlockedNodes.add(n.id());}
+                StatsManager.finish(p,stats);
+                // Measure mitigation without the separate once-per-cooldown fatal rescues.
+                com.rpgstats.combat.CombatState.get(p.getUuid()).startCooldown("internal_phoenix",3600);
+                com.rpgstats.combat.CombatState.get(p.getUuid()).startCooldown("internal_second_chance",2400);
+            }
             for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();com.rpgstats.compat.ClassArmorBonuses.apply(p);stable(c,p,g);
             var pos=c.getAbsolutePos(new BlockPos(131072+players.size()*64,3,49152+clazz.ordinal()*8192+phase*64+(juggernaut?4096:0)));var chunk=new ChunkPos(pos);
             if(!c.getWorld().getForcedChunks().contains(chunk.toLong())){forced.add(chunk);c.getWorld().setChunkForced(chunk.x,chunk.z,true);}
@@ -135,13 +152,13 @@ public final class NativeArmorGameTests {
         c.runAtTick(100,()->{
             try {
                 for(int i=0;i<players.size();i++) {
-                    var p=players.get(i);var g=sets.get(i);stable(c,p,g);p.setHealth(p.getMaxHealth());float hp=p.getHealth();var attrs=attributes(p);
+                    var p=players.get(i);var g=encounterSets.get(i);stable(c,p,g);p.setHealth(p.getMaxHealth());float hp=p.getHealth();var attrs=attributes(p);
                     var area=phase==52?new Box(bosses.get(i).getX()-18,bosses.get(i).getY()-8,bosses.get(i).getZ()-18,bosses.get(i).getX()+18,bosses.get(i).getY()+8,bosses.get(i).getZ()+18):new Box(p.getBlockPos()).expand(phase==7?5:3);
                     RPGStatsMod.LOGGER.info("RPG_ARMOR_HIT_CONTEXT class={} set={} phase={} playerPos={} bossPos={} queried={} invulnerable={} hurtTime={}",clazz,g.id,phase,p.getPos(),bosses.get(i).getPos(),c.getWorld().getOtherEntities(bosses.get(i),area).contains(p),p.isInvulnerableTo(p.getDamageSources().mobAttack(bosses.get(i))),p.hurtTime);
                     var effects=p.getStatusEffects().stream().map(e->e.getEffectType().getTranslationKey()+":"+e.getAmplifier()).sorted().toList();
                     c.assertTrue(bosses.get(i).isAlive(),"Native set killed the boss before its attack: "+g.id);nativeHit(bosses.get(i),p,phase);
                     float loss=hp-p.getHealth();c.assertTrue(Float.isFinite(loss)&&loss>=0 && p.getArmor()>=0,"Native armor produced invalid resolved damage: "+g.id);
-                    Map<String,Object> row=new LinkedHashMap<>();row.put("class",clazz.name());row.put("spec",juggernaut?"JUGGERNAUT":clazz==RPGClass.MAGO?"ACCELERATOR":"BASE");row.put("set",g.id);row.put("pieces",ids(g));row.put("phase",phase);row.put("armor",p.getArmor());row.put("toughness",p.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));row.put("hp",hp);row.put("loss",loss);row.put("remaining",p.getHealth());row.put("alive",p.isAlive());row.put("effects",effects);row.put("attributes",attrs);
+                    Map<String,Object> row=new LinkedHashMap<>();row.put("class",clazz.name());row.put("spec",allMageSpecs?(mageBuilds.get(i)==null?"BASE":mageBuilds.get(i).name()):juggernaut?"JUGGERNAUT":clazz==RPGClass.MAGO?"ACCELERATOR":"BASE");row.put("set",g.id);row.put("pieces",ids(g));row.put("phase",phase);row.put("armor",p.getArmor());row.put("toughness",p.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));row.put("hp",hp);row.put("loss",loss);row.put("remaining",p.getHealth());row.put("alive",p.isAlive());row.put("effects",effects);row.put("attributes",attrs);
                     RPGStatsMod.LOGGER.info("RPG_ARMOR_RESULT {}",new com.google.gson.Gson().toJson(row));
                     c.assertTrue(loss>0,"Native attack did not deal confirmed damage: "+clazz+" "+g.id+" phase="+phase);
                     if(clazz==RPGClass.MAGO && g.pieces.size()==4)c.assertTrue(p.isAlive(),"Complete native mage armor died to one reference boss hit: "+g.id+" phase="+phase);
@@ -180,5 +197,11 @@ public final class NativeArmorGameTests {
     public static void mageNativeArmorLaunch(TestContext c){encounter(c,RPGClass.MAGO,false,21);}
     @GameTest(templateName="empty",tickLimit=240)
     public static void mageNativeArmorEruption(TestContext c){encounter(c,RPGClass.MAGO,false,52);}
+    @GameTest(templateName="empty",tickLimit=240)
+    public static void allMageSpecsNativeStrike(TestContext c){encounter(c,RPGClass.MAGO,false,7,true);}
+    @GameTest(templateName="empty",tickLimit=240)
+    public static void allMageSpecsNativeLaunch(TestContext c){encounter(c,RPGClass.MAGO,false,21,true);}
+    @GameTest(templateName="empty",tickLimit=240)
+    public static void allMageSpecsNativeEruption(TestContext c){encounter(c,RPGClass.MAGO,false,52,true);}
     private NativeArmorGameTests(){}
 }

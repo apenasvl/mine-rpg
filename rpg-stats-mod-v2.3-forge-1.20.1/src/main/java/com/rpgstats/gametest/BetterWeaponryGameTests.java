@@ -108,10 +108,26 @@ public final class BetterWeaponryGameTests {
   var shot=new net.minecraft.entity.projectile.ArrowEntity(c.getWorld(),p);
   try {
    com.rpgstats.combat.ArcherShotTracker.beginLaunch(p,weapon);try{c.getWorld().spawnEntity(shot);}finally{com.rpgstats.combat.ArcherShotTracker.endLaunch(p);}
-   target.damage(p.getDamageSources().arrow(shot,p),100);
+   var source=p.getDamageSources().arrow(shot,p);
+   var swapped=new ItemStack(Items.IRON_SWORD);swapped.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","damage")),5);swapped.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","vampirism")),3);p.setStackInHand(Hand.MAIN_HAND,swapped);
+   c.assertTrue(com.rpgstats.compat.BetterWeaponrySustain.projectileDamage(p,10,source)==12,"Damage enchantment did not use the original launch stack");
+   target.damage(source,100);
    var recent=target.getRecentDamageSource();c.assertTrue(recent!=null && recent.isOf(net.minecraft.entity.damage.DamageTypes.ARROW),"Native Damage enchantment converted a projectile to melee");
    c.assertTrue(p.getHealth()==4,"Arrow incorrectly triggered native melee Vampirism");
   }finally{shot.discard();target.discard();TestPlayers.finish(c);}c.complete();
+ }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void armorToughnessBudgetHandlesNativeMultipliers(TestContext c) {
+  if(!ModList.get().isLoaded("irons_spellbooks")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.MAGO;StatsManager.finish(p,s);
+  var slots=new net.minecraft.entity.EquipmentSlot[]{net.minecraft.entity.EquipmentSlot.HEAD,net.minecraft.entity.EquipmentSlot.CHEST,net.minecraft.entity.EquipmentSlot.LEGS,net.minecraft.entity.EquipmentSlot.FEET};var names=new String[]{"helmet","chestplate","leggings","boots"};
+  try {
+   for(int i=0;i<4;i++)p.equipStack(slots[i],new ItemStack(Registries.ITEM.get(new Identifier("irons_spellbooks","wizard_"+names[i]))));p.playerTick();p.tick();
+   var tough=p.getAttributeInstance(net.minecraft.entity.attribute.EntityAttributes.GENERIC_ARMOR_TOUGHNESS);tough.setBaseValue(10.5);
+   tough.addPersistentModifier(new net.minecraft.entity.attribute.EntityAttributeModifier(java.util.UUID.fromString("9c439aba-6827-4e7c-bca5-dad6e173f44f"),"Native multiplicative fixture",.1,net.minecraft.entity.attribute.EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+   for(int i=0;i<5;i++){StatsApplier.apply(p);c.assertTrue(Math.abs(tough.getValue()-12)<.00001,"Armor role bonus exceeded or jittered at multiplicative toughness cap");}
+   for(var slot:slots)p.equipStack(slot,ItemStack.EMPTY);p.playerTick();p.tick();StatsApplier.apply(p);c.assertTrue(Math.abs(tough.getValue()-11.55)<.00001,"Removing RPG armor changed native multiplicative toughness");
+  }finally{TestPlayers.finish(c);}c.complete();
  }
  private static ItemStack ArcherWeapon(net.minecraft.entity.damage.DamageSource source,net.minecraft.server.network.ServerPlayerEntity p){return com.rpgstats.combat.ArcherShotTracker.launchWeapon(source,p);}
  private BetterWeaponryGameTests(){}

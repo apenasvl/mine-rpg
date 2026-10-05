@@ -20,7 +20,16 @@ public final class ClassArmorBonuses {
   double attack=clazz==RPGClass.ASSASSINO?.02*earned:0;
   double tough=clazz==RPGClass.GUERREIRO?.5*earned:clazz==RPGClass.MAGO?.25*earned:0;
   var instance=p.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-  if(instance!=null) {var previous=instance.getModifier(TOUGH);double nativeValue=instance.getValue()-(previous==null?0:previous.getValue());tough=Math.min(tough,Math.max(0,12-nativeValue));}
+  if(instance!=null) {
+   double additive=instance.getBaseValue(),baseMultiplier=0,totalMultiplier=1;
+   for(var m:instance.getModifiers())if(!m.getId().equals(TOUGH))switch(m.getOperation()) {
+    case ADDITION -> additive+=m.getValue();
+    case MULTIPLY_BASE -> baseMultiplier+=m.getValue();
+    case MULTIPLY_TOTAL -> totalMultiplier*=1+m.getValue();
+   }
+   double factor=(1+baseMultiplier)*totalMultiplier;
+   tough=factor>0?Math.min(tough,Math.max(0,(12-additive*factor)/factor)):0;
+  }
   modifier(p,EntityAttributes.GENERIC_MOVEMENT_SPEED,MOVE,move,EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
   modifier(p,EntityAttributes.GENERIC_ATTACK_SPEED,ATTACK,attack,EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
   modifier(p,EntityAttributes.GENERIC_ARMOR_TOUGHNESS,TOUGH,tough,EntityAttributeModifier.Operation.ADDITION);

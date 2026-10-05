@@ -16,6 +16,12 @@ public final class BetterWeaponrySustain {
  private static boolean auditedVersion() {
   return net.minecraftforge.fml.ModList.get().getMods().stream().anyMatch(m->m.getModId().equals("better_weaponry")&&m.getVersion().toString().equals("1.1.3"));
  }
+ public static float projectileDamage(ServerPlayerEntity p,float amount,DamageSource source) {
+  if(!auditedVersion() || !source.isOf(net.minecraft.entity.damage.DamageTypes.ARROW) || amount<=0)return amount;
+  var id=new Identifier("better_weaponry","damage");if(!Registries.ENCHANTMENT.containsId(id))return amount;
+  int level=EnchantmentHelper.getLevel(Registries.ENCHANTMENT.get(id),ArcherShotTracker.launchWeapon(source,p));
+  return amount+2*Math.min(5,Math.max(0,level));
+ }
  public static void confirmedHit(ServerPlayerEntity p,float damage,DamageSource source) {
   if(!auditedVersion() || source.getSource()!=p || damage<=0 || source.isOf(net.minecraft.entity.damage.DamageTypes.THORNS))return;
   if(!Registries.ENCHANTMENT.containsId(VAMPIRISM))return;

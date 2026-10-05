@@ -33,6 +33,13 @@ import net.minecraftforge.fml.common.Mod;
 /** Forge event bus. All game-state writes happen on the logical server. */
 @Mod.EventBusSubscriber(modid=RPGStatsMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public final class ForgeEvents {
+    @SubscribeEvent public static void armorAffinityTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
+        var stack=event.getItemStack();if(!(stack.getItem() instanceof net.minecraft.item.ArmorItem))return;
+        for(var row:new String[][]{{"guerreiro","Guerreiro: +0,5 tenacidade de armadura e +3% resistência a recuo"},{"arqueiro","Arqueiro: +2% movimento"},{"assassino","Assassino: +1% movimento e +2% velocidade de ataque"},{"mago","Mago: +0,25 tenacidade de armadura"}}) {
+            var tag=net.minecraft.registry.tag.TagKey.of(net.minecraft.registry.RegistryKeys.ITEM,new net.minecraft.util.Identifier("rpgstats","equipment/class_"+row[0]));
+            if(stack.isIn(tag))event.getToolTip().add(net.minecraft.text.Text.literal(row[1]+" por peça no nv. 50").formatted(net.minecraft.util.Formatting.AQUA));
+        }
+    }
     @SubscribeEvent public static void commands(RegisterCommandsEvent event) { RPGStatsMod.registerCommands(event); }
     @SubscribeEvent public static void resources(AddReloadListenerEvent event) { DataDrivenRegistry.register(event); }
     @SubscribeEvent public static void started(net.minecraftforge.event.server.ServerStartedEvent event) {

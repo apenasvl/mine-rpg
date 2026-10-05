@@ -14,7 +14,8 @@
     "LegendaryPlayerPowersMixin",
     "LegendaryArmorKeyMixin",
     "LegendaryArmorTickMixin",
-    "BetterWeaponryVampirismMixin"
+    "BetterWeaponryVampirismMixin",
+    "BetterWeaponryProjectileMixin"
   ],
   "client": [
     "CombatRollClientGateMixin",

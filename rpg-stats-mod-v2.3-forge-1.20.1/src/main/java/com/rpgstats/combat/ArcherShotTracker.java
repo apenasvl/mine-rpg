@@ -56,6 +56,16 @@ public final class ArcherShotTracker {
                 || !(projectile.getOwner() instanceof ServerPlayerEntity player)) return;
         // Loaded entities already carry the original weapon and shot, even after a relog.
         if (projectile.getPersistentData().contains(KEY)) return;
+        // Native shurikens are arrow entities, but must retain thrown-weapon affinity.
+        if(net.minecraft.registry.Registries.ENTITY_TYPE.getId(projectile.getType()).getNamespace().equals("better_weaponry")
+                && projectile instanceof net.minecraft.entity.FlyingItemEntity flying) {
+            ItemStack weapon=flying.getStack().copy();
+            if(!net.minecraft.registry.Registries.ITEM.getId(weapon.getItem()).getNamespace().equals("better_weaponry"))return;
+            if(player.getMainHandStack().isOf(weapon.getItem()))weapon=player.getMainHandStack().copy();
+            else if(player.getOffHandStack().isOf(weapon.getItem()))weapon=player.getOffHandStack().copy();
+            NbtCompound shot=new NbtCompound();shot.putLong("tick",event.getLevel().getTime());shot.putUuid("owner",player.getUuid());
+            shot.put("weapon",weapon.writeNbt(new NbtCompound()));shot.putBoolean("thrown",true);projectile.getPersistentData().put(KEY,shot);return;
+        }
         var scope = LAUNCHES.get(player.getUuid());
         if (scope == null || scope.isEmpty()) return;
         ItemStack weapon = scope.peek();
@@ -72,6 +82,7 @@ public final class ArcherShotTracker {
     public static boolean isBowShot(DamageSource source) {
         return source.getSource() instanceof ProjectileEntity projectile
                 && projectile.getPersistentData().contains(KEY)
+                && !projectile.getPersistentData().getCompound(KEY).getBoolean("thrown")
                 && !source.isIn(DamageTypeTags.IS_EXPLOSION) && !source.isIn(DamageTypeTags.IS_FIRE);
     }
 

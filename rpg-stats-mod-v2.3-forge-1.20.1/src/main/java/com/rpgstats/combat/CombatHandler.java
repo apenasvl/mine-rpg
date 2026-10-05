@@ -45,6 +45,7 @@ public final class CombatHandler {
 
     public static float modifyOutgoingDamage(ServerPlayerEntity player, Entity target, float amount, DamageSource source) {
         if (source.isOf(DamageTypes.THORNS)) return amount;
+        amount=com.rpgstats.compat.BetterWeaponrySustain.projectileDamage(player,amount,source);
 
         PlayerStats stats = StatsManager.get(player);
         float weaponAffinity=com.rpgstats.compat.bosses.WeaponAffinity.damageFactor(stats,
@@ -128,11 +129,11 @@ public final class CombatHandler {
         if (attacker instanceof LivingEntity living && !(attacker instanceof PlayerEntity))
             amount *= BossScaler.getDamageMultiplier(living);
 
+        float beforeClassGuards=amount;
         amount = MageCombatHandler.modifyIncomingDamage(player, amount, source);
         if (amount <= 0f) return 0f;
         if (source.isIn(DamageTypeTags.BYPASSES_RESISTANCE)) return amount;
 
-        float beforeClassGuards=amount;
         PlayerStats stats = StatsManager.get(player);
         if (ClassMechanics.handles(stats)) amount = ClassMechanics.modifyIncomingDamage(player, stats, amount, source);
 
