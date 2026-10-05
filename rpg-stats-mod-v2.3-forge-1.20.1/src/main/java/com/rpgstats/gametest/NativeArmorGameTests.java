@@ -23,6 +23,7 @@ public final class NativeArmorGameTests {
     private static final List<String> MODS=List.of("soulsweapons","bosses_of_mass_destruction","legendary_monsters","irons_spellbooks");
     private record Gear(String id,Map<EquipmentSlot,Item> pieces) {}
     private static String family(Identifier id) {
+        if(id.toString().equals("soulsweapons:chaos_robes"))return "soulsweapons:chaos";
         String name=id.getPath().replaceFirst("_(helmet|head|hood|hat|mask|chestplate|chest|robe|leggings|legs|pants|boots|feet)$","");
         name=name.replaceFirst("^(helmet|hood|hat|mask|chestplate|robe|leggings|pants|boots)_","");
         return id.getNamespace()+":"+name;
@@ -32,10 +33,17 @@ public final class NativeArmorGameTests {
         for(var item:Registries.ITEM) {
             var id=Registries.ITEM.getId(item);
             if(!(item instanceof ArmorItem) || !MODS.contains(id.getNamespace()) || (mage!=id.getNamespace().equals("irons_spellbooks")))continue;
+            if(id.toString().equals("irons_spellbooks:wizard_hat") || id.toString().equals("soulsweapons:chaos_crown"))continue;
             var slot=LivingEntity.getPreferredEquipmentSlot(new ItemStack(item));
             c.assertTrue(slot.getType()==EquipmentSlot.Type.ARMOR,"Native armor has no armor slot: "+id);
             var parts=groups.computeIfAbsent(family(id),ignored->new EnumMap<>(EquipmentSlot.class));
             c.assertTrue(parts.put(slot,item)==null,"Ambiguous native set grouping; inspect item identifiers: "+id);
+        }
+        for(var variant:List.of(new String[]{"irons_spellbooks:wizard","irons_spellbooks:wizard_hat"},new String[]{"soulsweapons:chaos","soulsweapons:chaos_crown"})) {
+            var base=groups.get(variant[0]);var item=Registries.ITEM.get(new Identifier(variant[1]));
+            if(base!=null && item instanceof ArmorItem) {
+                var parts=new EnumMap<EquipmentSlot,Item>(EquipmentSlot.class);parts.putAll(base);parts.put(EquipmentSlot.HEAD,item);groups.put(variant[1]+"_variant",parts);
+            }
         }
         return groups.entrySet().stream().map(e->new Gear(e.getKey(),e.getValue())).toList();
     }
@@ -94,7 +102,12 @@ public final class NativeArmorGameTests {
         for(var value:new Object[][]{{"attackCooldown",100},{"specialCooldown",100},{"summonCooldown",100},{"attackStatus",phase-1},{"targetPos",p.getBlockPos()},{"cordsRegistered",true}}) {
             var f=type.getDeclaredField((String)value[0]);f.setAccessible(true);f.set(goal,value[1]);
         }
-        if(phase==52)p.refreshPositionAndAngles(boss.getX()+12,boss.getY(),boss.getZ(),0,0);goal.tick();
+        if(phase==52) {
+            p.refreshPositionAndAngles(boss.getX()+12,boss.getY(),boss.getZ(),0,0);
+            var area=new Box(boss.getX()-18,boss.getY()-8,boss.getZ()-18,boss.getX()+18,boss.getY()+8,boss.getZ()+18);
+            if(!boss.getWorld().getOtherEntities(boss,area).contains(p))throw new AssertionError("Player absent from native eruption entity query; hit cannot be measured");
+        }
+        goal.tick();
     }
     private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase) {
         if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
@@ -108,7 +121,12 @@ public final class NativeArmorGameTests {
             if(!c.getWorld().getForcedChunks().contains(chunk.toLong())){forced.add(chunk);c.getWorld().setChunkForced(chunk.x,chunk.z,true);}
             for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)c.getWorld().setBlockState(pos.add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());
             var boss=(MobEntity)Registries.ENTITY_TYPE.get(new Identifier("soulsweapons:returning_knight")).create(c.getWorld());boss.setAiDisabled(true);boss.setNoGravity(true);
-            boss.refreshPositionAndAngles(pos.getX(),pos.getY(),pos.getZ()+1,180,0);p.refreshPositionAndAngles(pos.getX(),pos.getY(),pos.getZ(),0,0);c.getWorld().spawnEntity(boss);players.add(p);bosses.add(boss);
+            boss.refreshPositionAndAngles(pos.getX(),pos.getY(),pos.getZ()+1,180,0);
+            p.refreshPositionAndAngles(phase==52?boss.getX()+12:pos.getX(),pos.getY(),phase==52?boss.getZ():pos.getZ(),0,0);
+            var playerChunk=new ChunkPos(p.getBlockPos());
+            if(!c.getWorld().getForcedChunks().contains(playerChunk.toLong())){forced.add(playerChunk);c.getWorld().setChunkForced(playerChunk.x,playerChunk.z,true);}
+            for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)c.getWorld().setBlockState(p.getBlockPos().add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());
+            c.assertTrue(c.getWorld().spawnEntity(boss),"Native armor boss fixture did not spawn");players.add(p);bosses.add(boss);
         }
         for(int tick=1;tick<100;tick++)c.runAtTick(tick,()->players.forEach(ServerPlayerEntity::playerTick));
         c.runAtTick(100,()->{
