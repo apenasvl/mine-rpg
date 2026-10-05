@@ -46,6 +46,7 @@ public class ClassSelectionTests {
         check(returning.confirm(8101,requests::add),"A retained pending page must still allow explicit retry after timeout");
         check(choices.forPage("affinity").selected().equals("BERSERKER"),"Independent choice previews must remain available");
 
+        check(ClassSelectionLayout.sourceCard(0).height() >= 160, "Illustrated cards need room for a large emblem, title and readable tagline");
         int[][] sizes = {{960,540},{640,360},{480,270},{320,240},{427,240},{854,480},{1280,360}};
         for (var size : sizes) {
             var layout = ClassSelectionLayout.fit(size[0], size[1]);
@@ -64,7 +65,7 @@ public class ClassSelectionTests {
             for (var card : previous) check(!confirm.overlaps(card), "Confirmation must not overlap a class");
             var a = layout.card(0); var b = layout.card(1); var c = layout.card(2);
             check(a.x() < b.x() && b.x() < c.x() && a.y() == c.y(), "Compact class previews must share a row");
-            var detail = layout.project(new ClassSelectionLayout.Rect(34,188,732,168));
+            var detail = layout.project(new ClassSelectionLayout.Rect(34,278,732,94));
             for(var card : previous) check(!detail.overlaps(card), "The selected detail sheet must not cover a class hitbox");
             check(!detail.overlaps(confirm), "Details must not cover confirmation");
         }

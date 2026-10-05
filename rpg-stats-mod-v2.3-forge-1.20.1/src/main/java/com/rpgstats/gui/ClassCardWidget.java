@@ -34,12 +34,14 @@ public final class ClassCardWidget extends ButtonWidget {
         var font=MinecraftClient.getInstance().textRenderer;
         CosmicSelectionArt.begin(c,new ClassSelectionLayout.Rect(getX(),getY(),width,height),source);
         boolean selected=selection.selected()==clazz;
-        int accent=RpgUiTheme.accent(clazz);
-        CleanRpgUi.panel(c,0,0,source.width(),source.height(),selected||hovered||isFocused()?accent:CleanRpgUi.BORDER);
-        if(selected) c.fill(1,source.height()-3,source.width()-1,source.height()-1,accent);
-        RpgUiTheme.drawIcon(c,CleanRpgUi.icon(clazz),12,14,21,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL));
-        CosmicSelectionArt.label(c,font,clazz.display,41,17,1.2f,CleanRpgUi.TEXT);
-        CosmicSelectionArt.label(c,font,tagline(clazz),12,49,1f,CleanRpgUi.MUTED);
+        int accent=CleanRpgUi.accent(clazz);
+        int fill=RpgUiTheme.mix(CleanRpgUi.PANEL,accent,selected?.60f:.28f);
+        int edge=selected||hovered||isFocused()?RpgUiTheme.darken(accent,.35f):CleanRpgUi.BORDER;
+        CleanRpgUi.surface(c,0,0,source.width(),source.height(),fill,edge);
+        CartoonClassArt.emblem(c,clazz,49,14,76);
+        CosmicSelectionArt.centered(c,font,clazz.display.toUpperCase(java.util.Locale.ROOT),source.width()/2,103,1.45f,CleanRpgUi.TEXT,source.width()-14);
+        CosmicSelectionArt.centered(c,font,tagline(clazz),source.width()/2,128,1f,CleanRpgUi.MUTED,source.width()-16);
+        CosmicSelectionArt.centered(c,font,selected?"SELECIONADO":"VER CLASSE",source.width()/2,149,.8f,CleanRpgUi.MUTED,source.width()-16);
         c.getMatrices().pop();
     }
     public List<Text> houseTooltip(double x,double y) {return List.of();}

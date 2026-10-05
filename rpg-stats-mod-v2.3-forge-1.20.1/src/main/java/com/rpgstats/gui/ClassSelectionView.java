@@ -37,18 +37,18 @@ public final class ClassSelectionView {
         CosmicSelectionArt.centered(c,font,"ESCOLHA SUA CLASSE",400,36,2f,CleanRpgUi.TEXT,730);
         CosmicSelectionArt.centered(c,font,"Compare os estilos. A escolha só acontece ao confirmar.",400,70,1.2f,CleanRpgUi.MUTED,730);
         var chosen=selection.selected();
-        int accent=chosen==null?CleanRpgUi.BORDER:RpgUiTheme.accent(chosen);
-        CleanRpgUi.panel(c,34,188,732,168,accent);
-        if(chosen==null) CosmicSelectionArt.centered(c,font,"Selecione uma classe para ver sua ficha.",400,256,1.4f,CleanRpgUi.MUTED,700);
+        int accent=chosen==null?CleanRpgUi.BORDER:CleanRpgUi.accent(chosen);
+        CleanRpgUi.panel(c,34,278,732,94,accent);
+        if(chosen==null) CosmicSelectionArt.centered(c,font,"Selecione uma classe para ver sua ficha.",400,315,1.4f,CleanRpgUi.MUTED,700);
         else {
-            RpgUiTheme.drawIcon(c,CleanRpgUi.icon(chosen),57,214,45,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL));
-            CosmicSelectionArt.label(c,font,chosen.display.toUpperCase(java.util.Locale.ROOT),122,211,1.8f,CleanRpgUi.TEXT);
-            CosmicSelectionArt.wrapped(c,font,ClassCardWidget.description(chosen),122,243,1.3f,CleanRpgUi.MUTED,600,3);
-            CosmicSelectionArt.label(c,font,"RECURSO  "+chosen.resourceName(),58,307,1.2f,CleanRpgUi.TEXT);
-            CosmicSelectionArt.label(c,font,"ATRIBUTOS  "+ClassCardWidget.attributes(chosen),300,307,1.2f,CleanRpgUi.TEXT);
-            CosmicSelectionArt.label(c,font,"Casa no nível 10 · Especialização no 25 · Afinidade opcional no 30 · Requer Maestria",58,334,1f,CleanRpgUi.MUTED);
+            CartoonClassArt.emblem(c,chosen,48,295,49);
+            CosmicSelectionArt.label(c,font,chosen.display.toUpperCase(java.util.Locale.ROOT),111,289,1.4f,CleanRpgUi.TEXT);
+            CosmicSelectionArt.wrapped(c,font,ClassCardWidget.description(chosen),111,309,1.1f,CleanRpgUi.MUTED,632,2);
+            CosmicSelectionArt.label(c,font,"RECURSO  "+chosen.resourceName(),111,344,1f,CleanRpgUi.TEXT);
+            CosmicSelectionArt.label(c,font,"ATRIBUTOS  "+ClassCardWidget.attributes(chosen),330,344,1f,CleanRpgUi.TEXT);
+
         }
-        String hint=selection.pending()?"Aguardando o servidor...":selection.timedOut()?"Sem resposta. Confirme para tentar novamente.":"Uma classe, cinco Casas possíveis. Sua build evolui com você.";
+        String hint=selection.pending()?"Aguardando o servidor...":selection.timedOut()?"Sem resposta. Confirme para tentar novamente.":"Casa no nível 10 · Especialização no 25 · Afinidade no 30";
         CosmicSelectionArt.wrapped(c,font,hint,34,392,1.1f,CleanRpgUi.MUTED,520,2);
         c.getMatrices().pop();
     }

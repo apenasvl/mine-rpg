@@ -26,7 +26,7 @@ final class CosmicSelectionArt {
         context.getMatrices().push();
         context.getMatrices().translate(x, y, 0);
         context.getMatrices().scale(size, size, 1);
-        context.drawTextWithShadow(font, Text.literal(value), 0, 0, color);
+        context.drawText(font, Text.literal(value), 0, 0, color, false);
         context.getMatrices().pop();
     }
 
@@ -43,7 +43,7 @@ final class CosmicSelectionArt {
         context.getMatrices().scale(size, size, 1);
         var lines = font.wrapLines(Text.literal(value), (int) (width / size));
         for (int i = 0; i < Math.min(maxLines, lines.size()); i++) {
-            context.drawTextWithShadow(font, lines.get(i), 0, i * 10, color);
+            context.drawText(font, lines.get(i), 0, i * 10, color, false);
         }
         context.getMatrices().pop();
     }

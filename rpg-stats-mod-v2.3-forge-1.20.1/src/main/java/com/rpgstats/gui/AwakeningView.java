@@ -24,10 +24,10 @@ public final class AwakeningView {
         update();c.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
         c.getMatrices().push();c.getMatrices().translate(layout.x(),layout.y(),0);c.getMatrices().scale((float)layout.scale(),(float)layout.scale(),1);
         var font=MinecraftClient.getInstance().textRenderer;
-        CleanRpgUi.panel(c,160,54,480,342,CleanRpgUi.BORDER);
+        CleanRpgUi.panel(c,160,54,480,342,0xFFB9ACDE);
         CosmicSelectionArt.centered(c,font,"DESPERTE SUA ESSÊNCIA",400,87,2f,CleanRpgUi.TEXT,450);
         CosmicSelectionArt.centered(c,font,"O primeiro passo da sua jornada.",400,125,1.2f,CleanRpgUi.MUTED,450);
-        RpgUiTheme.drawIcon(c,"star",361,175,78,0xFF8EBBFF);
+        CartoonClassArt.essence(c,351,167,98);
         CosmicSelectionArt.centered(c,font,"+3 ao recurso da classe que você escolher.",400,285,1.2f,CleanRpgUi.TEXT,450);
         String hint=request.pending()?"Aguardando o servidor...":request.timedOut()?"Sem resposta. Tente novamente.":"Gratuito · Uma única vez";
         CosmicSelectionArt.centered(c,font,hint,400,374,1f,CleanRpgUi.MUTED,450);

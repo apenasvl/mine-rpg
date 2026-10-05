@@ -586,27 +586,27 @@ public class StatsScreen extends Screen {
     private void renderClassSelection(DrawContext context) {
         PlayerStats stats = ClientStatsStore.stats;
         Layout l = layout();
-        RpgUiTheme.panel(context, l.panelX, l.panelY, l.panelW, l.panelH, RpgUiTheme.PANEL, RpgUiTheme.BORDER);
+        CleanRpgUi.surface(context, l.panelX, l.panelY, l.panelW, l.panelH, CleanRpgUi.PANEL, RpgUiTheme.BORDER);
         context.drawCenteredTextWithShadow(textRenderer, Text.literal(stats.awakened ? "ESCOLHA SUA CLASSE" : "DESPERTE SEU POTENCIAL"),
-                width / 2, l.panelY + 25, RpgUiTheme.TEXT);
+                width / 2, l.panelY + 25, CleanRpgUi.TEXT);
         context.drawCenteredTextWithShadow(textRenderer, Text.literal(stats.awakened ? "Uma classe, uma Casa principal e uma afinidade opcional." : "Despertar concede +3 ao recurso da classe que escolher."),
-                width / 2, l.panelY + 43, RpgUiTheme.MUTED);
+                width / 2, l.panelY + 43, CleanRpgUi.MUTED);
     }
 
     private void renderSubclassSelection(DrawContext context, RPGClass clazz) {
         Layout l = layout();
         int accent = RpgUiTheme.accent(clazz);
-        int accentText = RpgUiTheme.accessibleAccent(accent, RpgUiTheme.PANEL);
-        RpgUiTheme.panel(context, l.panelX, l.panelY, l.panelW, l.panelH, RpgUiTheme.PANEL, RpgUiTheme.BORDER);
+        int accentText = RpgUiTheme.accessibleAccent(accent, CleanRpgUi.PANEL);
+        CleanRpgUi.surface(context, l.panelX, l.panelY, l.panelW, l.panelH, CleanRpgUi.PANEL, RpgUiTheme.BORDER);
         context.fill(l.panelX, l.panelY, l.panelX + l.panelW, l.panelY + 4, accent);
         context.drawCenteredTextWithShadow(textRenderer, Text.literal("ESPECIALIZACAO DE " + clazz.display.toUpperCase()),
-                width / 2, l.panelY + 27, RpgUiTheme.TEXT);
+                width / 2, l.panelY + 27, CleanRpgUi.TEXT);
         context.drawCenteredTextWithShadow(textRenderer,
                 Text.literal("Nivel " + StatsManager.SUBCLASS_LEVEL + " alcancado · escolha um caminho para aprofundar sua build."),
                 width / 2, l.panelY + 47, accentText);
         context.drawCenteredTextWithShadow(textRenderer,
                 Text.literal("Estas classes ainda usam a arvore v1.4 e serao migradas para o novo modelo depois do Mago."),
-                width / 2, l.panelY + 66, RpgUiTheme.MUTED);
+                width / 2, l.panelY + 66, CleanRpgUi.MUTED);
     }
 
     private void renderCharacterPage(DrawContext context, PlayerStats stats, int mouseX, int mouseY) {
@@ -614,7 +614,7 @@ public class StatsScreen extends Screen {
         int accent = RpgUiTheme.themedAccent(stats.clazz, stats.path, stats.affinityHouse);
         int primary = RpgUiTheme.primaryAccent(stats.clazz, stats.path);
         int affinity = RpgUiTheme.affinityAccent(stats.affinityHouse);
-        int panel = RpgUiTheme.panelTint(RpgUiTheme.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.07f);
+        int panel = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.07f);
         int border = RpgUiTheme.alpha(RpgUiTheme.lighten(accent, 0.08f), 220);
         CleanRpgUi.panel(context,l.panelX,l.panelY,l.panelW,l.panelH,CleanRpgUi.BORDER);
         CleanRpgUi.panel(context,l.contentX-5,l.tabsY-4,l.contentW+10,l.panelY+l.panelH-l.tabsY-6,CleanRpgUi.BORDER);
@@ -637,23 +637,23 @@ public class StatsScreen extends Screen {
 
     private void renderHeader(DrawContext context, Layout l, PlayerStats stats, int accent) {
         if(illustratedScreen()) {
-            RpgUiTheme.drawIcon(context,CleanRpgUi.icon(stats.clazz),l.panelX+17,l.panelY+17,33,RpgUiTheme.accessibleAccent(RpgUiTheme.accent(stats.clazz),CleanRpgUi.PANEL));
-            CosmicSelectionArt.label(context,textRenderer,stats.clazz.display.toUpperCase(java.util.Locale.ROOT),l.panelX+69,l.panelY+9,2f,RpgUiTheme.accessibleAccent(accent,RpgUiTheme.classNeutral(stats.clazz)));
+            CartoonClassArt.emblem(context,stats.clazz,l.panelX+13,l.panelY+10,43);
+            CosmicSelectionArt.label(context,textRenderer,stats.clazz.display.toUpperCase(java.util.Locale.ROOT),l.panelX+69,l.panelY+9,2f,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL));
             String house=stats.path==null?"Sem Casa":shortPathName(stats.path);
             String spec=stats.specialization==null?"Sem especialização":stats.specialization.display;
-            drawTrimmed(context,house+" · "+spec,l.panelX+69,l.panelY+30,RpgUiTheme.TEXT,330);
-            drawTrimmed(context,buildFlavor(stats),l.panelX+69,l.panelY+44,RpgUiTheme.MUTED,330);
+            drawTrimmed(context,house+" · "+spec,l.panelX+69,l.panelY+30,CleanRpgUi.TEXT,330);
+            drawTrimmed(context,buildFlavor(stats),l.panelX+69,l.panelY+44,CleanRpgUi.MUTED,330);
             int x=l.panelX+416, w=l.panelW-434;
-            drawTrimmed(context,"Nível "+stats.level+" / "+StatsManager.MAX_LEVEL,x,l.panelY+22,RpgUiTheme.TEXT,w);
+            drawTrimmed(context,"Nível "+stats.level+" / "+StatsManager.MAX_LEVEL,x,l.panelY+22,CleanRpgUi.TEXT,w);
             String points="PA "+stats.statPoints+" · PH "+stats.skillPoints;
-            context.drawTextWithShadow(textRenderer,Text.literal(points),l.panelX+l.panelW-16-textRenderer.getWidth(points),l.panelY+9,RpgUiTheme.WARNING);
+            context.drawTextWithShadow(textRenderer,Text.literal(points),l.panelX+l.panelW-16-textRenderer.getWidth(points),l.panelY+9,0xFF91552E);
             int needed=stats.level>=StatsManager.MAX_LEVEL?Math.max(1,stats.xp):PlayerStats.xpToNext(stats.level);
             RpgUiTheme.bar(context,x,l.panelY+47,w,7,stats.level>=StatsManager.MAX_LEVEL?1f:Math.min(1f,stats.xp/(float)Math.max(1,needed)),accent);
             String xp=stats.level>=StatsManager.MAX_LEVEL?"NÍVEL MÁXIMO":stats.xp+" / "+needed+" ECOS";
-            context.drawTextWithShadow(textRenderer,Text.literal(xp),x+w-textRenderer.getWidth(xp),l.panelY+35,RpgUiTheme.MUTED);
+            context.drawTextWithShadow(textRenderer,Text.literal(xp),x+w-textRenderer.getWidth(xp),l.panelY+35,CleanRpgUi.MUTED);
             return;
         }
-        int headerBg = RpgUiTheme.panelTint(RpgUiTheme.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.07f);
+        int headerBg = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.07f);
         int accentText = RpgUiTheme.accessibleAccent(accent, headerBg);
         String progression;
         if (stats.path != null || RPGPath.forClass(stats.clazz).size() > 0) {
@@ -668,14 +668,14 @@ public class StatsScreen extends Screen {
         int leftWidth = Math.max(80, right - left - 116);
         drawTrimmed(context, stats.clazz.display + "  " + progression, left, l.panelY + 13, accentText, leftWidth);
 
-        drawTrimmed(context, buildFlavor(stats), left, l.panelY + 27, RpgUiTheme.MUTED, leftWidth);
+        drawTrimmed(context, buildFlavor(stats), left, l.panelY + 27, CleanRpgUi.MUTED, leftWidth);
 
         String level = "NV " + stats.level + "/" + StatsManager.MAX_LEVEL;
-        context.drawTextWithShadow(textRenderer, Text.literal(level), right - textRenderer.getWidth(level), l.panelY + 13, RpgUiTheme.TEXT);
+        context.drawTextWithShadow(textRenderer, Text.literal(level), right - textRenderer.getWidth(level), l.panelY + 13, CleanRpgUi.TEXT);
 
         String points = "PA " + stats.statPoints + " · PH " + stats.skillPoints;
         context.drawTextWithShadow(textRenderer, Text.literal(points), right - textRenderer.getWidth(points), l.panelY + 27,
-                (stats.statPoints > 0 || stats.skillPoints > 0) ? RpgUiTheme.WARNING : RpgUiTheme.MUTED);
+                (stats.statPoints > 0 || stats.skillPoints > 0) ? 0xFF91552E : CleanRpgUi.MUTED);
 
         int xpX = l.panelX + 13;
         int xpY = l.panelY + 47;
@@ -690,7 +690,7 @@ public class StatsScreen extends Screen {
     private void renderSidebar(DrawContext context, Layout l, PlayerStats stats, int accent, int mouseX, int mouseY) {
         int primary = RpgUiTheme.primaryAccent(stats.clazz, stats.path);
         int affinity = RpgUiTheme.affinityAccent(stats.affinityHouse);
-        int panel = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.09f);
+        int panel = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.09f);
         CleanRpgUi.panel(context,l.sidebarX,l.sidebarY,l.sidebarW,l.sidebarH,CleanRpgUi.BORDER);
 
         int pad = 8;
@@ -735,17 +735,17 @@ public class StatsScreen extends Screen {
 
         context.fill(x, slotY, x + w, slotY + 1, RpgUiTheme.BORDER_SOFT);
         context.drawCenteredTextWithShadow(textRenderer, "ATIVA · SLOT " + ACTIVE_KEYS[activeEquipSlot],
-                l.sidebarX + l.sidebarW / 2, slotY + 7, RpgUiTheme.MUTED);
+                l.sidebarX + l.sidebarW / 2, slotY + 7, CleanRpgUi.MUTED);
 
         String activeId = stats.activeSlot(activeEquipSlot);
         SkillNode active = StatsManager.findNode(stats, activeId);
         int activeColor = active == null ? RpgUiTheme.DIM : accent;
         int activeY = slotY + 19;
         int cardH = 30;
-        int activeBg = active == null ? 0xD81C2432 : RpgUiTheme.alpha(RpgUiTheme.darken(accent, 0.62f), 220);
-        RpgUiTheme.panel(context, x, activeY, w, cardH, activeBg, activeColor);
+        int activeBg = RpgUiTheme.mix(CleanRpgUi.PANEL,accent,.18f);
+        CleanRpgUi.surface(context, x, activeY, w, cardH, activeBg, activeColor);
         String activeName = active == null ? "Nenhuma equipada" : active.name();
-        int activeTitleColor = active == null ? RpgUiTheme.MUTED
+        int activeTitleColor = active == null ? CleanRpgUi.MUTED
                 : RpgUiTheme.themedText(RpgUiTheme.composite(activeBg, panel), activeColor);
         drawCenteredTrimmed(context, activeName, x + w / 2, activeY + 5,
                 activeTitleColor, w - 8);
@@ -783,7 +783,7 @@ public class StatsScreen extends Screen {
     private void renderAbilityDetailPanel(DrawContext context, PlayerStats stats, DetailTarget target,
                                           int x, int y, int w, int h, int accent) {
         int bottom = y + h;
-        int detailBg = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.09f);
+        int detailBg = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.09f);
         int detailAccent = RpgUiTheme.accessibleAccent(accent, detailBg);
         context.drawTextWithShadow(textRenderer, Text.literal("DETALHES DA HABILIDADE"), x, y, detailAccent);
         y += 13;
@@ -800,7 +800,7 @@ public class StatsScreen extends Screen {
 
         int statusColor = slot >= 0 ? detailAccent
                 : unlocked ? RpgUiTheme.accessibleAccent(RpgUiTheme.SUCCESS, detailBg)
-                : available ? RpgUiTheme.accessibleAccent(RpgUiTheme.WARNING, detailBg) : RpgUiTheme.DIM;
+                : available ? RpgUiTheme.accessibleAccent(0xFF91552E, detailBg) : RpgUiTheme.DIM;
         String status = slot >= 0 ? "EQUIPADA · " + ACTIVE_KEYS[slot]
                 : unlocked ? "DESBLOQUEADA"
                 : available ? "DISPONIVEL" : "BLOQUEADA";
@@ -853,7 +853,7 @@ public class StatsScreen extends Screen {
         for(int i=choiceScroll;i<Math.min(lines.size(),choiceScroll+visible);i++) drawTrimmed(c,lines.get(i),x+12,y+29+(i-choiceScroll)*10,CleanRpgUi.MUTED,leftW);
         if(page==Page.AFFINITY) {
             int rx=x+w/2+6,rw=w/2-18;
-            drawTrimmed(c,"CUSTOS E PENALIDADES",rx,y+29,RpgUiTheme.WARNING,rw);
+            drawTrimmed(c,"CUSTOS E PENALIDADES",rx,y+29,0xFF91552E,rw);
             String penalty=HouseRules.penaltyText(RPGPath.valueOf(selected.id));
             int py=y+44;
             for(String line:wrapText(penalty,rw)) {if(py+9>y+h-22) break;drawTrimmed(c,line,rx,py,CleanRpgUi.MUTED,rw);py+=10;}
@@ -861,7 +861,7 @@ public class StatsScreen extends Screen {
         }
         if(lines.size()>visible) drawTrimmed(c,"Roda: ver todos os talentos e efeitos",x+12,y+h-17,RpgUiTheme.DIM,leftW);
         String status=choice.pending()?"Aguardando o servidor...":choice.timedOut()?"Sem resposta. Confirme novamente.":error.isEmpty()?"Pronto para confirmar.":error;
-        drawTrimmed(c,status,l.contentX+3,l.contentY+l.contentH-20,error.isEmpty()?CleanRpgUi.MUTED:RpgUiTheme.WARNING,l.contentW-192);
+        drawTrimmed(c,status,l.contentX+3,l.contentY+l.contentH-20,error.isEmpty()?CleanRpgUi.MUTED:0xFF91552E,l.contentW-192);
     }
 
     private void drawSidebarResource(DrawContext context, RPGClass clazz, float value, float max, int x, int y, int w) {
@@ -870,7 +870,7 @@ public class StatsScreen extends Screen {
         String label = clazz.resourceName();
         context.drawTextWithShadow(textRenderer, Text.literal(label), x, y, color);
         String values = (int) value + "/" + (int) max;
-        context.drawTextWithShadow(textRenderer, Text.literal(values), x + w - textRenderer.getWidth(values), y, RpgUiTheme.MUTED);
+        context.drawTextWithShadow(textRenderer, Text.literal(values), x + w - textRenderer.getWidth(values), y, CleanRpgUi.MUTED);
         float ratio = max <= 0 ? 0f : value / max;
         RpgUiTheme.bar(context, x, y + 10, w, 6, ratio, color);
     }
@@ -881,7 +881,7 @@ public class StatsScreen extends Screen {
             Stat stat = Stat.values()[i];
             Rect r = attributeRect(l, i);
             int color = statColor(stat);
-            RpgUiTheme.panel(context, r.x, r.y, r.w, r.h, RpgUiTheme.PANEL_SOFT, RpgUiTheme.BORDER_SOFT);
+            CleanRpgUi.surface(context, r.x, r.y, r.w, r.h, CleanRpgUi.PANEL, RpgUiTheme.BORDER_SOFT);
             context.fill(r.x + 1, r.y + 1, r.x + 4, r.bottom() - 1, color);
 
             int base = stats.stats.get(stat);
@@ -889,16 +889,16 @@ public class StatsScreen extends Screen {
             int iconSize = Math.min(26, r.h - 10);
             int iconX = r.x + 8;
             int iconY = r.y + (r.h - iconSize) / 2;
-            RpgUiTheme.panel(context, iconX, iconY, iconSize, iconSize, RpgUiTheme.alpha(color, 60), color);
+            CleanRpgUi.surface(context, iconX, iconY, iconSize, iconSize, RpgUiTheme.alpha(color, 60), color);
             context.drawCenteredTextWithShadow(textRenderer, statAbbr(stat), iconX + iconSize / 2, iconY + (iconSize - 8) / 2, color);
 
             int textX = iconX + iconSize + 8;
-            context.drawTextWithShadow(textRenderer, Text.literal(stat.display), textX, r.y + 6, RpgUiTheme.TEXT);
+            context.drawTextWithShadow(textRenderer, Text.literal(stat.display), textX, r.y + 6, CleanRpgUi.TEXT);
             String amount = total == base ? String.valueOf(base) : base + "  (" + total + ")";
             int amountX = textX + Math.min(112, textRenderer.getWidth(stat.display) + 12);
             context.drawTextWithShadow(textRenderer, Text.literal("Base/total: " + amount), amountX, r.y + 6,
                     total > base ? RpgUiTheme.SUCCESS : color);
-            drawTrimmed(context, statDescription(stat), textX, r.y + 19, RpgUiTheme.MUTED, Math.max(30, r.w - (textX - r.x) - 49));
+            drawTrimmed(context, statDescription(stat), textX, r.y + 19, CleanRpgUi.MUTED, Math.max(30, r.w - (textX - r.x) - 49));
 
             if (r.h >= 40) {
                 int barX = textX;
@@ -912,12 +912,12 @@ public class StatsScreen extends Screen {
                 ? "Voce tem " + stats.statPoints + " ponto(s) de atributo para distribuir."
                 : "Atributos base + bonus verdes das arvores desbloqueadas.";
         context.drawTextWithShadow(textRenderer, Text.literal(tip), l.contentX + 3, l.contentY + 1,
-                stats.statPoints > 0 ? RpgUiTheme.WARNING : RpgUiTheme.DIM);
+                stats.statPoints > 0 ? 0xFF91552E : RpgUiTheme.DIM);
     }
 
     private void renderPathSelectionBackground(DrawContext context, Layout l, PlayerStats stats) {
         int accent = RpgUiTheme.accent(stats.clazz);
-        int contentBg = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
+        int contentBg = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
         int accentText = RpgUiTheme.accessibleAccent(accent, contentBg);
         String mastery = stats.clazz.nodes.get(stats.clazz.nodes.size() - 1).id();
         boolean unlocked = stats.unlockedNodes.contains(mastery);
@@ -926,24 +926,24 @@ public class StatsScreen extends Screen {
                 ? "Compare os estilos abaixo. Passe o mouse para ler todos os detalhes."
                 : pathUnlockRequirement(stats);
         context.drawTextWithShadow(textRenderer, Text.literal(state), l.contentX + 3, l.contentY + 16,
-                unlocked ? RpgUiTheme.MUTED : RpgUiTheme.WARNING);
+                unlocked ? CleanRpgUi.MUTED : 0xFF91552E);
     }
 
     private void renderSpecializationSelectionBackground(DrawContext context, Layout l, PlayerStats stats) {
-        int contentBg = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
+        int contentBg = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
         int specAccent = stats.path == null ? RpgUiTheme.DIM
                 : RpgUiTheme.accessibleAccent(pathColor(stats.path), contentBg);
         context.drawTextWithShadow(textRenderer, Text.literal("ESCOLHA SEU RAMO FINAL"), l.contentX + 3, l.contentY + 2,
                 specAccent);
         if (stats.path == null) {
-            context.drawTextWithShadow(textRenderer, Text.literal("Escolha sua Casa primeiro."), l.contentX + 3, l.contentY + 17, RpgUiTheme.WARNING);
+            context.drawTextWithShadow(textRenderer, Text.literal("Escolha sua Casa primeiro."), l.contentX + 3, l.contentY + 17, 0xFF91552E);
             return;
         }
         boolean mastery = stats.unlockedNodes.contains(pathMasteryNode(stats.path));
         String line = mastery ? "Tres estilos finais. Passe o mouse para comparar antes de escolher."
                 : "Complete a Maestria da Casa antes de escolher uma especializacao.";
         context.drawTextWithShadow(textRenderer, Text.literal(line), l.contentX + 3, l.contentY + 17,
-                mastery ? RpgUiTheme.MUTED : RpgUiTheme.WARNING);
+                mastery ? CleanRpgUi.MUTED : 0xFF91552E);
     }
 
     private void renderTreeBackground(DrawContext context, Layout l, PlayerStats stats) {
@@ -965,13 +965,13 @@ public class StatsScreen extends Screen {
         } else {
             title = stats.clazz == RPGClass.MAGO ? "MAGO · NUCLEO ARCANO" : stats.clazz.display.toUpperCase() + " · ARVORE BASE";
         }
-        int contentBg = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
+        int contentBg = RpgUiTheme.panelTint(CleanRpgUi.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
         int titleColor = RpgUiTheme.accessibleAccent(accent, contentBg);
         String right = stats.skillPoints + " PH";
         drawTrimmed(context, title, l.contentX + 3, l.contentY + 2, titleColor,
                 l.contentW - textRenderer.getWidth(right) - 16);
         context.drawTextWithShadow(textRenderer, Text.literal(right), l.contentX + l.contentW - textRenderer.getWidth(right),
-                l.contentY + 2, stats.skillPoints > 0 ? RpgUiTheme.WARNING : RpgUiTheme.DIM);
+                l.contentY + 2, stats.skillPoints > 0 ? 0xFF91552E : RpgUiTheme.DIM);
 
         String help = page == Page.AFFINITY
                 ? "Até 4 talentos · +custo "+clean(HouseRules.surcharge(stats)*100)+"% · +dano recebido "+clean(HouseRules.vulnerability(stats)*100)+"% · -dano "+clean(HouseRules.offensePenalty(stats)*100)+"%"
@@ -991,7 +991,7 @@ public class StatsScreen extends Screen {
 
         if (page == Page.AFFINITY && stats.affinityHouse == null) {
             context.drawCenteredTextWithShadow(textRenderer, "Cada Casa oferece talentos próprios com penalidades.",
-                    l.contentX + l.contentW / 2, l.contentY + l.contentH / 2, RpgUiTheme.MUTED);
+                    l.contentX + l.contentW / 2, l.contentY + l.contentH / 2, CleanRpgUi.MUTED);
         }
     }
 
