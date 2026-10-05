@@ -169,6 +169,9 @@ public final class CombatHandler {
           } else if(stats.clazz==RPGClass.ARQUEIRO || stats.clazz==RPGClass.ASSASSINO) {
               int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
               guarded=com.rpgstats.balance.ClassBalance.mobileBossDamage(beforeClassGuards,guarded,stats.level,tenacity);
+          } else if(stats.clazz==RPGClass.MAGO) {
+              int tenacity=stats.totalStats().getOrDefault(Stat.TENACIDADE,0);
+              guarded=com.rpgstats.balance.ClassBalance.mageBossDamage(beforeClassGuards,guarded,stats.level,tenacity);
           }
         }
         return guarded*(1f+HouseRules.vulnerability(stats));

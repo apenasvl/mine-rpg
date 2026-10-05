@@ -83,5 +83,36 @@ public final class BetterWeaponryGameTests {
    c.assertTrue(Math.abs(p.getAttributeValue(move)-bare)<.00001,"Armor role bonus remained after unequipping");
   }finally{TestPlayers.finish(c);}c.complete();
  }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void nativeShurikenKeepsItsAffinityAfterWeaponSwap(TestContext c) {
+  if(!ModList.get().isLoaded("better_weaponry")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.GUERREIRO;StatsManager.finish(p,s);
+  var weapon=new ItemStack(Registries.ITEM.get(new Identifier("better_weaponry","diamond_shuriken")));p.setStackInHand(Hand.MAIN_HAND,weapon);
+  net.minecraft.entity.Entity raw=null;
+  try {
+   var cls=Class.forName("betterweaponry.entity.DiamondShurikenEntityEntity");var shoot=java.util.Arrays.stream(cls.getMethods()).filter(m->m.getName().equals("shoot")&&m.getParameterCount()==3).findFirst().orElseThrow();
+   raw=(net.minecraft.entity.Entity)shoot.invoke(null,c.getWorld(),p,p.getRandom());
+   var shot=(net.minecraft.entity.projectile.PersistentProjectileEntity)raw;var source=p.getDamageSources().arrow(shot,p);
+   p.setStackInHand(Hand.MAIN_HAND,new ItemStack(Items.IRON_SWORD));
+   c.assertTrue(ArcherWeapon(source,p).isOf(weapon.getItem()),"Native thrown weapon identity was lost after swapping");
+   c.assertTrue(Math.abs(WeaponAffinity.damageFactor(StatsManager.get(p),ArcherWeapon(source,p))-.625f)<.0001,"Weapon swap removed shuriken off-class penalty");
+   c.assertTrue(!com.rpgstats.combat.ArcherShotTracker.isBowShot(source),"Native shuriken incorrectly acquired bow abilities");
+  }catch(ReflectiveOperationException e){throw new AssertionError(e);}finally{if(raw!=null)raw.discard();TestPlayers.finish(c);}c.complete();
+ }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void nativeDamageEnchantmentPreservesArrowAndCannotTriggerMeleeHealing(TestContext c) {
+  if(!ModList.get().isLoaded("better_weaponry")){c.complete();return;}
+  var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.level=50;s.clazz=RPGClass.GUERREIRO;StatsManager.finish(p,s);
+  var weapon=new ItemStack(Items.BOW);weapon.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","damage")),1);weapon.addEnchantment(Registries.ENCHANTMENT.get(new Identifier("better_weaponry","vampirism")),3);p.setStackInHand(Hand.MAIN_HAND,weapon);p.setHealth(4);
+  var target=EntityType.ZOMBIE.create(c.getWorld());target.setAiDisabled(true);target.getAttributeInstance(net.minecraft.entity.attribute.EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(100000);target.setHealth(100000);c.getWorld().spawnEntity(target);
+  var shot=new net.minecraft.entity.projectile.ArrowEntity(c.getWorld(),p);
+  try {
+   com.rpgstats.combat.ArcherShotTracker.beginLaunch(p,weapon);try{c.getWorld().spawnEntity(shot);}finally{com.rpgstats.combat.ArcherShotTracker.endLaunch(p);}
+   target.damage(p.getDamageSources().arrow(shot,p),100);
+   var recent=target.getRecentDamageSource();c.assertTrue(recent!=null && recent.isOf(net.minecraft.entity.damage.DamageTypes.ARROW),"Native Damage enchantment converted a projectile to melee");
+   c.assertTrue(p.getHealth()==4,"Arrow incorrectly triggered native melee Vampirism");
+  }finally{shot.discard();target.discard();TestPlayers.finish(c);}c.complete();
+ }
+ private static ItemStack ArcherWeapon(net.minecraft.entity.damage.DamageSource source,net.minecraft.server.network.ServerPlayerEntity p){return com.rpgstats.combat.ArcherShotTracker.launchWeapon(source,p);}
  private BetterWeaponryGameTests(){}
 }

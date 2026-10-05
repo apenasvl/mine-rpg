@@ -1,0 +1,73 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:speed_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:atmospheric_boots",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:blastproof_helmet",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:mossy_chestplate",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:shulker_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_boots",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_chestplate",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_helmet",
+      "required": false
+    },
+    {
+      "id": "soulsweapons:soul_robes_leggings",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:amethyst_armor_boots",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "better_weaponry:emerald_armor_boots",
+      "required": false
+    }
+  ]
+}

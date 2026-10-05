@@ -87,7 +87,7 @@ public final class NativeArmorGameTests {
             }
             for(boolean mage:new boolean[]{false,true})for(var g:gear(c,mage)) {
                 var p=TestPlayers.create(c);configure(p,mage?RPGClass.MAGO:RPGClass.GUERREIRO,false);
-                for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();stable(c,p,g);
+                for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();com.rpgstats.compat.ClassArmorBonuses.apply(p);stable(c,p,g);
                 RPGStatsMod.LOGGER.info("RPG_ARMOR_EQUIPPED {}",new com.google.gson.Gson().toJson(Map.of("set",g.id,"pieces",ids(g),"attributes",attributes(p))));
                 TestPlayers.finish(c);
             }
@@ -108,10 +108,9 @@ public final class NativeArmorGameTests {
             if(!boss.getWorld().getOtherEntities(boss,area).contains(p))throw new AssertionError("Player absent from native eruption entity query; hit cannot be measured");
         }
         var status=type.getDeclaredField("attackStatus");status.setAccessible(true);
-        RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH phase={} target={} mace={} summon={} obliterate={} blind={} rupture={} preStatus={} predicted={}",phase,boss.getTarget()==p,boss.getClass().getMethod("getMaceOfSpades").invoke(boss),boss.getClass().getMethod("getSummon").invoke(boss),boss.getClass().getMethod("getObliterate").invoke(boss),boss.getClass().getMethod("getBlind").invoke(boss),boss.getClass().getMethod("getRupture").invoke(boss),status.get(goal),com.rpgstats.combat.CombatHandler.modifyIncomingDamage(p,phase==7?20:phase==21?25:30,p.getDamageSources().mobAttack(boss)));
-        for(var f:ServerPlayerEntity.class.getDeclaredFields())if(f.getType()==int.class){f.setAccessible(true);RPGStatsMod.LOGGER.info("RPG_PLAYER_TICK_FIELD phase={} field={} value={}",phase,f.getName(),f.getInt(p));}
+        RPGStatsMod.LOGGER.debug("RPG_NATIVE_BRANCH phase={} target={} mace={} summon={} obliterate={} blind={} rupture={} preStatus={}",phase,boss.getTarget()==p,boss.getClass().getMethod("getMaceOfSpades").invoke(boss),boss.getClass().getMethod("getSummon").invoke(boss),boss.getClass().getMethod("getObliterate").invoke(boss),boss.getClass().getMethod("getBlind").invoke(boss),boss.getClass().getMethod("getRupture").invoke(boss),status.get(goal));
         goal.tick();
-        RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH_END phase={} postStatus={} velocity={}",phase,status.get(goal),p.getVelocity());
+        RPGStatsMod.LOGGER.debug("RPG_NATIVE_BRANCH_END phase={} postStatus={} velocity={}",phase,status.get(goal),p.getVelocity());
     }
     private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase) {
         if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
@@ -120,7 +119,7 @@ public final class NativeArmorGameTests {
         var players=new ArrayList<ServerPlayerEntity>();var bosses=new ArrayList<MobEntity>();var forced=new HashSet<ChunkPos>();
         for(var g:sets) {
             var p=TestPlayers.create(c);configure(p,clazz,juggernaut);
-            for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();stable(c,p,g);
+            for(var e:g.pieces.entrySet())p.equipStack(e.getKey(),new ItemStack(e.getValue()));p.playerTick();p.tick();com.rpgstats.compat.ClassArmorBonuses.apply(p);stable(c,p,g);
             var pos=c.getAbsolutePos(new BlockPos(131072+players.size()*64,3,49152+clazz.ordinal()*8192+phase*64+(juggernaut?4096:0)));var chunk=new ChunkPos(pos);
             if(!c.getWorld().getForcedChunks().contains(chunk.toLong())){forced.add(chunk);c.getWorld().setChunkForced(chunk.x,chunk.z,true);}
             for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)c.getWorld().setBlockState(pos.add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());

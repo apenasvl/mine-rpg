@@ -85,7 +85,7 @@ public final class ForgeEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void nativeArmorAttributes(net.minecraftforge.event.ItemAttributeModifierEvent event) {
         var stack=event.getItemStack();String namespace=net.minecraft.registry.Registries.ITEM.getId(stack.getItem()).getNamespace();
-        if(!java.util.Set.of("soulsweapons","legendary_monsters").contains(namespace)
+        if(!java.util.Set.of("soulsweapons","legendary_monsters","better_weaponry").contains(namespace)
                 || !(stack.getItem() instanceof net.minecraft.item.ArmorItem armor))return;
         var slot=armor.getSlotType();if(event.getSlotType()!=slot)return;
         double max=switch(slot){case CHEST->8;case LEGS->6;case HEAD->3;default->3;};
@@ -137,6 +137,7 @@ public final class ForgeEvents {
         var server=event.getServer();
         for (ServerPlayerEntity p:server.getPlayerManager().getPlayerList()) {
             CombatHandler.tickPlayer(p); StatsManager.tickRecovery(p);
+            com.rpgstats.compat.ClassArmorBonuses.apply(p);
         }
         ProcDamageQueue.tick(server);
         BossScaler.tick(server);
