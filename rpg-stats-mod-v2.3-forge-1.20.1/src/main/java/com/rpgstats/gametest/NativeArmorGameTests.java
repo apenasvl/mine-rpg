@@ -109,6 +109,7 @@ public final class NativeArmorGameTests {
         }
         var status=type.getDeclaredField("attackStatus");status.setAccessible(true);
         RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH phase={} target={} mace={} summon={} obliterate={} blind={} rupture={} preStatus={} predicted={}",phase,boss.getTarget()==p,boss.getClass().getMethod("getMaceOfSpades").invoke(boss),boss.getClass().getMethod("getSummon").invoke(boss),boss.getClass().getMethod("getObliterate").invoke(boss),boss.getClass().getMethod("getBlind").invoke(boss),boss.getClass().getMethod("getRupture").invoke(boss),status.get(goal),com.rpgstats.combat.CombatHandler.modifyIncomingDamage(p,phase==7?20:phase==21?25:30,p.getDamageSources().mobAttack(boss)));
+        for(var f:ServerPlayerEntity.class.getDeclaredFields())if(f.getType()==int.class){f.setAccessible(true);RPGStatsMod.LOGGER.info("RPG_PLAYER_TICK_FIELD phase={} field={} value={}",phase,f.getName(),f.getInt(p));}
         goal.tick();
         RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH_END phase={} postStatus={} velocity={}",phase,status.get(goal),p.getVelocity());
     }
@@ -131,7 +132,7 @@ public final class NativeArmorGameTests {
             for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)c.getWorld().setBlockState(p.getBlockPos().add(x,-1,z),net.minecraft.block.Blocks.STONE.getDefaultState());
             c.assertTrue(c.getWorld().spawnEntity(boss),"Native armor boss fixture did not spawn");players.add(p);bosses.add(boss);
         }
-        for(int tick=1;tick<100;tick++)c.runAtTick(tick,()->players.forEach(ServerPlayerEntity::playerTick));
+        for(int tick=1;tick<100;tick++)c.runAtTick(tick,()->players.forEach(p->{p.tick();p.playerTick();}));
         c.runAtTick(100,()->{
             try {
                 for(int i=0;i<players.size();i++) {

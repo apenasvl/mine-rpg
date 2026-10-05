@@ -43,5 +43,13 @@ public final class BetterWeaponryGameTests {
    c.assertTrue(p.getHealth()==4,"Native Vampirism healed without confirmed damage");
   }catch(ReflectiveOperationException e){throw new AssertionError(e);}finally{target.discard();TestPlayers.finish(c);}c.complete();
  }
+ @GameTest(templateName="empty",tickLimit=40)
+ public static void armorProfilesDistinguishTheClassRoles(TestContext c) {
+  for(var row:new String[][]{{"soulsweapons:soul_ingot_chestplate","GUERREIRO"},{"soulsweapons:soul_robes_chestplate","ARQUEIRO"},{"soulsweapons:forlorn_chestplate","ASSASSINO"},{"irons_spellbooks:cryomancer_chestplate","MAGO"}}) {
+   var id=new Identifier(row[0]);if(!Registries.ITEM.containsId(id))continue;
+   var profile=DataDrivenRegistry.equipment(new ItemStack(Registries.ITEM.get(id))).orElse(null);
+   c.assertTrue(profile!=null && profile.categories().contains("class_"+row[1].toLowerCase(java.util.Locale.ROOT)),"Armor class profile missing "+id);
+  }c.complete();
+ }
  private BetterWeaponryGameTests(){}
 }
