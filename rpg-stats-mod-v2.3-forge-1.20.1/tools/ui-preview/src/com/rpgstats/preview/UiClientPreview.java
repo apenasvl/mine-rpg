@@ -42,7 +42,7 @@ public final class UiClientPreview {
         CASES.add(new Sample(RPGClass.MAGO,"Guide:index",1920,1080,2,"guide-index"));
         CASES.add(new Sample(RPGClass.MAGO,"Guide:house",1920,1080,2,"guide-house-bonuses"));
         CASES.add(new Sample(RPGClass.MAGO,"Guide:spec",1920,1080,2,"guide-blood-full"));
-        CASES.add(new Sample(RPGClass.MAGO,"Guide:scroll",1920,1080,2,"guide-blood-end"));
+        CASES.add(new Sample(RPGClass.MAGO,"Guide:scroll",1920,1080,2,"guide-house-end"));
         CASES.add(new Sample(RPGClass.MAGO,"Guide:specs",1024,768,4,"guide-small-specs"));
         CASES.add(new Sample(RPGClass.MAGO,"Guide:index",2560,1080,3,"guide-wide-index"));
     }
@@ -118,7 +118,7 @@ public final class UiClientPreview {
         if(c.currentScreen instanceof GuideScreen guide) {
             if(age==20&&!sample.page.equals("Guide:index"))click(guide,button(guide,RPGClass.MAGO.display),true);
             if(age==22&&!sample.page.equals("Guide:index"))click(guide,button(guide,sample.page.equals("Guide:specs")?"15 Especializações":RPGPath.MAGE_OCCULT.display),true);
-            if(age==24&&(sample.page.equals("Guide:spec")||sample.page.equals("Guide:scroll")))click(guide,button(guide,RPGSpecialization.BLOODMANCER.display),true);
+            if(age==24&&sample.page.equals("Guide:spec"))click(guide,button(guide,RPGSpecialization.BLOODMANCER.display),true);
             if(age==27&&sample.page.equals("Guide:scroll")) {
                 var v=MageViewport.fit(guide.width,guide.height);
                 guide.mouseScrolled(v.x()+610*v.scale(),v.y()+280*v.scale(),-200);
