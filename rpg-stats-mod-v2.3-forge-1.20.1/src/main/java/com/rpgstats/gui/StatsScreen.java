@@ -868,7 +868,7 @@ public class StatsScreen extends Screen {
         PlayerStats stats = ClientStatsStore.stats;
         int color = RpgUiTheme.themedAccent(clazz, stats.path, stats.affinityHouse);
         String label = clazz.resourceName();
-        context.drawTextWithShadow(textRenderer, Text.literal(label), x, y, color);
+        context.drawText(textRenderer,Text.literal(label),x,y,RpgUiTheme.accessibleAccent(color,CleanRpgUi.PANEL),false);
         String values = (int) value + "/" + (int) max;
         context.drawTextWithShadow(textRenderer, Text.literal(values), x + w - textRenderer.getWidth(values), y, CleanRpgUi.MUTED);
         float ratio = max <= 0 ? 0f : value / max;
@@ -890,14 +890,14 @@ public class StatsScreen extends Screen {
             int iconX = r.x + 8;
             int iconY = r.y + (r.h - iconSize) / 2;
             CleanRpgUi.surface(context, iconX, iconY, iconSize, iconSize, RpgUiTheme.alpha(color, 60), color);
-            context.drawCenteredTextWithShadow(textRenderer, statAbbr(stat), iconX + iconSize / 2, iconY + (iconSize - 8) / 2, color);
+            context.drawText(textRenderer,statAbbr(stat),iconX+(iconSize-textRenderer.getWidth(statAbbr(stat)))/2,iconY+(iconSize-8)/2,RpgUiTheme.accessibleAccent(color,RpgUiTheme.composite(RpgUiTheme.alpha(color,60),CleanRpgUi.PANEL)),false);
 
             int textX = iconX + iconSize + 8;
             context.drawTextWithShadow(textRenderer, Text.literal(stat.display), textX, r.y + 6, CleanRpgUi.TEXT);
             String amount = total == base ? String.valueOf(base) : base + "  (" + total + ")";
             int amountX = textX + Math.min(112, textRenderer.getWidth(stat.display) + 12);
             context.drawTextWithShadow(textRenderer, Text.literal("Base/total: " + amount), amountX, r.y + 6,
-                    total > base ? RpgUiTheme.SUCCESS : color);
+                    RpgUiTheme.accessibleAccent(total > base ? RpgUiTheme.SUCCESS : color,CleanRpgUi.PANEL));
             drawTrimmed(context, statDescription(stat), textX, r.y + 19, CleanRpgUi.MUTED, Math.max(30, r.w - (textX - r.x) - 49));
 
             if (r.h >= 40) {
@@ -1428,7 +1428,7 @@ public class StatsScreen extends Screen {
         if (textRenderer.getWidth(text) > maxWidth) {
             text = textRenderer.trimToWidth(text, Math.max(0, maxWidth - textRenderer.getWidth("..."))) + "...";
         }
-        context.drawTextWithShadow(textRenderer, Text.literal(text), x, y, color);
+        context.drawText(textRenderer,Text.literal(text),x,y,RpgUiTheme.accessibleAccent(color,CleanRpgUi.PANEL),false);
     }
 
     private void drawCenteredTrimmed(DrawContext context, String raw, int cx, int y, int color, int maxWidth) {
@@ -1436,7 +1436,7 @@ public class StatsScreen extends Screen {
         if (textRenderer.getWidth(text) > maxWidth) {
             text = textRenderer.trimToWidth(text, Math.max(0, maxWidth - textRenderer.getWidth("..."))) + "...";
         }
-        context.drawCenteredTextWithShadow(textRenderer, text, cx, y, color);
+        context.drawText(textRenderer,text,cx-textRenderer.getWidth(text)/2,y,RpgUiTheme.accessibleAccent(color,CleanRpgUi.PANEL),false);
     }
 
     @Override
