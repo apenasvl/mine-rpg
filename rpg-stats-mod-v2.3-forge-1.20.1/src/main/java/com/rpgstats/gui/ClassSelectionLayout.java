@@ -2,8 +2,8 @@ package com.rpgstats.gui;
 
 /** Fits the reference canvas into GUI coordinates, preserving art and native hitboxes. */
 public record ClassSelectionLayout(double scale, int x, int y) {
-    public static final int WIDTH = 1672;
-    public static final int HEIGHT = 941;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 450;
 
     public record Rect(int x, int y, int width, int height) {
         public int right() { return x + width; }
@@ -24,8 +24,7 @@ public record ClassSelectionLayout(double scale, int x, int y) {
 
     public static Rect sourceCard(int index) {
         if (index < 0 || index > 3) throw new IllegalArgumentException("Class card index: " + index);
-        return new Rect(index % 2 == 0 ? 125 : 840, index < 2 ? 177 : 512,
-                index % 2 == 0 ? 703 : 709, index < 2 ? 325 : 320);
+        return new Rect(34 + index * 186, 100, 174, 74);
     }
 
     public Rect project(Rect source) {
@@ -37,5 +36,5 @@ public record ClassSelectionLayout(double scale, int x, int y) {
     }
 
     public Rect card(int index) { return project(sourceCard(index)); }
-    public Rect confirm() { return project(new Rect(1230, 840, 400, 70)); }
+    public Rect confirm() { return project(new Rect(580, 384, 186, 32)); }
 }

@@ -226,12 +226,20 @@ jobs:
           ALSOFT_DRIVERS: 'null'
         run: xvfb-run -a timeout 1000 ./gradlew --no-daemon --stacktrace -PcombinedCompatTests -PcombatClient -I tools/combat-client.init.gradle runClient
       - run: test -f build/combat-client/result.txt && test -f build/combat-client/roll.png
+      - name: Verify clean RPG menus in real client
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          ALSOFT_DRIVERS: 'null'
+        run: xvfb-run -a timeout 600 ./gradlew --no-daemon --stacktrace -I tools/ui-preview.init.gradle runClient
+      - run: test -f build/ui-preview/result.txt
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: combat-client-probe
           path: |
             rpg-stats-mod-v2.3-forge-1.20.1/build/combat-client/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/ui-preview/
             rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
           retention-days: 7
 

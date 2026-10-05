@@ -62,6 +62,14 @@ public class StatsScreen extends Screen {
     private final Map<String, NodeVisual> nodeVisuals = new LinkedHashMap<>();
     private final List<HintVisual> hintVisuals = new ArrayList<>();
     private Page page = Page.ATTRIBUTES;
+    private String inspectedNode = "";
+    private int detailScroll, choiceScroll;
+    private Page choicePage;
+    private final ClassSelectionState<String> choice = new ClassSelectionState<>();
+    private final List<RpgButton> choiceCards = new ArrayList<>();
+    private RpgButton choiceConfirm;
+    private record ChoiceOption(String id,String title,String description,List<SkillNode> nodes,int accent,String icon) {}
+    private List<ChoiceOption> choiceOptions = List.of();
     private int activeEquipSlot = 0;
     private RPGPath viewingPath = null;
     private final ClassSelectionView classSelection = new ClassSelectionView();
@@ -83,6 +91,9 @@ public class StatsScreen extends Screen {
         attributeButtons.clear();
         nodeVisuals.clear();
         hintVisuals.clear();
+        choiceCards.clear();
+        choiceConfirm = null;
+        choiceOptions = List.of();
         PlayerStats stats = ClientStatsStore.stats;
         if(stats.awakened || stats.clazz != null) awakening.reset();
 
@@ -150,8 +161,16 @@ public class StatsScreen extends Screen {
     }
     @Override
     public boolean mouseScrolled(double x,double y,double amount) {
-        if(illustratedScreen()) { var v=mageViewport(); return super.mouseScrolled(v.localX(x),v.localY(y),amount); }
-        return super.mouseScrolled(x,y,amount);
+        double lx=x,ly=y;
+        if(illustratedScreen()) {var v=mageViewport();lx=v.localX(x);ly=v.localY(y);}
+        Layout l=layout();
+        if(lx>=l.sidebarX && lx<l.sidebarX+l.sidebarW && ly>=l.sidebarY && ly<l.sidebarY+l.sidebarH) {
+            detailScroll=Math.max(0,detailScroll-(int)Math.signum(amount)*3);return true;
+        }
+        if(!choiceOptions.isEmpty() && lx>=l.contentX && lx<l.contentX+l.contentW && ly>=l.contentY+89 && ly<l.contentY+l.contentH-37) {
+            choiceScroll=Math.max(0,choiceScroll-(int)Math.signum(amount)*3);return true;
+        }
+        return super.mouseScrolled(lx,ly,amount);
     }
 
     private Layout layout() {
@@ -260,17 +279,8 @@ public class StatsScreen extends Screen {
     }
 
     private void addAffinitySelection(Layout l,PlayerStats stats) {
-        java.util.List<RPGPath> houses=RPGPath.forClass(stats.clazz).stream().filter(p->p!=stats.path).toList();
-        int h=Math.min(45,Math.max(28,(l.contentH-40)/4));
-        for(int i=0;i<houses.size();i++) {
-            RPGPath house=houses.get(i);
-            String names=String.join(", ",HouseRules.nodes(house).stream().map(SkillNode::name).toList());
-            RpgButton card=new RpgButton(l.contentX,l.contentY+35+i*(h+2),l.contentW,h,
-                    Text.literal(house.display),button->send(RPGStatsMod.SELECT_AFFINITY,house.name()),
-                    RpgButton.Kind.CARD,pathColor(house)).icon(houseIcon(house)).subtitle(names).footer("UMA CASA · ATÉ 4 TALENTOS · 2 PH CADA");
-            addDrawableChild(card);
-            addHint(card,house.display,names+" — "+HouseRules.penaltyText(house),"Escolha permanente até existir respec.");
-        }
+        addChoiceButtons(l, RPGPath.forClass(stats.clazz).stream().filter(p->p!=stats.path)
+                .map(p->new ChoiceOption(p.name(),shortPathName(p),p.desc,HouseRules.nodes(p),pathColor(p),houseIcon(p))).toList());
     }
 
     private void addSubclassSelectionButtons(RPGClass clazz) {
@@ -296,58 +306,39 @@ public class StatsScreen extends Screen {
         }
     }
 
-    private void addPathSelectionButtons(Layout l, PlayerStats stats) {
-        List<RPGPath> paths = RPGPath.forClass(stats.clazz);
-        int gap = 5;
-        int cols = 2;
-        int rows = (int) Math.ceil(paths.size() / (double) cols);
-        int cardW = (l.contentW - gap * (cols - 1)) / cols;
-        int cardH = Math.max(36, Math.min(68, (l.contentH - 35 - gap * (rows - 1)) / rows));
-        int startY = l.contentY + 34;
-        String mastery = stats.clazz.nodes.get(stats.clazz.nodes.size() - 1).id();
-        boolean eligible = stats.level >= StatsManager.PATH_LEVEL && stats.unlockedNodes.contains(mastery);
-        for (int i = 0; i < paths.size(); i++) {
-            RPGPath path = paths.get(i);
-            int row = i / cols;
-            int col = i % cols;
-            int x = l.contentX + col * (cardW + gap);
-            int y = startY + row * (cardH + gap);
-            if (i == paths.size() - 1 && paths.size() % cols == 1) x = l.contentX + (l.contentW - cardW) / 2;
-            RpgButton card = new RpgButton(x, y, cardW, cardH, Text.literal(path.display),
-                    b -> send(RPGStatsMod.SELECT_PATH, path.name()), RpgButton.Kind.CARD, pathColor(path))
-                    .icon(houseIcon(path))
-                    .subtitle(path.desc)
-                    .footer(eligible ? "CLIQUE PARA ESCOLHER" : "BLOQUEADO · VEJA O MOTIVO");
-            card.active = eligible;
-            addDrawableChild(card);
-            addHint(card, path.display, path.desc,
-                    eligible ? "Escolha permanente do caminho principal." : pathUnlockRequirement(stats));
-        }
+    private void addPathSelectionButtons(Layout l,PlayerStats stats) {
+        addChoiceButtons(l,RPGPath.forClass(stats.clazz).stream()
+                .map(p->new ChoiceOption(p.name(),shortPathName(p),p.desc,p.nodes,pathColor(p),houseIcon(p))).toList());
     }
-
-    private void addSpecializationSelectionButtons(Layout l, PlayerStats stats) {
-        if (stats.path == null) return;
-        List<RPGSpecialization> specs = RPGSpecialization.forPath(stats.path);
-        int gap = 6;
-        int cardW = l.contentW;
-        int cardH = Math.max(39, Math.min(62, (l.contentH - 35 - gap * 2) / 3));
-        int y = l.contentY + 34;
-        boolean eligible = stats.level >= StatsManager.SPECIALIZATION_LEVEL
-                && stats.unlockedNodes.contains(pathMasteryNode(stats.path));
-        for (int i = 0; i < specs.size(); i++) {
-            RPGSpecialization spec = specs.get(i);
-            int x = l.contentX;
-            int cardY = y + i * (cardH + gap);
-            RpgButton card = new RpgButton(x, cardY, cardW, cardH, Text.literal(spec.display),
-                    b -> send(RPGStatsMod.SELECT_SPECIALIZATION, spec.name()), RpgButton.Kind.CARD, specColor(spec))
-                    .icon("star")
-                    .subtitle(spec.desc)
-                    .footer(eligible ? "CLIQUE PARA ESPECIALIZAR" : "BLOQUEADO · REQUER MAESTRIA DO CAMINHO");
-            card.active = eligible;
-            addDrawableChild(card);
-            addHint(card, spec.display, spec.desc,
-                    eligible ? "Escolha permanente do ramo final da build." : "Complete a Maestria do seu caminho e alcance o nivel " + StatsManager.SPECIALIZATION_LEVEL + ".");
+    private void addSpecializationSelectionButtons(Layout l,PlayerStats stats) {
+        if(stats.path==null) return;
+        addChoiceButtons(l,RPGSpecialization.forPath(stats.path).stream()
+                .map(p->new ChoiceOption(p.name(),p.display,p.desc,p.nodes,specColor(p),"star")).toList());
+    }
+    private void addChoiceButtons(Layout l,List<ChoiceOption> options) {
+        if(choicePage!=page) {choice.reset();choicePage=page;choiceScroll=0;}
+        choiceOptions=options;
+        if(choice.selected()!=null && options.stream().noneMatch(o->o.id.equals(choice.selected()))) choice.reset();
+        int gap=5, count=options.size(), cardW=(l.contentW-gap*(count-1))/Math.max(1,count);
+        for(int i=0;i<count;i++) {
+            ChoiceOption o=options.get(i);
+            RpgButton card=new RpgButton(l.contentX+i*(cardW+gap),l.contentY+30,cardW,51,Text.literal(o.title),
+                    b->{if(!choice.pending()) {choice.select(o.id);choiceScroll=0;}},RpgButton.Kind.CHOICE,o.accent).icon(o.icon);
+            choiceCards.add(card);addDrawableChild(card);
         }
+        choiceConfirm=new RpgButton(l.contentX+l.contentW-180,l.contentY+l.contentH-29,180,25,Text.literal("Confirmar escolha"),b->{
+            if(choiceError(ClientStatsStore.stats).isEmpty()) choice.confirm(net.minecraft.util.Util.getMeasuringTimeMs(),id->
+                    send(page==Page.AFFINITY?RPGStatsMod.SELECT_AFFINITY:page==Page.PATH_TREE?RPGStatsMod.SELECT_PATH:RPGStatsMod.SELECT_SPECIALIZATION,id));
+        },RpgButton.Kind.ACTION,RpgUiTheme.accent(ClientStatsStore.stats.clazz));
+        choiceConfirm.active=false;addDrawableChild(choiceConfirm);
+    }
+    private String choiceError(PlayerStats stats) {
+        if(choice.selected()==null) return "Selecione uma opção para comparar.";
+        if(page==Page.AFFINITY) return HouseRules.chooseError(stats,RPGPath.valueOf(choice.selected()));
+        if(page==Page.PATH_TREE) return stats.level>=StatsManager.PATH_LEVEL && stats.unlockedNodes.contains(stats.clazz.nodes.get(stats.clazz.nodes.size()-1).id())
+                ? "" : pathUnlockRequirement(stats);
+        return stats.path!=null && stats.level>=StatsManager.SPECIALIZATION_LEVEL && stats.unlockedNodes.contains(pathMasteryNode(stats.path))
+                ? "" : "Requer nível 25 e Maestria da Casa.";
     }
 
     private void addAttributeButtons(Layout l, PlayerStats stats) {
@@ -420,6 +411,7 @@ public class StatsScreen extends Screen {
 
             String subtitle = active != null ? "ATIVA" : shortEffectLabel(key);
             RpgButton button = new RpgButton(r.x, r.y, r.w, r.h, Text.literal(node.name()), b -> {
+                inspectedNode=key;detailScroll=0;
                 PlayerStats current = ClientStatsStore.stats;
                 if (current.unlockedNodes.contains(key) && AbilityRegistry.hasActive(key)) sendActive(activeEquipSlot, key);
                 else if(canUnlock(current,node,false,cost))send(RPGStatsMod.UNLOCK,key);
@@ -545,7 +537,7 @@ public class StatsScreen extends Screen {
             return;
         }
         if (illustratedScreen()) {
-            context.fill(0,0,width,height,RpgUiTheme.classNeutral(stats.clazz));
+            context.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
             var viewport=mageViewport();
             int localX=(int)Math.floor(viewport.localX(mouseX));
             int localY=(int)Math.floor(viewport.localY(mouseY));
@@ -623,24 +615,15 @@ public class StatsScreen extends Screen {
         int affinity = RpgUiTheme.affinityAccent(stats.affinityHouse);
         int panel = RpgUiTheme.panelTint(RpgUiTheme.PANEL, stats.clazz, stats.path, stats.affinityHouse, 0.07f);
         int border = RpgUiTheme.alpha(RpgUiTheme.lighten(accent, 0.08f), 220);
-        if(illustratedScreen()) {
-            CharacterArt.frame(context,stats.clazz,l.panelX,l.panelY,l.panelW,68,accent);
-            RPGPath artHouse=page==Page.AFFINITY && stats.affinityHouse!=null ? stats.affinityHouse : stats.path;
-            RPGSpecialization artSpec=page==Page.SPECIALIZATION_TREE ? stats.specialization : null;
-            CharacterArt.background(context,stats.clazz,artHouse,artSpec,l.contentX-5,l.contentY-5,l.contentW+10,l.contentH+10,accent);
-        } else {
-            RpgUiTheme.panel(context, l.panelX, l.panelY, l.panelW, l.panelH, panel, border);
-            RpgUiTheme.dualAccentBar(context, l.panelX + 2, l.panelY + 1, l.panelW - 4, 3, primary, affinity);
-            int contentPanel = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.06f);
-            RpgUiTheme.panel(context, l.contentX - 4, l.tabsY - 4,
-                    l.contentW + 8, l.panelY + l.panelH - l.tabsY - 6,
-                    contentPanel, RpgUiTheme.alpha(accent, 120));
-        }
+        CleanRpgUi.panel(context,l.panelX,l.panelY,l.panelW,l.panelH,CleanRpgUi.BORDER);
+        CleanRpgUi.panel(context,l.contentX-5,l.tabsY-4,l.contentW+10,l.panelY+l.panelH-l.tabsY-6,CleanRpgUi.BORDER);
 
         renderHeader(context, l, stats, accent);
         renderSidebar(context, l, stats, accent, mouseX, mouseY);
 
-        if (page == Page.ATTRIBUTES) {
+        if (!choiceOptions.isEmpty()) {
+            renderChoiceSheet(context,l,stats);
+        } else if (page == Page.ATTRIBUTES) {
             renderAttributes(context, l, stats);
         } else if (page == Page.PATH_TREE && stats.path == null) {
             renderPathSelectionBackground(context, l, stats);
@@ -653,7 +636,7 @@ public class StatsScreen extends Screen {
 
     private void renderHeader(DrawContext context, Layout l, PlayerStats stats, int accent) {
         if(illustratedScreen()) {
-            CharacterArt.emblem(context,stats.clazz,stats.path,stats.specialization,l.panelX+5,l.panelY+5,58,1);
+            RpgUiTheme.drawIcon(context,CleanRpgUi.icon(stats.clazz),l.panelX+17,l.panelY+17,33,RpgUiTheme.accessibleAccent(RpgUiTheme.accent(stats.clazz),CleanRpgUi.PANEL));
             CosmicSelectionArt.label(context,textRenderer,stats.clazz.display.toUpperCase(java.util.Locale.ROOT),l.panelX+69,l.panelY+9,2f,RpgUiTheme.accessibleAccent(accent,RpgUiTheme.classNeutral(stats.clazz)));
             String house=stats.path==null?"Sem Casa":shortPathName(stats.path);
             String spec=stats.specialization==null?"Sem especialização":stats.specialization.display;
@@ -707,9 +690,7 @@ public class StatsScreen extends Screen {
         int primary = RpgUiTheme.primaryAccent(stats.clazz, stats.path);
         int affinity = RpgUiTheme.affinityAccent(stats.affinityHouse);
         int panel = RpgUiTheme.panelTint(RpgUiTheme.PANEL_DARK, stats.clazz, stats.path, stats.affinityHouse, 0.09f);
-        if(illustratedScreen()) CharacterArt.frame(context,stats.clazz,l.sidebarX,l.sidebarY,l.sidebarW,l.sidebarH,accent);
-        else RpgUiTheme.panel(context, l.sidebarX, l.sidebarY, l.sidebarW, l.sidebarH, panel,
-                RpgUiTheme.alpha(accent, 205));
+        CleanRpgUi.panel(context,l.sidebarX,l.sidebarY,l.sidebarW,l.sidebarH,CleanRpgUi.BORDER);
 
         int pad = 8;
         int x = l.sidebarX + pad;
@@ -772,11 +753,13 @@ public class StatsScreen extends Screen {
                 : RpgUiTheme.accessibleAccent(activeColor, RpgUiTheme.composite(activeBg, panel));
         drawCenteredTrimmed(context, activeHint, x + w / 2, activeY + 17, activeTextColor, w - 8);
 
-        context.drawCenteredTextWithShadow(textRenderer, "Mouse = detalhes", l.sidebarX + l.sidebarW / 2,
+        context.drawCenteredTextWithShadow(textRenderer, "Clique: fixar · Roda: ler", l.sidebarX + l.sidebarW / 2,
                 l.sidebarY + l.sidebarH - 14, RpgUiTheme.DIM);
     }
 
     private DetailTarget resolveDetailTarget(PlayerStats stats, int mouseX, int mouseY) {
+        SkillNode inspected=StatsManager.findNode(stats,inspectedNode);
+        if(inspected!=null) return new DetailTarget(inspected,inspectedNode,HouseRules.borrowed(inspectedNode));
         for (NodeVisual visual : nodeVisuals.values()) {
             Rect r = visual.rect;
             if (mouseX >= r.x && mouseX < r.right() && mouseY >= r.y && mouseY < r.bottom()) {
@@ -828,27 +811,56 @@ public class StatsScreen extends Screen {
             y += 11;
         }
 
-        List<String> description = wrapText(node.description(), w);
-        for (int i = 0; i < Math.min(3, description.size()) && y + 9 <= bottom; i++) {
-            drawTrimmed(context, description.get(i), x, y, RpgUiTheme.MUTED, w);
-            y += 10;
+        List<String> lines=new ArrayList<>(wrapText(node.description(),w));
+        for(String effect:detailEffects(key,node)) lines.addAll(wrapText("• "+effect,w));
+        lines.add("NV "+node.reqLevel()+" · "+node.cost()+" PH");
+        if(!unlocked) lines.addAll(wrapText("Consulte os requisitos na árvore antes de aprender.",w));
+        int visible=Math.max(1,(bottom-y-12)/10);
+        detailScroll=Math.max(0,Math.min(detailScroll,Math.max(0,lines.size()-visible)));
+        for(int i=detailScroll;i<Math.min(lines.size(),detailScroll+visible);i++) {
+            drawTrimmed(context,lines.get(i),x,y,CleanRpgUi.MUTED,w);y+=10;
         }
+        if(lines.size()>visible) drawTrimmed(context,"Roda: ler "+(detailScroll+1)+"–"+Math.min(lines.size(),detailScroll+visible)+" / "+lines.size(),x,bottom-9,RpgUiTheme.DIM,w);
+    }
 
-        List<String> effects = detailEffects(key, node);
-        if (!effects.isEmpty() && y + 9 <= bottom) {
-            y += 1;
-            for (int i = 0; i < Math.min(3, effects.size()) && y + 9 <= bottom; i++) {
-                drawTrimmed(context, "• " + effects.get(i), x, y,
-                        target.secondary ? RpgUiTheme.WARNING : RpgUiTheme.SUCCESS, w);
-                y += 10;
-            }
+    private void renderChoiceSheet(DrawContext c,Layout l,PlayerStats stats) {
+        choice.tick(net.minecraft.util.Util.getMeasuringTimeMs());
+        String error=choiceError(stats);
+        choiceConfirm.active=error.isEmpty()&&!choice.pending();
+        for(int i=0;i<choiceCards.size();i++) {
+            var b=choiceCards.get(i);b.active=!choice.pending();b.selected(choiceOptions.get(i).id.equals(choice.selected()));
         }
-
-        if (y + 9 <= bottom) {
-            y += 1;
-            drawTrimmed(context, "NV " + node.reqLevel() + " · " + node.cost() + " PH",
-                    x, y, available || unlocked ? RpgUiTheme.MUTED : RpgUiTheme.WARNING, w);
+        String title=page==Page.AFFINITY?"AFINIDADE SECUNDÁRIA":page==Page.PATH_TREE?"ESCOLHA SUA CASA":"ESCOLHA SUA ESPECIALIZAÇÃO";
+        drawTrimmed(c,title,l.contentX+3,l.contentY+2,CleanRpgUi.TEXT,l.contentW-6);
+        drawTrimmed(c,"Compare antes de confirmar. A escolha é permanente.",l.contentX+3,l.contentY+16,CleanRpgUi.MUTED,l.contentW-6);
+        int x=l.contentX,y=l.contentY+89,w=l.contentW,h=l.contentH-126;
+        CleanRpgUi.panel(c,x,y,w,h,CleanRpgUi.BORDER);
+        ChoiceOption selected=choiceOptions.stream().filter(o->o.id.equals(choice.selected())).findFirst().orElse(null);
+        if(selected==null) {drawTrimmed(c,"Selecione um emblema para abrir a ficha.",x+12,y+16,CleanRpgUi.MUTED,w-24);return;}
+        drawTrimmed(c,selected.title,x+12,y+10,CleanRpgUi.TEXT,w-24);
+        int leftW=page==Page.AFFINITY?(w-36)/2:w-24;
+        List<String> lines=new ArrayList<>(wrapText(selected.description,leftW));
+        lines.add("");
+        for(SkillNode n:selected.nodes) {
+            lines.addAll(wrapText(n.name()+" · NV "+n.reqLevel()+" · "+n.cost()+" PH",leftW));
+            lines.addAll(wrapText(n.description(),leftW));
+            for(String effect:detailEffects(n.id(),n)) lines.addAll(wrapText("• "+effect,leftW));
+            lines.add("");
         }
+        int visible=Math.max(1,(h-51)/10);
+        choiceScroll=Math.max(0,Math.min(choiceScroll,Math.max(0,lines.size()-visible)));
+        for(int i=choiceScroll;i<Math.min(lines.size(),choiceScroll+visible);i++) drawTrimmed(c,lines.get(i),x+12,y+29+(i-choiceScroll)*10,CleanRpgUi.MUTED,leftW);
+        if(page==Page.AFFINITY) {
+            int rx=x+w/2+6,rw=w/2-18;
+            drawTrimmed(c,"CUSTOS E PENALIDADES",rx,y+29,RpgUiTheme.WARNING,rw);
+            String penalty=HouseRules.penaltyText(RPGPath.valueOf(selected.id));
+            int py=y+44;
+            for(String line:wrapText(penalty,rw)) {if(py+9>y+h-22) break;drawTrimmed(c,line,rx,py,CleanRpgUi.MUTED,rw);py+=10;}
+            drawTrimmed(c,"Até 4 talentos · 2 PH cada",rx,y+h-19,CleanRpgUi.MUTED,rw);
+        }
+        if(lines.size()>visible) drawTrimmed(c,"Roda: ver todos os talentos e efeitos",x+12,y+h-17,RpgUiTheme.DIM,leftW);
+        String status=choice.pending()?"Aguardando o servidor...":choice.timedOut()?"Sem resposta. Confirme novamente.":error.isEmpty()?"Pronto para confirmar.":error;
+        drawTrimmed(c,status,l.contentX+3,l.contentY+l.contentH-20,error.isEmpty()?CleanRpgUi.MUTED:RpgUiTheme.WARNING,l.contentW-192);
     }
 
     private void drawSidebarResource(DrawContext context, RPGClass clazz, float value, float max, int x, int y, int w) {
@@ -962,7 +974,7 @@ public class StatsScreen extends Screen {
 
         String help = page == Page.AFFINITY
                 ? "Até 4 talentos · +custo "+clean(HouseRules.surcharge(stats)*100)+"% · +dano recebido "+clean(HouseRules.vulnerability(stats)*100)+"% · -dano "+clean(HouseRules.offensePenalty(stats)*100)+"%"
-                : "Mouse: detalhes · Clique: aprender · Ativa: equipa no slot selecionado";
+                : "Clique: fixar e aprender · Ativa: equipar · Roda na ficha: detalhes";
         drawTrimmed(context, help, l.contentX + 3, l.contentY + 16, RpgUiTheme.DIM, l.contentW - 6);
 
         for (NodeVisual visual : nodeVisuals.values()) {
@@ -1242,8 +1254,7 @@ public class StatsScreen extends Screen {
     }
 
     private String shortPathName(RPGPath path) {
-        String name = path.display.replace("Casa da ", "").replace("Casa ", "");
-        return name.length() > 14 ? name.substring(0, 14) : name;
+        return path.display.replace("Casa da ", "").replace("Casa do ", "").replace("Casa dos ", "").replace("Casa de ", "").replace("Casa ", "");
     }
 
     private int pathColor(RPGPath path) {

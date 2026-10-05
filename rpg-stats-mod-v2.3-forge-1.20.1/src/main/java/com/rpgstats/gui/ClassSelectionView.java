@@ -10,91 +10,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-/** Presentation embedded in StatsScreen, preserving its existing server-sync rebuild path. */
 public final class ClassSelectionView {
-    private final ClassSelectionState<RPGClass> selection = new ClassSelectionState<>();
-    private final List<ClassCardWidget> cards = new ArrayList<>();
+    private final ClassSelectionState<RPGClass> selection=new ClassSelectionState<>();
+    private final List<ClassCardWidget> cards=new ArrayList<>();
     private ClassSelectionLayout layout;
     private ButtonWidget confirm;
-
-    public void init(int width, int height, Consumer<ButtonWidget> addWidget, Consumer<RPGClass> send) {
-        layout = ClassSelectionLayout.fit(width, height);
-        cards.clear();
-        RPGClass[] roster = {RPGClass.GUERREIRO, RPGClass.MAGO, RPGClass.ARQUEIRO, RPGClass.ASSASSINO};
-        for (int i = 0; i < roster.length; i++) {
-            var card = new ClassCardWidget(layout.card(i), i, roster[i], selection);
-            cards.add(card);
-            addWidget.accept(card);
-        }
-        var rect = layout.confirm();
-        confirm = new ButtonWidget(rect.x(), rect.y(), rect.width(), rect.height(), Text.literal("Confirmar classe"),
-                button -> selection.confirm(Util.getMeasuringTimeMs(), send), narration -> narration.get()) {
-            @Override
-            public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-                var source = new ClassSelectionLayout.Rect(1230, 840, 400, 70);
-                CosmicSelectionArt.begin(context, rect, source);
-                CosmicSelectionArt.texture(context, source);
-                if (!active) context.fill(10, 9, 389, 61, 0x92020B15);
-                if (active && (hovered || isFocused())) CosmicSelectionArt.outline(context, 400, 70, 0xFFFFFFFF);
-                CosmicSelectionArt.centered(context, MinecraftClient.getInstance().textRenderer,
-                        selection.pending() ? "CONFIRMANDO..." : "CONFIRMAR CLASSE", 184, 25, 2.6f,
-                        active ? 0xFFFFFFFF : 0xFF9AB7C8, 305);
-                context.getMatrices().pop();
-            }
-        };
-        addWidget.accept(confirm);
-        update();
+    public void init(int width,int height,Consumer<ButtonWidget> add,Consumer<RPGClass> send) {
+        layout=ClassSelectionLayout.fit(width,height);cards.clear();
+        RPGClass[] roster={RPGClass.GUERREIRO,RPGClass.MAGO,RPGClass.ARQUEIRO,RPGClass.ASSASSINO};
+        for(int i=0;i<roster.length;i++) {var card=new ClassCardWidget(layout.card(i),i,roster[i],selection);cards.add(card);add.accept(card);}
+        var r=layout.confirm();
+        confirm=new RpgButton(r.x(),r.y(),r.width(),r.height(),Text.literal("Confirmar classe"),
+                b->selection.confirm(Util.getMeasuringTimeMs(),send),RpgButton.Kind.ACTION,0xFF8EBBFF);
+        add.accept(confirm);update();
     }
-
     private void update() {
         selection.tick(Util.getMeasuringTimeMs());
-        if (confirm != null) confirm.active = selection.selected() != null && !selection.pending();
-        for (var card : cards) card.active = !selection.pending();
+        if(confirm!=null) confirm.active=selection.selected()!=null&&!selection.pending();
+        for(var card:cards) card.active=!selection.pending();
     }
-
-    public void reset() { selection.reset(); }
-
-    public void render(DrawContext context, int width, int height) {
-        update();
-        context.fill(0, 0, width, height, 0xFF020711);
-        var font = MinecraftClient.getInstance().textRenderer;
-        context.getMatrices().push();
-        context.getMatrices().translate(layout.x(), layout.y(), 0);
-        context.getMatrices().scale((float) layout.scale(), (float) layout.scale(), 1);
-        // Draw only the surroundings. The four independent widgets render their atlas regions.
-        drawRegion(context, 0, 0, 1672, 177);
-        drawRegion(context, 0, 177, 125, 656);
-        drawRegion(context, 1549, 177, 123, 656);
-        drawRegion(context, 828, 177, 12, 656);
-        drawRegion(context, 125, 502, 1424, 10);
-        drawRegion(context, 0, 832, 1672, 109);
-        CosmicSelectionArt.centered(context, font, "ESCOLHA SUA CLASSE", 836, 76, 4.7f, 0xFFFFFFFF, 960);
-        CosmicSelectionArt.centered(context, font, "Uma classe, uma Casa principal e uma afinidade opcional.",
-                836, 136, 2.5f, CosmicSelectionArt.CYAN, 1300);
-        String help = selection.timedOut() ? "Sem resposta do servidor. Você pode confirmar novamente."
-                : selection.selected() == null ? "Selecione uma classe para começar sua jornada."
-                : selection.pending() ? "Aguardando a confirmação do servidor..."
-                : selection.selected().display + " selecionado. Confirme para iniciar sua jornada.";
-        CosmicSelectionArt.label(context, font, help, 108, 861, 1.9f, CosmicSelectionArt.TEXT);
-        CosmicSelectionArt.label(context, font, "5 Casas por classe · afinidade da mesma classe · sem multiclass",
-                108, 887, 1.6f, CosmicSelectionArt.CYAN);
-        context.getMatrices().pop();
-    }
-
-    private static void drawRegion(DrawContext context, int x, int y, int width, int height) {
-        context.getMatrices().push();
-        context.getMatrices().translate(x, y, 0);
-        CosmicSelectionArt.texture(context, new ClassSelectionLayout.Rect(x, y, width, height));
-        context.getMatrices().pop();
-    }
-
-    public void renderTooltip(DrawContext context, int mouseX, int mouseY) {
-        for (var card : cards) {
-            List<Text> lines = card.houseTooltip(mouseX, mouseY);
-            if (!lines.isEmpty()) {
-                context.drawTooltip(MinecraftClient.getInstance().textRenderer, lines, mouseX, mouseY);
-                return;
-            }
+    public void reset() {selection.reset();}
+    public void render(DrawContext c,int width,int height) {
+        update();c.fill(0,0,width,height,CleanRpgUi.BACKGROUND);
+        var font=MinecraftClient.getInstance().textRenderer;
+        c.getMatrices().push();c.getMatrices().translate(layout.x(),layout.y(),0);c.getMatrices().scale((float)layout.scale(),(float)layout.scale(),1);
+        CosmicSelectionArt.centered(c,font,"ESCOLHA SUA CLASSE",400,36,2f,CleanRpgUi.TEXT,730);
+        CosmicSelectionArt.centered(c,font,"Compare os estilos. A escolha só acontece ao confirmar.",400,70,1.2f,CleanRpgUi.MUTED,730);
+        var chosen=selection.selected();
+        int accent=chosen==null?CleanRpgUi.BORDER:RpgUiTheme.accent(chosen);
+        CleanRpgUi.panel(c,34,188,732,168,accent);
+        if(chosen==null) CosmicSelectionArt.centered(c,font,"Selecione uma classe para ver sua ficha.",400,256,1.4f,CleanRpgUi.MUTED,700);
+        else {
+            RpgUiTheme.drawIcon(c,CleanRpgUi.icon(chosen),57,214,45,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL));
+            CosmicSelectionArt.label(c,font,chosen.display.toUpperCase(java.util.Locale.ROOT),122,211,1.8f,CleanRpgUi.TEXT);
+            CosmicSelectionArt.wrapped(c,font,ClassCardWidget.description(chosen),122,243,1.3f,CleanRpgUi.MUTED,600,3);
+            CosmicSelectionArt.label(c,font,"RECURSO  "+chosen.resourceName(),58,307,1.2f,CleanRpgUi.TEXT);
+            CosmicSelectionArt.label(c,font,"ATRIBUTOS  "+ClassCardWidget.attributes(chosen),300,307,1.2f,CleanRpgUi.TEXT);
+            CosmicSelectionArt.label(c,font,"Casa no nível 10 · Especialização no 25 · Afinidade opcional no 30 · Requer Maestria",58,334,1f,CleanRpgUi.MUTED);
         }
+        String hint=selection.pending()?"Aguardando o servidor...":selection.timedOut()?"Sem resposta. Confirme para tentar novamente.":"Uma classe, cinco Casas possíveis. Sua build evolui com você.";
+        CosmicSelectionArt.wrapped(c,font,hint,34,392,1.1f,CleanRpgUi.MUTED,520,2);
+        c.getMatrices().pop();
     }
+    public void renderTooltip(DrawContext c,int x,int y) {}
 }

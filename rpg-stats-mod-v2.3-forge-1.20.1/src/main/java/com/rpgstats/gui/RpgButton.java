@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 
 /** Botao customizado para evitar o visual vanilla cinza dentro do menu RPG. */
 public class RpgButton extends ButtonWidget {
-    public enum Kind { TAB, ACTION, SMALL, CARD, NODE }
+    public enum Kind { TAB, ACTION, SMALL, CARD, NODE, CHOICE }
     public enum State { DEFAULT, BLOCKED, UNLOCKED, EQUIPPED }
 
     private final Kind kind;
@@ -27,7 +27,7 @@ public class RpgButton extends ButtonWidget {
     public RpgButton(int x, int y, int width, int height, Text message, PressAction action, Kind kind, int accent) {
         super(x, y, width, height, message, action, DEFAULT_NARRATION_SUPPLIER);
         this.kind = kind;
-        this.illustratedStyle = CharacterArt.supported(ClientStatsStore.stats.clazz);
+        this.illustratedStyle = false;
         this.accent = accent;
     }
 
@@ -72,6 +72,16 @@ public class RpgButton extends ButtonWidget {
         TextRenderer font = client.textRenderer;
         int x = getX();
         int y = getY();
+
+        if(kind==Kind.CHOICE) {
+            int edge=selected||hovered||isFocused()?accent:CleanRpgUi.BORDER;
+            CleanRpgUi.panel(context,x,y,width,height,edge);
+            RpgUiTheme.drawIcon(context,icon,x+width/2-8,y+5,16,RpgUiTheme.accessibleAccent(accent,CleanRpgUi.PANEL));
+            var lines=font.wrapLines(getMessage(),Math.max(1,width-10));
+            for(int i=0;i<Math.min(2,lines.size());i++) context.drawTextWithShadow(font,lines.get(i),x+(width-font.getWidth(lines.get(i)))/2,y+27+i*10,CleanRpgUi.TEXT);
+            if(selected) context.fill(x+2,y+height-3,x+width-2,y+height-1,accent);
+            return;
+        }
 
         if (kind == Kind.TAB) {
             int bg = selected ? RpgUiTheme.alpha(accent, 46) : (hovered ? 0xB5363E52 : 0x96303949);
@@ -121,6 +131,7 @@ public class RpgButton extends ButtonWidget {
             case BLOCKED -> 0xD6222733;
             case DEFAULT -> 0xE92B3141;
         };
+        if (selected || isFocused()) stateAccent = accent;
         if (hovered && active) bg = RpgUiTheme.lighten(bg, 0.09f);
         int border = active || state == State.UNLOCKED || state == State.EQUIPPED ? stateAccent : 0xFF464E61;
         panel(context, x, y, width, height, bg, border);
@@ -190,8 +201,7 @@ public class RpgButton extends ButtonWidget {
     }
 
     private void panel(DrawContext context,int x,int y,int w,int h,int bg,int border) {
-        if(illustratedStyle) MageArt.frame(context,x,y,w,h,border);
-        else RpgUiTheme.panel(context,x,y,w,h,bg,border);
+        CleanRpgUi.panel(context,x,y,w,h,border);
     }
 
     private static void drawCentered(TextRenderer font, DrawContext context, String raw, int cx, int y, int color, int maxWidth) {
