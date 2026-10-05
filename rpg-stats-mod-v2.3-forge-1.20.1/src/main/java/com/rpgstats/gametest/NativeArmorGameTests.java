@@ -94,9 +94,9 @@ public final class NativeArmorGameTests {
         }finally{TestPlayers.finish(c);}c.complete();
     }
     private static void nativeHit(MobEntity boss,ServerPlayerEntity p,int phase)throws ReflectiveOperationException {
-        if(phase==7){BossPressureGameTests.commonHit(boss,p,true);return;}
+        if(phase==7)boss.refreshPositionAndAngles(p.getX(),p.getY(),p.getZ()+1,180,0);
         boss.setTarget(p);boss.getClass().getMethod("setSpawning",boolean.class).invoke(boss,false);
-        boss.getClass().getMethod(phase==21?"setMaceOfSpades":"setRupture",boolean.class).invoke(boss,true);
+        boss.getClass().getMethod(phase==52?"setRupture":"setMaceOfSpades",boolean.class).invoke(boss,true);
         var type=Class.forName("net.soulsweaponry.entity.ai.goal.ReturningKnightGoal");
         var goal=(net.minecraft.entity.ai.goal.Goal)type.getConstructor(boss.getClass()).newInstance(boss);
         for(var value:new Object[][]{{"attackCooldown",100},{"specialCooldown",100},{"summonCooldown",100},{"attackStatus",phase-1},{"targetPos",p.getBlockPos()},{"cordsRegistered",true}}) {
@@ -107,7 +107,10 @@ public final class NativeArmorGameTests {
             var area=new Box(boss.getX()-18,boss.getY()-8,boss.getZ()-18,boss.getX()+18,boss.getY()+8,boss.getZ()+18);
             if(!boss.getWorld().getOtherEntities(boss,area).contains(p))throw new AssertionError("Player absent from native eruption entity query; hit cannot be measured");
         }
+        var status=type.getDeclaredField("attackStatus");status.setAccessible(true);
+        RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH phase={} target={} mace={} summon={} obliterate={} blind={} rupture={} preStatus={} predicted={}",phase,boss.getTarget()==p,boss.getClass().getMethod("getMaceOfSpades").invoke(boss),boss.getClass().getMethod("getSummon").invoke(boss),boss.getClass().getMethod("getObliterate").invoke(boss),boss.getClass().getMethod("getBlind").invoke(boss),boss.getClass().getMethod("getRupture").invoke(boss),status.get(goal),com.rpgstats.combat.CombatHandler.modifyIncomingDamage(p,phase==7?20:phase==21?25:30,p.getDamageSources().mobAttack(boss)));
         goal.tick();
+        RPGStatsMod.LOGGER.info("RPG_NATIVE_BRANCH_END phase={} postStatus={} velocity={}",phase,status.get(goal),p.getVelocity());
     }
     private static void encounter(TestContext c,RPGClass clazz,boolean juggernaut,int phase) {
         if(!ModList.get().isLoaded("soulsweapons")){c.complete();return;}
