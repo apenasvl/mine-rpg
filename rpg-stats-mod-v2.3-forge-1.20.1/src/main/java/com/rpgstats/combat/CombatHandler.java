@@ -130,8 +130,11 @@ public final class CombatHandler {
             amount *= BossScaler.getDamageMultiplier(living);
 
         float beforeClassGuards=amount;
+        int secondChanceBefore=CombatState.get(player.getUuid()).cooldown("internal_second_chance");
         amount = MageCombatHandler.modifyIncomingDamage(player, amount, source);
         if (amount <= 0f) return 0f;
+        // A one-use fatal rescue is an explicit exception to ordinary mitigation floors.
+        if(secondChanceBefore<=0 && CombatState.get(player.getUuid()).cooldown("internal_second_chance")>0)return amount;
         if (source.isIn(DamageTypeTags.BYPASSES_RESISTANCE)) return amount;
 
         PlayerStats stats = StatsManager.get(player);

@@ -19,7 +19,8 @@ public final class BetterWeaponrySustain {
  public static float projectileDamage(ServerPlayerEntity p,float amount,DamageSource source) {
   if(!auditedVersion() || !source.isOf(net.minecraft.entity.damage.DamageTypes.ARROW) || amount<=0)return amount;
   var id=new Identifier("better_weaponry","damage");if(!Registries.ENCHANTMENT.containsId(id))return amount;
-  int level=EnchantmentHelper.getLevel(Registries.ENCHANTMENT.get(id),ArcherShotTracker.launchWeapon(source,p));
+  var original=ArcherShotTracker.storedLaunchWeapon(source,p);if(original.isEmpty())return amount;
+  int level=EnchantmentHelper.getLevel(Registries.ENCHANTMENT.get(id),original.get());
   return amount+2*Math.min(5,Math.max(0,level));
  }
  public static void confirmedHit(ServerPlayerEntity p,float damage,DamageSource source) {
