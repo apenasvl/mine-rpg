@@ -80,6 +80,7 @@ jobs:
       - name: Illustrated UI routing tests
         run: |
           python3 tools/run_ui_tests.py
+          python3 tools/run_guide_layout_tests.py
           python3 tools/run_mage_ui_tests.py
           python3 tools/run_warrior_ui_tests.py
           python3 tools/run_archer_ui_tests.py

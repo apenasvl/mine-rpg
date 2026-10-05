@@ -33,6 +33,16 @@ import net.minecraftforge.fml.common.Mod;
 /** Forge event bus. All game-state writes happen on the logical server. */
 @Mod.EventBusSubscriber(modid=RPGStatsMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public final class ForgeEvents {
+    /** Old physical Codex items use the same corrected screen as /rpg guia. */
+    @SubscribeEvent(priority=EventPriority.HIGHEST)
+    public static void openPhysicalGuide(PlayerInteractEvent.RightClickItem event) {
+        if(!com.rpgstats.guide.RpgGuideBook.isGuide(event.getItemStack()))return;
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.util.ActionResult.SUCCESS);
+        if(event.getEntity() instanceof ServerPlayerEntity player) {
+            RPGStatsMod.syncStats(player);RpgNetwork.openGuide(player);
+        }
+    }
     @SubscribeEvent public static void armorAffinityTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
         var stack=event.getItemStack();if(!(stack.getItem() instanceof net.minecraft.item.ArmorItem))return;
         for(var row:new String[][]{{"guerreiro","Guerreiro: +0,5 tenacidade de armadura e +3% resistência a recuo"},{"arqueiro","Arqueiro: +2% movimento"},{"assassino","Assassino: +1% movimento e +2% velocidade de ataque"},{"mago","Mago: +0,25 tenacidade de armadura"}}) {

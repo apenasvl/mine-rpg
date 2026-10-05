@@ -16,6 +16,12 @@ public record EquipmentRules(int minLevel, Set<String> classes, Map<String,Integ
             throw new IllegalArgumentException("Invalid equipment progression/class");
         if(!VALID_STATS.containsAll(stats.keySet()) || stats.values().stream().anyMatch(x->x<0))
             throw new IllegalArgumentException("Invalid equipment attribute requirement");
+        if(stats.containsKey("faith")) {
+            var migrated=new java.util.HashMap<>(stats);
+            int requirement=migrated.remove("faith");
+            if(requirement>0)migrated.merge("int",requirement,Math::max);
+            stats=Map.copyOf(migrated);
+        }
         if(!Float.isFinite(damageFactor)||damageFactor<=0||!Float.isFinite(attackSpeedFactor)||attackSpeedFactor<=0)
             throw new IllegalArgumentException("Equipment factors must be finite and positive");
     }

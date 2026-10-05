@@ -29,21 +29,23 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Selection and layout behavior
-        run: python3 tools/run_ui_tests.py
+        run: |
+          python3 tools/run_ui_tests.py
+          python3 tools/run_guide_layout_tests.py
       - name: Install virtual display
         run: sudo apt-get update -qq && sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
       - name: Capture the real Forge client
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
           ALSOFT_DRIVERS: 'null'
-        run: xvfb-run -a -s '-screen 0 2560x1440x24' timeout 900 bash gradlew --no-daemon --stacktrace -I tools/ui-preview.init.gradle runClient
+        run: xvfb-run -a -s '-screen 0 2560x1440x24' timeout --kill-after=20s 600 bash gradlew --no-daemon --stacktrace -I tools/ui-preview.init.gradle runClient
       - name: Require all screenshots
         run: |
           test -f build/ui-preview/result.txt
           python3 - <<'PYTEST'
           from pathlib import Path
           files=list(Path('build/ui-preview').glob('*.png'))
-          assert len(files)==36, f'Expected 36 UI screenshots, got {len(files)}'
+          assert len(files)==42, f'Expected 42 UI screenshots, got {len(files)}'
           PYTEST
       - name: Upload captures and client log
         if: always()

@@ -67,7 +67,10 @@ for forbidden in (
 # Every transition must be tied to actual widgets; no text hit-testing navigation.
 assert 'new RpgButton' in screen
 assert 'clearAndInit()' in screen
-assert 'mouseClicked(' not in screen
+assert 'MageViewport.fit(width,height)' in screen
+assert 'super.mouseClicked(v.localX(x),v.localY(y),button)' in screen
+assert 'mouseScrolled(' in screen and 'enableScissor(' in screen
+assert 'if (yy > book().y + book().h - 48) break;' not in screen
 assert 'styleAt' not in screen
 
 print("RPG deterministic Codex screen validation OK")

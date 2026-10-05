@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.HashMap;
 
 public class PlayerStats {
-    public static final int DATA_VERSION = 10;
+    public static final int DATA_VERSION = 11;
     public static final int ACTIVE_SLOTS = 4;
 
     public int level = 1;
@@ -185,7 +185,7 @@ public class PlayerStats {
         nbt.putString("lastUnlockedNode", lastUnlockedNode == null ? "" : lastUnlockedNode);
 
         NbtCompound storedStats = new NbtCompound();
-        for (Map.Entry<Stat, Integer> entry : stats.entrySet()) storedStats.putInt(entry.getKey().name(), entry.getValue());
+        for (Stat stat : Stat.activeValues()) storedStats.putInt(stat.name(), stats.getOrDefault(stat,0));
         nbt.put("stats", storedStats);
 
         NbtList nodes = new NbtList();
@@ -263,6 +263,12 @@ public class PlayerStats {
             result.stats.put(stat, Math.max(0, value));
         }
         NbtList nodes = nbt.getList("nodes", NbtElement.STRING_TYPE);
+        if (oldVersion < 11) {
+            // Return base Faith (including origin points), never tree/equipment bonuses.
+            result.statPoints = (int)Math.min(Integer.MAX_VALUE,
+                    (long)result.statPoints + result.stats.getOrDefault(Stat.FE,0));
+        }
+        result.stats.put(Stat.FE,0);
         for (int i = 0; i < nodes.size(); i++) result.unlockedNodes.add(nodes.getString(i));
 
         result.resource = Math.max(0f, nbt.getFloat("resource"));

@@ -59,6 +59,8 @@ public class StatsScreen extends Screen {
     private static final String[] ACTIVE_KEYS = {"R", "Z", "X", "C"};
 
     private final List<RpgButton> attributeButtons = new ArrayList<>();
+    private PlayerStats attributeSnapshot;
+    private final Map<Stat,List<String>> attributeDetails=new java.util.EnumMap<>(Stat.class);
     private final Map<String, NodeVisual> nodeVisuals = new LinkedHashMap<>();
     private final List<HintVisual> hintVisuals = new ArrayList<>();
     private Page page = Page.ATTRIBUTES;
@@ -358,15 +360,15 @@ public class StatsScreen extends Screen {
     }
 
     private void addAttributeButtons(Layout l, PlayerStats stats) {
-        for (int i = 0; i < Stat.values().length; i++) {
+        for (int i = 0; i < Stat.activeValues().length; i++) {
             Rect rect = attributeRect(l, i);
-            Stat stat = Stat.values()[i];
+            Stat stat = Stat.activeValues()[i];
             RpgButton plus = new RpgButton(rect.right() - 34, rect.y + (rect.h - 20) / 2, 25, 20, Text.literal("+"),
                     b -> send(RPGStatsMod.ALLOCATE, stat.name()), RpgButton.Kind.SMALL, statColor(stat));
             plus.active = stats.statPoints > 0 && stats.stats.get(stat) < StatsManager.MAX_STAT;
             attributeButtons.add(plus);
             addDrawableChild(plus);
-            addHint(plus, stat.display, statDescription(stat),
+            addHint(plus, stat.display, statDescription(stat)+"\n"+String.join("\n",AttributeDetails.lines(stats,stat)),
                     plus.active ? "Clique para gastar 1 PA neste atributo." : "Sem PA disponivel ou atributo no limite.");
         }
     }
@@ -374,8 +376,8 @@ public class StatsScreen extends Screen {
     private Rect attributeRect(Layout l, int index) {
         int top = l.contentY + 17;
         int gap = 4;
-        int count = Stat.values().length;
-        int rowH = Math.max(27, Math.min(39, (l.contentH - 17 - gap * (count - 1)) / count));
+        int count = Stat.activeValues().length;
+        int rowH = Math.max(27, Math.min(47, (l.contentH - 17 - gap * (count - 1)) / count));
         return new Rect(l.contentX, top + index * (rowH + gap), l.contentW, rowH);
     }
 
@@ -866,10 +868,14 @@ public class StatsScreen extends Screen {
             CosmicSelectionArt.label(c,textRenderer,selected.title,x+15,y+12,1.3f,RpgUiTheme.accessibleAccent(selected.accent,CleanRpgUi.PANEL));
             List<String> lines=new ArrayList<>(wrapText(selected.description,leftW));lines.add("");
             if(choiceDetails) {
+                for(String bonus:HouseBonusSummary.lines(selected.nodes,stats.unlockedNodes))lines.addAll(wrapText(bonus,leftW));
+                lines.add("");
                 for(SkillNode n:selected.nodes){lines.addAll(wrapText(n.name()+" · NV "+n.reqLevel()+" · "+n.cost()+" PH",leftW));lines.addAll(wrapText(n.description(),leftW));for(String effect:detailEffects(n.id(),n))lines.addAll(wrapText("• "+effect,leftW));lines.add("");}
             } else {
                 if(page==Page.AFFINITY){lines.addAll(wrapText(HouseRules.penaltyText(RPGPath.valueOf(selected.id)),leftW));lines.add("Até 4 talentos · 2 PH cada");}
-                else {lines.add("Talentos deste caminho");for(SkillNode n:selected.nodes.stream().limit(3).toList())lines.addAll(wrapText("• "+n.name(),leftW));}
+                else {
+                    for(String bonus:HouseBonusSummary.lines(selected.nodes,stats.unlockedNodes).stream().limit(6).toList())lines.addAll(wrapText(bonus,leftW));
+                }
                 ReferenceIcons.scene(c,stats.clazz,selected.icon,x+w-178,y+12,163,h-24,selected.accent);
             }
             int visible=Math.max(1,(h-51)/10);choiceScroll=Math.max(0,Math.min(choiceScroll,Math.max(0,lines.size()-visible)));
@@ -892,9 +898,13 @@ public class StatsScreen extends Screen {
     }
 
     private void renderAttributes(DrawContext context, Layout l, PlayerStats stats) {
+        if(attributeSnapshot!=stats) {
+            attributeSnapshot=stats;
+            for(Stat stat:Stat.activeValues())attributeDetails.put(stat,AttributeDetails.lines(stats,stat));
+        }
         Map<Stat, Integer> totals = stats.totalStats();
-        for (int i = 0; i < Stat.values().length; i++) {
-            Stat stat = Stat.values()[i];
+        for (int i = 0; i < Stat.activeValues().length; i++) {
+            Stat stat = Stat.activeValues()[i];
             Rect r = attributeRect(l, i);
             int color = statColor(stat);
             CleanRpgUi.surface(context, r.x, r.y, r.w, r.h, CleanRpgUi.PANEL, RpgUiTheme.BORDER_SOFT);
@@ -914,9 +924,11 @@ public class StatsScreen extends Screen {
             int amountX = textX + Math.min(112, textRenderer.getWidth(stat.display) + 12);
             context.drawTextWithShadow(textRenderer, Text.literal("Base/total: " + amount), amountX, r.y + 6,
                     RpgUiTheme.accessibleAccent(total > base ? RpgUiTheme.SUCCESS : color,CleanRpgUi.PANEL));
-            drawTrimmed(context, statDescription(stat), textX, r.y + 19, CleanRpgUi.MUTED, Math.max(30, r.w - (textX - r.x) - 49));
+            List<String> effects=attributeDetails.get(stat);
+            drawTrimmed(context,effects.get(0),textX,r.y+19,CleanRpgUi.MUTED,Math.max(30,r.w-(textX-r.x)-49));
+            if(r.h>=43)drawTrimmed(context,effects.get(1),textX,r.y+31,RpgUiTheme.accessibleAccent(RpgUiTheme.SUCCESS,CleanRpgUi.PANEL),Math.max(30,r.w-(textX-r.x)-49));
 
-            if (r.h >= 40) {
+            if (r.h >= 52) {
                 int barX = textX;
                 int barY = r.bottom() - 8;
                 int barW = Math.max(28, r.w - (barX - r.x) - 47);
@@ -992,6 +1004,8 @@ public class StatsScreen extends Screen {
         String help = page == Page.AFFINITY
                 ? "Até 4 talentos · +custo "+clean(HouseRules.surcharge(stats)*100)+"% · +dano recebido "+clean(HouseRules.vulnerability(stats)*100)+"% · -dano "+clean(HouseRules.offensePenalty(stats)*100)+"%"
                 : "Clique: fixar e aprender · Ativa: equipar · Roda na ficha: detalhes";
+        if(page==Page.PATH_TREE&&stats.path!=null)
+            help="Atributos aprendidos: "+HouseBonusSummary.attributeText(stats.path.nodes,stats.unlockedNodes)+" · Detalhes no Codex";
         drawTrimmed(context, help, l.contentX + 3, l.contentY + 16, RpgUiTheme.DIM, l.contentW - 6);
 
         for (NodeVisual visual : nodeVisuals.values()) {
@@ -1154,62 +1168,9 @@ public class StatsScreen extends Screen {
         };
     }
 
-    private String effectDescription(String nodeId, SkillEffect effect) {
-        if (effect.type() == AbilityType.ACTIVE) {
-            String summary = AbilityRegistry.activeSummary(nodeId);
-            if (!summary.isBlank()) return summary;
-        }
-        float v = effect.value();
-        return switch (effect.effectId()) {
-            case "melee_damage" -> percent(v) + " dano corpo a corpo";
-            case "ranged_damage" -> percent(v) + " dano a distancia";
-            case "magic_power" -> percent(v) + " poder magico";
-            case "lifesteal", "spell_lifesteal" -> percent(v) + " roubo de vida";
-            case "damage_reduction" -> percent(v) + " reducao de dano";
-            case "crit_chance", "spell_crit" -> percent(v) + " chance de critico";
-            case "poison_hit" -> "Veneno em ataques (potencia " + clean(v) + ")";
-            case "thorns" -> percent(v) + " espinhos";
-            case "attack_speed" -> percent(v) + " velocidade de ataque";
-            case "move_speed" -> percent(v) + " velocidade de movimento";
-            case "resource_on_hit" -> "+" + clean(v) + " recurso ao acertar";
-            case "resource_on_hurt" -> "+" + clean(v) + " recurso ao receber dano";
-            case "heal_on_kill" -> "+" + clean(v) + " HP ao eliminar inimigo";
-            case "mana_flat" -> "+" + clean(v) + " Mana maxima";
-            case "mana_regen_flat" -> "+" + clean(v) + " Mana/s";
-            case "mana_max_pct" -> percent(v) + " Mana maxima";
-            case "mana_cost_reduction" -> percent(v) + " eficiencia de Mana";
-            case "cooldown_recovery" -> percent(v) + " recuperacao de cooldown";
-            case "elemental_damage" -> percent(v) + " dano elemental";
-            case "reaction_damage" -> percent(v) + " dano de reacoes";
-            case "summon_damage" -> percent(v) + " dano de invocacoes";
-            case "summon_duration" -> percent(v) + " duracao/estabilidade de invocacoes";
-            case "summon_defense" -> percent(v) + " defesa com invocacao proxima";
-            case "summon_refund" -> percent(v) + " do custo devolvido ao expirar (gate 1s)";
-            case "summon_diversity_damage" -> "+" + percent(v) + " dano por variedade de invocacoes (cap da skill)";
-            case "astral_resonance" -> "+" + percent(v) + " poder por constructo diferente (cap da skill)";
-            case "bond_flat" -> "+" + clean(v) + " Pontos de Vinculo";
-            case "concentration_retention" -> percent(v) + " menos perda de Concentracao ao sofrer dano";
-            case "concentration_reaction" -> "+" + clean(v) + " Concentracao por reacao (com cap por cast)";
-            case "elemental_cost_reduction" -> percent(v) + " menor custo de Mana elemental";
-            case "fire_damage_marked" -> percent(v) + " dano de fogo contra alvos aquecidos";
-            case "fire_crit_hot" -> percent(v) + " critico de fogo contra alvos muito aquecidos";
-            case "frozen_fragility" -> percent(v) + " dano no proximo golpe contra alvo congelado";
-            case "reaction_aoe" -> "+" + clean(v) + " HP na explosao de reacao em area";
-            case "shatter_damage" -> "+" + clean(v) + " HP na explosao ao estilhacar";
-            case "chain_concentration" -> "+" + clean(v) + " Concentracao por salto de raio (com cap por cast)";
-            case "rune_limit" -> "+" + clean(v) + " limite de runas";
-            case "illusion_echo" -> percent(v) + " chance controlada de eco ilusorio";
-            case "mage_echo" -> percent(v) + " chance de Eco Arcano (35% do dano; CD interno)";
-            case "teleport_spell_bonus" -> percent(v) + " dano da proxima magia apos mobilidade espacial";
-            case "curse_duration" -> percent(v) + " duracao de maldicoes";
-            case "mana_regen_pct" -> percent(v) + " regeneracao de Mana quando a condicao da skill estiver ativa";
-            case "stasis_magic_amp" -> percent(v) + " dano magico contra alvos em Stasis";
-            case "temporal_second_chance" -> "Segunda Chance temporal com cooldown interno";
-            case "hex_melee_magic" -> "+" + clean(v) + " dano magico em ataques imbuídos";
-            case "spellblade_rhythm" -> percent(v) + " dano por stack do ritmo melee-spell-melee";
-            case "temporal_fragment_max" -> "+" + clean(v) + " Fragmentos Temporais maximos";
-            default -> com.rpgstats.ability.ClassAbilityRegistry.describe(effect);
-        };
+    private String effectDescription(String nodeId,SkillEffect effect) {
+        String resolved=EffectText.describe(nodeId,effect);
+        return resolved.isBlank()?com.rpgstats.ability.ClassAbilityRegistry.describe(effect):resolved;
     }
 
     private String pageName(Page target) {
@@ -1224,16 +1185,16 @@ public class StatsScreen extends Screen {
 
     private String classOriginStats(RPGClass clazz) {
         return switch (clazz) {
-            case GUERREIRO -> "Origem: VIT 8 · TEN 8 · FOR 10 · DES 3 · INT 1 · FE 2 · ARC 1.";
-            case MAGO -> "Origem: VIT 5 · TEN 5 · FOR 2 · DES 4 · INT 10 · FE 3 · ARC 4.";
-            case ARQUEIRO -> "Origem: VIT 6 · TEN 7 · FOR 3 · DES 10 · INT 2 · FE 2 · ARC 3.";
-            case ASSASSINO -> "Origem: VIT 5 · TEN 7 · FOR 3 · DES 9 · INT 2 · FE 1 · ARC 6.";
+            case GUERREIRO -> "Origem: VIT 8 · TEN 8 · FOR 10 · DES 3 · INT 1 · ARC 1 · 2 PA livres.";
+            case MAGO -> "Origem: VIT 5 · TEN 5 · FOR 2 · DES 4 · INT 10 · ARC 4 · 3 PA livres.";
+            case ARQUEIRO -> "Origem: VIT 6 · TEN 7 · FOR 3 · DES 10 · INT 2 · ARC 3 · 2 PA livres.";
+            case ASSASSINO -> "Origem: VIT 5 · TEN 7 · FOR 3 · DES 9 · INT 2 · ARC 6 · 1 PA livre.";
         };
     }
 
     private String pageDescription(Page target, PlayerStats stats) {
         return switch (target) {
-            case ATTRIBUTES -> "Distribua PA entre Vitalidade, Tenacidade, Forca, Destreza, Inteligencia, Fe e Arcano.";
+            case ATTRIBUTES -> "Distribua PA entre seis atributos. Confira o efeito atual e o ganho real do próximo PA.";
             case CLASS_TREE -> "Fundamentos da classe. Esta arvore abre o recurso principal e libera a escolha de Casa.";
             case PATH_TREE -> "Mostra somente a Casa principal escolhida. Define a mecanica central e libera tres especializacoes.";
             case SPECIALIZATION_TREE -> "Aprofunda sua Casa em um estilo de combate especializado.";
@@ -1414,8 +1375,8 @@ public class StatsScreen extends Screen {
             case FORCA -> "Dano corpo a corpo; Guerreiro tambem escala com nivel.";
             case DESTREZA -> "Velocidade; dano de arco e golpes do Assassino.";
             case INTELIGENCIA -> "Mana; dano magico cresce com Inteligencia e nivel.";
-            case FE -> "Afinidade espiritual, cura e efeitos sagrados.";
-            case ARCANO -> "Veneno/ocultismo, duracao de aflicoes e Sorte.";
+            case FE -> "Atributo removido; pontos reembolsados.";
+            case ARCANO -> "Sorte; Energia do Assassino e magia Oculta. A Casa Arcana usa Inteligência como atributo principal.";
         };
     }
 
