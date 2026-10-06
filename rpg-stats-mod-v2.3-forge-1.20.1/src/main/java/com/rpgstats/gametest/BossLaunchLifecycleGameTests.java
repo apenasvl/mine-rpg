@@ -147,5 +147,19 @@ public final class BossLaunchLifecycleGameTests {
         }catch(ReflectiveOperationException e){throw new AssertionError(e);}
         finally {p.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
     }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void nativePostHurtImpulsePreservesAcceptedVanillaLaunch(TestContext c) {
+        var p=player(c);var b=boss(c,3);
+        try {
+            p.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0);
+            p.setVelocity(Vec3d.ZERO);p.setOnGround(true);hit(c,p,b);
+            c.assertTrue(p.getVelocity().y>=.25,"Accepted hurt did not produce vanilla vertical knockback");
+            c.assertTrue(BossLaunchTracker.isBossFall(p,p.getDamageSources().fall()),"Vanilla accepted launch not tracked");
+            // Same post-hurt write used by Returning Knight phases36/52.
+            double old=p.getVelocity().y;p.setVelocity(0,1.5,0);
+            BossLaunchTracker.recordImpulse(p,b,old,p.getVelocity().y);
+            c.assertTrue(BossLaunchTracker.isBossFall(p,p.getDamageSources().fall()),"Native post-hurt impulse erased accepted vanilla launch");
+        }finally {b.discard();TestPlayers.finish(c);}c.complete();
+    }
     private BossLaunchLifecycleGameTests(){}
 }
