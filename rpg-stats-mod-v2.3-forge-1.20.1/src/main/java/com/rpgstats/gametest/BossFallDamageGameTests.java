@@ -16,7 +16,10 @@ public final class BossFallDamageGameTests {
     private static void build(ServerPlayerEntity p,RPGClass clazz) {
         var s=new PlayerStats();s.awakened=true;s.clazz=clazz;s.level=50;
         s.stats.put(Stat.VITALIDADE,32);s.stats.put(Stat.TENACIDADE,25);
-        s.refreshResourceMax();StatsManager.finish(p,s);p.setHealth(p.getMaxHealth());
+        s.refreshResourceMax();StatsManager.finish(p,s);p.setNoGravity(true);
+        // Connected players retain vanilla spawn protection until server ticks expire it.
+        for(int i=0;i<80;i++){p.playerTick();p.tick();}
+        p.setHealth(p.getMaxHealth());
     }
     @GameTest(templateName="empty",tickLimit=80)
     public static void acceptedBossLaunchProtectsOnlyItsFirstLanding(TestContext c) {
@@ -50,6 +53,16 @@ public final class BossFallDamageGameTests {
             ForgeEvents.logout(new net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent(p));
             c.assertTrue(Math.abs(CombatHandler.modifyIncomingDamage(p,40,fall)-ordinary)<.001f,"Logout retained launch protection");
         }finally {boss.discard();cow.discard();TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=260)
+    public static void expiredLaunchNeverProtectsLaterFall(TestContext c) {
+        var boss=c.spawnMob(EntityType.WITHER,3,1,3);var p=TestPlayers.create(c);build(p,RPGClass.GUERREIRO);
+        var fall=p.getDamageSources().fall();float ordinary=CombatHandler.modifyIncomingDamage(p,40,fall);
+        p.setVelocity(new Vec3d(0,1,0));p.timeUntilRegen=0;p.damage(p.getDamageSources().mobAttack(boss),1);
+        c.runAtTick(220,()-> {
+            try {c.assertTrue(Math.abs(CombatHandler.modifyIncomingDamage(p,40,fall)-ordinary)<.001f,"Expired launch retained protection");}
+            finally {boss.discard();TestPlayers.finish(c);}c.complete();
+        });
     }
     private BossFallDamageGameTests(){}
 }
