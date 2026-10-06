@@ -55,8 +55,7 @@ def main():
      reports.append({'modId':'kotlinforforge','sha256':hashlib.sha256(jar.read_bytes()).hexdigest(),'embeddedMods':descriptors,'status':'native-container-verified'})
    else:reports.append(inspect_jar(jar,{'library':True}))
  installer=server/'forge-installer.jar'
- if args.forge_version=='47.4.0':shutil.copyfile(ROOT/'build/production-probe/forge-installer.jar',installer)
- else:download(f'https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-{args.forge_version}/forge-1.20.1-{args.forge_version}-installer.jar',installer)
+ shutil.copyfile(ROOT/'build/production-probe/forge-installer.jar',installer)
  subprocess.run(['java','-jar',str(installer),'--installServer'],cwd=server,check=True)
  (server/'eula.txt').write_text('eula=true\n')
  (server/'user_jvm_args.txt').write_text('-Xmx4G\n-Dforge.gameTestServer=true\n-Dforge.enableGameTest=true\n-Dforge.enabledGameTestNamespaces=rpgstats\n-Drpgstats.productionBossTests=true\n')

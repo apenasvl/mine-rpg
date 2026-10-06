@@ -251,12 +251,15 @@ jobs:
           - profile: boss
             argument: ''
             server_folder: production-boss
+            forge_version: 47.4.0
           - profile: full
             argument: '--full'
             server_folder: production-boss-full
+            forge_version: 47.4.0
           - profile: full-forge47.4.10
             argument: '--full --forge-version 47.4.10'
             server_folder: production-boss-full
+            forge_version: 47.4.10
     defaults:
       run:
         working-directory: rpg-stats-mod-v2.3-forge-1.20.1
@@ -269,7 +272,7 @@ jobs:
           cache: gradle
       - run: chmod +x gradlew
       - name: Build separate production namespace probe
-        run: ./gradlew --no-daemon --stacktrace -I tools/production-boss-probe.init.gradle build productionBossProbeJar
+        run: ./gradlew --no-daemon --stacktrace -PproductionForgeVersion=${{ matrix.forge_version }} -I tools/production-boss-probe.init.gradle build productionBossProbeJar
       - name: Test original native binaries in installed Forge
         run: python3 tools/run_production_boss_tests.py ${{ matrix.argument }}
       - name: Preserve the exact native-tested RPG artifact
