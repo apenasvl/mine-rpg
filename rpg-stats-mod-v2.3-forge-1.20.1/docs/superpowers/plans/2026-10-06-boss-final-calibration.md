@@ -42,7 +42,7 @@
 ## Finalização da infraestrutura
 - [x] PR8 revisada e mergeada isoladamente; PR9 retarget main, diff sem UI e CI reexecutado.
 - [x] RED: impulsos de outro boss/mob comum preservavam marca antiga; corrigidos.
-- [ ] Consumir o pareamento por ação de dano, invalidar hit anterior antes de novo hurt, tratar impulso pré-hurt sem reutilizar HIT antigo.
+- [x] Consumir o pareamento por ação de dano, invalidar hit anterior antes de novo hurt, tratar impulso pré-hurt sem reutilizar HIT antigo.
 - [ ] GREEN: líquidos, voo, veículo, pouso, dimensão/respawn/morte/clear, PvP e bosses concorrentes, limite200/201 e rejeição do mesmo boss/tick.
 - [ ] Revisão final, merge somente após CI atual verde.
 

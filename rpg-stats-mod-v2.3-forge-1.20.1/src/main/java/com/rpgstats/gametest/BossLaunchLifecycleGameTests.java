@@ -66,6 +66,7 @@ public final class BossLaunchLifecycleGameTests {
         var p=player(c);var b=boss(c,3);var pig=c.spawnMob(EntityType.PIG,2,2,2);
         try {
             launch(c,p,b);p.getAbilities().flying=true;inactive(c,p,"Flight retained launch");p.getAbilities().flying=false;inactive(c,p,"Flight exit restored launch");
+            launch(c,p,b);p.startFallFlying();inactive(c,p,"Elytra flight retained launch");p.stopFallFlying();inactive(c,p,"Elytra exit restored launch");
             launch(c,p,b);c.assertTrue(p.startRiding(pig,true),"Could not enter vehicle");inactive(c,p,"Vehicle retained launch");p.stopRiding();inactive(c,p,"Vehicle exit restored launch");
             launch(c,p,b);ForgeEvents.dimension(new PlayerEvent.PlayerChangedDimensionEvent(p,World.OVERWORLD,World.NETHER));inactive(c,p,"Dimension event retained launch");
             impulse(p,b);inactive(c,p,"Dimension cleanup retained old accepted hit");
@@ -131,6 +132,9 @@ public final class BossLaunchLifecycleGameTests {
             c.assertTrue(!p.damage(p.getDamageSources().mobAttack(b),1),"Second attack not rejected");
             p.setInvulnerable(false);impulse(p,b);
             inactive(c,p,"Rejected second attack borrowed earlier same-boss damage");
+            double old=p.getVelocity().y;p.setVelocity(0,old+1,0);
+            BossLaunchTracker.recordNativePostDamageImpulse(p,b,old,p.getVelocity().y);
+            inactive(c,p,"Rejected attack retained native continuation token");
         }finally {p.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
     }
     @GameTest(templateName="empty",tickLimit=80)
@@ -157,7 +161,7 @@ public final class BossLaunchLifecycleGameTests {
             c.assertTrue(BossLaunchTracker.isBossFall(p,p.getDamageSources().fall()),"Vanilla accepted launch not tracked");
             // Same post-hurt write used by Returning Knight phases36/52.
             double old=p.getVelocity().y;p.setVelocity(0,1.5,0);
-            BossLaunchTracker.recordImpulse(p,b,old,p.getVelocity().y);
+            BossLaunchTracker.recordNativePostDamageImpulse(p,b,old,p.getVelocity().y);
             c.assertTrue(BossLaunchTracker.isBossFall(p,p.getDamageSources().fall()),"Native post-hurt impulse erased accepted vanilla launch");
         }finally {b.discard();TestPlayers.finish(c);}c.complete();
     }

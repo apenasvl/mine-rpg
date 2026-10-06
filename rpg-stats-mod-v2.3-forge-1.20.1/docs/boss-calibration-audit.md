@@ -39,7 +39,7 @@ Baseline nativo: run 36794767189, Native registry/attributes observed; arena cal
 
 ## Rotas confirmadas na inspeção do binário
 
-- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Fases36/52 escrevem Y1/Y1.5 depois do dano. A integração mede o delta nos writes nativos, pareado com o dano aceito da própria ação no mesmo tick, com par consumido uma única vez; velocidade absoluta preexistente não comprova lançamento.
+- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Fases36/52 escrevem Y1/Y1.5 depois do dano. A integração mede o delta nos writes nativos, pareado com o dano aceito da própria ação no mesmo tick, com par comum consumido uma única vez e continuação reservada ao write nativo pós-hurt da mesma ação; velocidade absoluta preexistente não comprova lançamento.
 - Legendary `ModDamageTypes.causeCutDamage/causeImpaleDamage`: fontes sem atacante. Chamadas encontradas somente em SwingingAxeBlockEntity e SpikeTrapBlock; não atribuir a boss pela proximidade.
 - Rotas customizadas de laser, gravidade, nuvem e ghost possuem construtores de fonte com entidades; verificar owner efetivo em runtime, sem adivinhar a partir do tipo de dano.
 
@@ -77,3 +77,7 @@ Returning Knight e Colossus já possuem fixtures nativas de ataque; todos os per
 | Launch + wall | Nenhum golpe nativo inspecionado usa flyIntoWall; voo Elytra encerra marca | Não criar tratamento genérico de colisão |
 
 Inspeção de bytecode é evidência de rota, não prova da luta inteira. Nenhuma proteção genérica foi adicionada por DamageType ou registry do efeito. Fontes nativas adicionais e summons exigem cobertura na arena posterior.
+
+## Regressões adicionais da revisão final
+
+Segundo hurt rejeitado no mesmo tick não reutiliza o hit anterior, inclusive quando ServerPlayer rejeita antes de LivingEntity. Um hurt aceito com knockback vanilla pode receber também o write nativo pós-hurt; apenas esse call site auditado continua a ação aceita. Impulsos comuns repetidos não reutilizam o par consumido. Novas chamadas de dano, cleanup e mudança de tick invalidam a continuação nativa. Fixtures reais reproduziram ambos os defeitos antes da correção.
