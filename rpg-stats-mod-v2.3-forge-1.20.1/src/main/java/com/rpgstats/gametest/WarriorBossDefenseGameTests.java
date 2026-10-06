@@ -30,7 +30,7 @@ public final class WarriorBossDefenseGameTests {
         p.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).setBaseValue(11);
         p.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
     }
-    private static void nativeHit(MobEntity boss,ServerPlayerEntity p,int phase) throws ReflectiveOperationException {
+    static void nativeHit(MobEntity boss,ServerPlayerEntity p,int phase) throws ReflectiveOperationException {
         if(phase==7){BossPressureGameTests.commonHit(boss,p,true);return;}
         boss.setTarget(p);boss.getClass().getMethod("setSpawning",boolean.class).invoke(boss,false);
         boss.getClass().getMethod(phase==21?"setMaceOfSpades":"setRupture",boolean.class).invoke(boss,true);
@@ -59,8 +59,12 @@ public final class WarriorBossDefenseGameTests {
             var failures=new ArrayList<String>();
             try {
                 for(int i=0;i<players.size();i++) {
-                    var p=players.get(i);p.setHealth(p.getMaxHealth());float hp=p.getHealth();nativeHit(bosses.get(i),p,phase);
+                    var p=players.get(i);p.setHealth(p.getMaxHealth());p.setVelocity(0,phase==21?-.1:-1,0);p.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);float hp=p.getHealth();nativeHit(bosses.get(i),p,phase);
                     float loss=hp-p.getHealth();
+                    if(phase==21||phase==52) {
+                        c.assertTrue(p.getVelocity().y>=0.89,"Native launch did not occur");
+                        c.assertTrue(com.rpgstats.boss.BossLaunchTracker.isBossFall(p,p.getDamageSources().fall()),"Native launch was missed at phase "+phase+" spec="+specs.get(i));
+                    }
                     RPGStatsMod.LOGGER.info("RPG_WARRIOR_BOSS_DEFENSE spec={} phase={} level=50 vitality=32 tenacity=25 armor={} maxHP={} loss={} remaining={}",specs.get(i),phase,p.getArmor(),hp,loss,p.getHealth());
                     if(loss<=0||!p.isAlive())failures.add(specs.get(i).name());
                 }

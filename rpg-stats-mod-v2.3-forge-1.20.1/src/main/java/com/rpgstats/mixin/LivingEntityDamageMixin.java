@@ -19,6 +19,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityDamageMixin {
     @Unique private boolean rpgstats$deathRewarded;
+    @Unique private java.util.ArrayDeque<DamageSource> rpgstats$damageSources;
+    @Unique private java.util.ArrayDeque<Double> rpgstats$knockbackY;
+    @Inject(method="takeKnockback",at=@At("HEAD"))
+    private void rpgstats$beforeKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if((Object)this instanceof ServerPlayerEntity p) {
+            if(rpgstats$knockbackY==null)rpgstats$knockbackY=new java.util.ArrayDeque<>();
+            rpgstats$knockbackY.push(p.getVelocity().y);
+        }
+    }
+    @Inject(method="takeKnockback",at=@At("RETURN"))
+    private void rpgstats$bossKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        LivingEntity self=(LivingEntity)(Object)this;
+        if(rpgstats$knockbackY==null)return;
+        double before=rpgstats$knockbackY.pop();
+        if(self instanceof ServerPlayerEntity p && rpgstats$damageSources!=null && !rpgstats$damageSources.isEmpty()
+                && rpgstats$damageSources.peek().getAttacker() instanceof LivingEntity boss)
+            com.rpgstats.boss.BossLaunchTracker.recordImpulseBeforeDamage(p,boss,before,p.getVelocity().y);
+    }
 
     @Inject(method="onDeath", at=@At("TAIL"))
     private void rpgstats$confirmedDeath(DamageSource source,
@@ -43,6 +61,10 @@ public abstract class LivingEntityDamageMixin {
     @Inject(method="damage",at=@At("HEAD"))
     private void rpgstats$beforeDamage(DamageSource source,float amount,CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self=(LivingEntity)(Object)this;
+        if(self instanceof ServerPlayerEntity p) {
+            if(rpgstats$damageSources==null)rpgstats$damageSources=new java.util.ArrayDeque<>();
+            com.rpgstats.boss.BossLaunchTracker.beginDamage(p);rpgstats$damageSources.push(source);
+        }
         rpgstats$healthBefore.push(self.getHealth());rpgstats$contributionRecorded.push(false);rpgstats$trainingDamage.push(0f);
     }
 
@@ -83,12 +105,23 @@ public abstract class LivingEntityDamageMixin {
     @Inject(method = "damage", at = @At("RETURN"))
     private void rpgstats$afterDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
+        if(rpgstats$damageSources!=null&&!rpgstats$damageSources.isEmpty())rpgstats$damageSources.pop();
         float before=rpgstats$healthBefore.isEmpty()?self.getHealth():rpgstats$healthBefore.pop();
         boolean recorded=!rpgstats$contributionRecorded.isEmpty() && rpgstats$contributionRecorded.pop();
         float training = rpgstats$trainingDamage.isEmpty() ? 0f : rpgstats$trainingDamage.pop();
-        if (!cir.getReturnValue()) return;
+        if (!cir.getReturnValue()) {
+            if(self instanceof ServerPlayerEntity player) {
+                com.rpgstats.boss.BossLaunchTracker.finishDamage(player,0);
+                com.rpgstats.boss.BossLaunchTracker.finishFall(player,source);
+            }
+            return;
+        }
         float actual=Math.max(0,before-self.getHealth());
         if(actual > 0 && !recorded)com.rpgstats.forge.ForgeEvents.confirmedDamage(self,source,actual);
+        if(self instanceof ServerPlayerEntity player) {
+            com.rpgstats.boss.BossLaunchTracker.finishDamage(player,actual);
+            com.rpgstats.boss.BossLaunchTracker.finishFall(player,source);
+        }
         float resolved = actual > 0 ? actual : training;
         if(resolved<=0)return;
         if (ProcDamageQueue.isApplying()) return;
@@ -102,4 +135,3 @@ public abstract class LivingEntityDamageMixin {
         }
     }
 }
-
