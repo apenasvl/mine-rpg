@@ -5,7 +5,7 @@ on:
   push:
     branches: [ "main", "audit/forge-1.20.1", "feature/selective-combat-mod-compat", "feature/three-mod-boss-progression" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "feat/clean-rpg-ui" ]
 
 jobs:
   build:
