@@ -102,7 +102,8 @@ public class StatsManager {
         stats.stats.put(Stat.FORCA, strength);
         stats.stats.put(Stat.DESTREZA, dexterity);
         stats.stats.put(Stat.INTELIGENCIA, intelligence);
-        stats.stats.put(Stat.FE, faith);
+        stats.stats.put(Stat.FE, 0);
+        stats.statPoints += faith; // Original 33-point budget becomes six stats + free PA.
         stats.stats.put(Stat.ARCANO, arcane);
     }
 
@@ -445,4 +446,3 @@ public class StatsManager {
         player.sendMessage(Text.literal("§6§lEcos recuperados: §e" + recovered), false);
     }
 }
-

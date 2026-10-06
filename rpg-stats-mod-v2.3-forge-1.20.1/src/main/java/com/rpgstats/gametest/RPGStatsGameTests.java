@@ -475,6 +475,25 @@ public final class RPGStatsGameTests {
         complete(context);
     }
 
+    @GameTest(templateName="empty",tickLimit=100)
+    public static void retiredFaithRefundsOnceAndPreservesBuild(TestContext context) {
+        for(RPGClass clazz:RPGClass.values()) {
+            PlayerStats original=new PlayerStats();original.clazz=clazz;original.level=50;original.statPoints=9;
+            original.stats.put(com.rpgstats.stats.Stat.ARCANO,24);
+            original.unlockedNodes.add(clazz.nodes.get(0).id());
+            var old=original.toNbt();old.putInt("dataVersion",10);old.getCompound("stats").putInt("FE",17);
+            var migrated=PlayerStats.fromNbt(old);
+            context.assertTrue(migrated.statPoints==26,"Faith refund incorrect for "+clazz);
+            context.assertTrue(migrated.stats.get(com.rpgstats.stats.Stat.FE)==0,"Legacy Faith still active");
+            context.assertTrue(migrated.stats.get(com.rpgstats.stats.Stat.ARCANO)==24&&migrated.level==50
+                    &&migrated.unlockedNodes.equals(original.unlockedNodes),"Migration altered the build");
+            context.assertTrue(!migrated.toNbt().getCompound("stats").contains("FE"),"Faith persisted again");
+            context.assertTrue(PlayerStats.fromNbt(migrated.toNbt()).statPoints==26,"Repeated refund");
+        }
+        context.assertTrue(com.rpgstats.stats.Stat.byName("FE")==null,"Faith allocation accepted");
+        complete(context);
+    }
+
     @GameTest(templateName = "empty", tickLimit = 80)
     public static void crossbowTechniqueRejectsBowWithoutSpending(TestContext context) {
         ServerPlayerEntity player = testPlayer(context);

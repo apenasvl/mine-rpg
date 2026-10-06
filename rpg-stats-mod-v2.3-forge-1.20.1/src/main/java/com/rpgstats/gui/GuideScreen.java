@@ -34,6 +34,7 @@ public final class GuideScreen extends Screen {
 
     private String pageKey = "index";
     private final List<String> history = new ArrayList<>();
+    private int rightScroll,rightMaxScroll,maxRenderedY;
 
     public GuideScreen() {
         super(Text.literal("Codex do RPG Stats"));
@@ -182,14 +183,11 @@ public final class GuideScreen extends Screen {
         if (key == null || key.equals(pageKey)) return;
         history.add(pageKey);
         pageKey = key;
+        rightScroll=rightMaxScroll=0;
         clearAndInit();
     }
 
-    private void openDirect(String key) {
-        if (key == null || key.equals(pageKey)) return;
-        pageKey = key;
-        clearAndInit();
-    }
+    private void openDirect(String key) { open(key); }
 
     private void back() {
         if (history.isEmpty()) {
@@ -197,16 +195,51 @@ public final class GuideScreen extends Screen {
             return;
         }
         pageKey = history.remove(history.size() - 1);
+        rightScroll=rightMaxScroll=0;
         clearAndInit();
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fillGradient(0, 0, width, height, 0, 0xFF15100C, 0xFF2A2016);
-        drawBook(context);
-        renderLeftHeading(context);
+        context.fillGradient(0,0,width,height,0,0xFF15100C,0xFF2A2016);
+        var v=MageViewport.fit(width,height);
+        int localX=(int)Math.floor(v.localX(mouseX)),localY=(int)Math.floor(v.localY(mouseY));
+        pushViewport(context,v);drawBook(context);renderLeftHeading(context);context.getMatrices().pop();
+        BookRect b=book();
+        // Scissor is set with an identity matrix, in actual GUI coordinates.
+        context.enableScissor((int)Math.floor(v.x()+(b.x+b.pageW+12)*v.scale()),
+                (int)Math.floor(v.y()+GuideLayout.CONTENT_TOP*v.scale()),
+                (int)Math.ceil(v.x()+(b.x+b.w-12)*v.scale()),
+                (int)Math.ceil(v.y()+GuideLayout.CONTENT_BOTTOM*v.scale()));
+        pushViewport(context,v);maxRenderedY=GuideLayout.CONTENT_TOP;
         renderRightPage(context);
-        super.render(context, mouseX, mouseY, delta);
+        rightMaxScroll=GuideLayout.scrollLimit(maxRenderedY+rightScroll);
+        rightScroll=Math.min(rightScroll,rightMaxScroll);
+        context.getMatrices().pop();context.disableScissor();
+        pushViewport(context,v);
+        if(rightMaxScroll>0)context.drawText(textRenderer,Text.literal("Roda: ler · "+(rightScroll==rightMaxScroll?"fim":"mais abaixo")),
+                b.x+b.pageW+24,b.y+b.h-39,MUTED,false);
+        super.render(context,localX,localY,delta);context.getMatrices().pop();
+    }
+    private void pushViewport(DrawContext c,MageViewport v) {
+        c.getMatrices().push();c.getMatrices().translate(v.x(),v.y(),0);
+        c.getMatrices().scale((float)v.scale(),(float)v.scale(),1);
+    }
+    @Override public boolean mouseClicked(double x,double y,int button) {
+        var v=MageViewport.fit(width,height);return super.mouseClicked(v.localX(x),v.localY(y),button);
+    }
+    @Override public boolean mouseReleased(double x,double y,int button) {
+        var v=MageViewport.fit(width,height);return super.mouseReleased(v.localX(x),v.localY(y),button);
+    }
+    @Override public boolean mouseDragged(double x,double y,int button,double dx,double dy) {
+        var v=MageViewport.fit(width,height);return super.mouseDragged(v.localX(x),v.localY(y),button,dx/v.scale(),dy/v.scale());
+    }
+    @Override public boolean mouseScrolled(double x,double y,double amount) {
+        var v=MageViewport.fit(width,height);BookRect b=book();double lx=v.localX(x),ly=v.localY(y);
+        if(lx>=b.x+b.pageW+12&&lx<=b.x+b.w-12&&ly>=GuideLayout.CONTENT_TOP&&ly<=GuideLayout.CONTENT_BOTTOM) {
+            rightScroll=Math.max(0,Math.min(rightMaxScroll,rightScroll-(int)Math.round(amount*27)));return true;
+        }
+        return super.mouseScrolled(lx,ly,amount);
     }
 
     private void drawBook(DrawContext context) {
@@ -232,7 +265,7 @@ public final class GuideScreen extends Screen {
     private void renderRightPage(DrawContext context) {
         BookRect b = book();
         int x = b.x + b.pageW + 24;
-        int y = b.y + 24;
+        int y = b.y + 24-rightScroll;
         int w = b.pageW - 48;
         PlayerStats stats = ClientStatsStore.stats;
 
@@ -250,7 +283,7 @@ public final class GuideScreen extends Screen {
 
         if ("index".equals(pageKey)) {
             drawTitle(context, "ÍNDICE", x, y, 0xFF5E3E20);
-            drawWrapped(context, "Escolha uma seção na página esquerda. A navegação agora usa botões reais, então nenhuma área invisível do texto pode trocar de página.", x, y + 28, w, INK, 9);
+            drawWrapped(context, "Escolha uma seção na página esquerda. Nas páginas longas, use a roda do mouse sobre o texto para continuar a leitura.", x, y + 28, w, INK, 9);
             drawWrapped(context, "Use Próx./Ant. para folhear em ordem ou Índice/Voltar para navegar pela hierarquia.", x, y + 92, w, MUTED, 9);
             return;
         }
@@ -317,11 +350,13 @@ public final class GuideScreen extends Screen {
             RPGPath house = parseHouse(pageKey);
             if (house == null) return;
             drawTitle(context, house.display.toUpperCase(Locale.ROOT), x, y, RpgUiTheme.houseAccent(house));
-            drawWrapped(context, house.desc, x, y + 28, w, INK, 9);
+            int houseY=drawWrapped(context,house.desc,x,y+28,w,INK,9)+9;
+            for(String bonus:HouseBonusSummary.lines(house.nodes,stats.unlockedNodes))
+                houseY=drawWrapped(context,bonus,x,houseY,w,INK,9)+7;
             SkillNode foundation = nodeBySuffix(house.nodes, "_foundation");
             if (foundation == null && !house.nodes.isEmpty()) foundation = house.nodes.get(0);
             if (foundation != null) {
-                int yy = y + 112;
+                int yy = houseY+7;
                 context.drawTextWithShadow(textRenderer, Text.literal("LOOP PRINCIPAL").formatted(Formatting.BOLD), x, yy, MUTED);
                 drawWrapped(context, detailFor(foundation), x, yy + 14, w, INK, 9);
             }
@@ -354,13 +389,12 @@ public final class GuideScreen extends Screen {
             context.drawTextWithShadow(textRenderer, Text.literal(labels[i]).formatted(Formatting.BOLD), x, yy, MUTED);
             yy += 11;
             String detail = detailFor(node);
-            yy = drawWrapped(context, compact(detail, 128), x + 6, yy, w - 6, INK, 9);
+            yy = drawWrapped(context, detail, x + 6, yy, w - 6, INK, 9);
             if (AbilityRegistry.hasActive(node.id())) {
-                yy = drawWrapped(context, compact(AbilityRegistry.activeSummary(node.id()), 118),
+                yy = drawWrapped(context, AbilityRegistry.activeSummary(node.id()),
                         x + 6, yy, w - 6, 0xFF6B3F1E, 9);
             }
             yy += 4;
-            if (yy > book().y + book().h - 48) break;
         }
     }
 
@@ -370,7 +404,8 @@ public final class GuideScreen extends Screen {
     }
 
     private void drawTitle(DrawContext context, String value, int x, int y, int color) {
-        context.drawTextWithShadow(textRenderer, Text.literal(value).formatted(Formatting.BOLD), x, y, color);
+        context.drawTextWithShadow(textRenderer, Text.literal(value).formatted(Formatting.BOLD), x, y, RpgUiTheme.accessibleAccent(color,PAPER));
+        maxRenderedY=Math.max(maxRenderedY,y+16);
         context.fill(x, y + 13, x + Math.min(book().pageW - 48, textRenderer.getWidth(value) + 28), y + 14, color);
     }
 
@@ -380,6 +415,7 @@ public final class GuideScreen extends Screen {
             context.drawTextWithShadow(textRenderer, Text.literal(line), x, yy, color);
             yy += lineHeight;
         }
+        maxRenderedY=Math.max(maxRenderedY,yy);
         return yy;
     }
 
@@ -534,11 +570,7 @@ public final class GuideScreen extends Screen {
     }
 
     private BookRect book() {
-        int w = Math.min(820, Math.max(600, width - 36));
-        int h = Math.min(460, Math.max(340, height - 28));
-        int x = (width - w) / 2;
-        int y = (height - h) / 2;
-        return new BookRect(x, y, w, h, w / 2);
+        return new BookRect(GuideLayout.BOOK_X,GuideLayout.BOOK_Y,GuideLayout.BOOK_W,GuideLayout.BOOK_H,GuideLayout.BOOK_W/2);
     }
 
     private record BookRect(int x, int y, int w, int h, int pageW) {}

@@ -99,7 +99,6 @@ public final class SoulslikeCombat {
      */
     public static float magicAttributeMultiplier(PlayerStats stats) {
         int intelligence = stats.totalStats().getOrDefault(Stat.INTELIGENCIA, 0);
-        int faith = stats.totalStats().getOrDefault(Stat.FE, 0);
         int arcane = stats.totalStats().getOrDefault(Stat.ARCANO, 0);
 
         if (stats.clazz == RPGClass.MAGO) {
@@ -123,8 +122,14 @@ public final class SoulslikeCombat {
     }
 
     public static float healingMultiplier(PlayerStats stats) {
-        int faith = stats.totalStats().getOrDefault(Stat.FE, 0);
-        return 1f + Math.min(0.20f, faith * 0.004f);
+        Stat primary=stats.clazz==null ? null : switch(stats.clazz) {
+            case GUERREIRO -> Stat.FORCA;
+            case MAGO -> Stat.INTELIGENCIA;
+            case ARQUEIRO,ASSASSINO -> Stat.DESTREZA;
+        };
+        int points=primary==null ? 0 : stats.totalStats().getOrDefault(primary,0);
+        // Only active healing uses this multiplier; lifesteal keeps its own caps and weapon restrictions.
+        return 1f + Math.min(0.20f, Math.max(0,points) * 0.004f);
     }
 
     public static float afflictionDurationMultiplier(PlayerStats stats) {

@@ -6,7 +6,8 @@ public enum Stat {
     FORCA("Força"),
     DESTREZA("Destreza"),
     INTELIGENCIA("Inteligência"),
-    FE("Fé"),
+    /** Reserved legacy identifier; never allocate or display it. Keeps old enum order stable. */
+    @Deprecated FE("Fé"),
     ARCANO("Arcano");
 
     public final String display;
@@ -18,8 +19,12 @@ public enum Stat {
     public static Stat byName(String name) {
         if ("AGILIDADE".equalsIgnoreCase(name)) return TENACIDADE;
         for (Stat s : values()) {
-            if (s.name().equalsIgnoreCase(name)) return s;
+            if (s != FE && s.name().equalsIgnoreCase(name)) return s;
         }
         return null;
+    }
+
+    public static Stat[] activeValues() {
+        return new Stat[]{VITALIDADE,TENACIDADE,FORCA,DESTREZA,INTELIGENCIA,ARCANO};
     }
 }
