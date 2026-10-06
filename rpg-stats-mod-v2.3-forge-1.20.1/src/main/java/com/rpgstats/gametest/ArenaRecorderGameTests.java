@@ -1,0 +1,52 @@
+package com.rpgstats.gametest;
+
+import com.google.gson.JsonObject;
+import com.rpgstats.RPGStatsMod;
+import com.rpgstats.classes.RPGClass;
+import com.rpgstats.stats.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.test.*;
+import net.minecraftforge.gametest.*;
+
+/** Recorder correctness fixtures, never full encounters or balance evidence. */
+@GameTestHolder(RPGStatsMod.MOD_ID) @PrefixGameTestTemplate(false)
+public final class ArenaRecorderGameTests {
+    private static Object call(String method,Class<?>[] types,Object... args) {
+        try{return Class.forName("com.rpgstats.debug.ArenaRecorder").getMethod(method,types).invoke(null,args);}
+        catch(ReflectiveOperationException e){throw new AssertionError("Real arena recorder unavailable: "+method,e);}
+    }
+    private static ServerPlayerEntity player(TestContext c) {
+        var p=TestPlayers.create(c);var s=new PlayerStats();s.awakened=true;s.clazz=RPGClass.GUERREIRO;s.level=50;
+        s.stats.put(Stat.VITALIDADE,32);s.refreshResourceMax();StatsManager.finish(p,s);
+        p.setNoGravity(true);for(int i=0;i<80;i++){p.playerTick();p.tick();}p.setHealth(p.getMaxHealth());return p;
+    }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void recorderCountsOnlyConfirmedHealthLossAndNoStopWin(TestContext c) {
+        var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);b.setNoGravity(true);
+        try {
+            c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
+            b.setInvulnerable(true);c.assertTrue(!b.damage(p.getDamageSources().playerAttack(p),5),"Rejected fixture accepted");b.setInvulnerable(false);
+            b.timeUntilRegen=0;float before=b.getHealth();c.assertTrue(b.damage(p.getDamageSources().playerAttack(p),5),"Accepted fixture rejected");float dealt=before-b.getHealth();
+            p.timeUntilRegen=0;before=p.getHealth();c.assertTrue(p.damage(p.getDamageSources().mobAttack(b),2),"Incoming fixture rejected");float received=before-p.getHealth();
+            var report=(JsonObject)call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
+            c.assertTrue(Math.abs(report.get("damage_dealt").getAsFloat()-dealt)<.001,"Recorder counted rejected/unmitigated outgoing damage");
+            c.assertTrue(Math.abs(report.get("damage_received").getAsFloat()-received)<.001,"Recorder did not measure confirmed incoming health loss");
+            c.assertTrue(report.get("ttk_seconds").isJsonNull(),"Stopped fixture fabricated boss kill TTK");
+        }finally {b.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void recorderRejectsInvalidStartAndCleansOnDimensionEvent(TestContext c) {
+        var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);var cow=c.spawnMob(EntityType.COW,2,2,2);
+        try {
+            c.assertTrue(!(boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,cow,"balanced"),"Non-boss recording accepted");
+            c.assertTrue(!(boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"invalid"),"Invalid build accepted");
+            c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"defensive"),"Valid recording rejected");
+            com.rpgstats.forge.ForgeEvents.dimension(new net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent(p,net.minecraft.world.World.OVERWORLD,net.minecraft.world.World.NETHER));
+            c.assertTrue(call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED")==null,"Dimension retained active recorder");
+        }finally {b.discard();cow.discard();TestPlayers.finish(c);}c.complete();
+    }
+    private ArenaRecorderGameTests(){}
+}
