@@ -10,47 +10,61 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/** One landing from a confirmed upward boss hit; transient, never inferred from nearby mobs. */
+/** A landing requires both accepted health loss and a measured boss impulse in the same world tick. */
 public final class BossLaunchTracker {
-    private record Launch(UUID boss,ServerWorld world,long started){}
-    private static final Map<UUID,Launch> LAUNCHES=new HashMap<>();
+    private record Event(UUID boss,ServerWorld world,long tick){}
+    private static final Map<UUID,Event> HITS=new HashMap<>(), IMPULSES=new HashMap<>(), LAUNCHES=new HashMap<>();
     private static final long MAX_FLIGHT_TICKS=200;
-
-    public static void record(ServerPlayerEntity player,LivingEntity boss) {
-        if(player.getWorld()!=boss.getWorld() || BossScaler.getTier(boss)<=0
-                || !player.isAlive() || player.getAbilities().flying || player.getVelocity().y<.25)return;
-        LAUNCHES.put(player.getUuid(),new Launch(boss.getUuid(),player.getServerWorld(),player.getServer().getTicks()));
+    private static Event event(ServerPlayerEntity p,LivingEntity boss) {
+        if(p.getWorld()!=boss.getWorld() || BossScaler.getTier(boss)<=0 || !p.isAlive() || p.getAbilities().flying)return null;
+        return new Event(boss.getUuid(),p.getServerWorld(),p.getServerWorld().getTime());
     }
-    private static Launch active(ServerPlayerEntity player) {
-        Launch launch=LAUNCHES.get(player.getUuid());
-        if(launch!=null && (player.getServerWorld()!=launch.world || !player.isAlive()
-                || player.getAbilities().flying || player.getServer().getTicks()-launch.started>MAX_FLIGHT_TICKS)) {
-            LAUNCHES.remove(player.getUuid());return null;
+    public static void record(ServerPlayerEntity p,LivingEntity boss) {
+        Event e=event(p,boss);if(e==null)return;
+        HITS.put(p.getUuid(),e);match(p,e,IMPULSES.get(p.getUuid()));
+    }
+    /** Called only at boss-owned native velocity writes or knockback inside that boss's damage call. */
+    public static void recordImpulse(ServerPlayerEntity p,LivingEntity boss,double beforeY,double afterY) {
+        if(!Double.isFinite(beforeY)||!Double.isFinite(afterY)||afterY-beforeY<.25||afterY<.25)return;
+        Event e=event(p,boss);if(e==null)return;
+        IMPULSES.put(p.getUuid(),e);match(p,e,HITS.get(p.getUuid()));
+    }
+    private static void match(ServerPlayerEntity p,Event a,Event b) {
+        if(a.equals(b))LAUNCHES.put(p.getUuid(),a);
+    }
+    private static boolean safe(ServerPlayerEntity p) {
+        return !p.isAlive() || p.getAbilities().flying || p.isFallFlying() || p.isTouchingWater()
+                || p.isInLava() || p.isClimbing() || p.hasVehicle();
+    }
+    private static Event active(ServerPlayerEntity p) {
+        Event e=LAUNCHES.get(p.getUuid());
+        if(e!=null && (p.getServerWorld()!=e.world || safe(p) || p.getServerWorld().getTime()-e.tick>MAX_FLIGHT_TICKS)) {
+            remove(p.getUuid());return null;
         }
-        return launch;
+        return e;
     }
-    public static boolean isBossFall(ServerPlayerEntity player,DamageSource source) {
-        return source.isOf(DamageTypes.FALL) && source.getAttacker()==null && active(player)!=null;
+    public static boolean isBossFall(ServerPlayerEntity p,DamageSource source) {
+        return source.isOf(DamageTypes.FALL) && source.getAttacker()==null && active(p)!=null;
     }
-    public static LivingEntity fallBoss(ServerPlayerEntity player,DamageSource source) {
-        if(!isBossFall(player,source))return null;
-        var launch=active(player);var entity=launch.world.getEntity(launch.boss);
+    public static LivingEntity fallBoss(ServerPlayerEntity p,DamageSource source) {
+        if(!isBossFall(p,source))return null;
+        var e=active(p);var entity=e.world.getEntity(e.boss);
         return entity instanceof LivingEntity boss?boss:null;
     }
-    /** Consume after confirmed contribution accounting, even when vanilla rejected the landing damage. */
-    public static void finishFall(ServerPlayerEntity player,DamageSource source) {
-        if(source.isOf(DamageTypes.FALL))remove(player.getUuid());
+    public static void finishFall(ServerPlayerEntity p,DamageSource source) {
+        if(source.isOf(DamageTypes.FALL))remove(p.getUuid());
     }
     public static void tick(MinecraftServer server) {
-        long now=server.getTicks();
         LAUNCHES.entrySet().removeIf(entry->{
-            var player=server.getPlayerManager().getPlayer(entry.getKey());var launch=entry.getValue();
-            return player==null || !player.isAlive() || player.getServerWorld()!=launch.world
-                    || player.getAbilities().flying || now-launch.started>MAX_FLIGHT_TICKS
-                    || (now>launch.started+2 && player.isOnGround());
+            var p=server.getPlayerManager().getPlayer(entry.getKey());var e=entry.getValue();
+            return p==null || p.getServerWorld()!=e.world || safe(p) || e.world.getTime()-e.tick>MAX_FLIGHT_TICKS
+                    || (e.world.getTime()>e.tick+2 && p.isOnGround());
         });
+        // Pairing is strictly same-tick; no history or unbounded accumulation.
+        HITS.entrySet().removeIf(e->e.getValue().world.getTime()>e.getValue().tick);
+        IMPULSES.entrySet().removeIf(e->e.getValue().world.getTime()>e.getValue().tick);
     }
-    public static void remove(UUID player){LAUNCHES.remove(player);}
-    public static void clear(){LAUNCHES.clear();}
+    public static void remove(UUID player){LAUNCHES.remove(player);HITS.remove(player);IMPULSES.remove(player);}
+    public static void clear(){LAUNCHES.clear();HITS.clear();IMPULSES.clear();}
     private BossLaunchTracker(){}
 }

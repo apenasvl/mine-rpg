@@ -19,6 +19,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityDamageMixin {
     @Unique private boolean rpgstats$deathRewarded;
+    @Unique private final java.util.ArrayDeque<DamageSource> rpgstats$damageSources=new java.util.ArrayDeque<>();
+    @Unique private final java.util.ArrayDeque<Double> rpgstats$knockbackY=new java.util.ArrayDeque<>();
+    @Inject(method="takeKnockback",at=@At("HEAD"))
+    private void rpgstats$beforeKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        rpgstats$knockbackY.push(((LivingEntity)(Object)this).getVelocity().y);
+    }
+    @Inject(method="takeKnockback",at=@At("RETURN"))
+    private void rpgstats$bossKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        LivingEntity self=(LivingEntity)(Object)this;
+        double before=rpgstats$knockbackY.pop();
+        if(self instanceof ServerPlayerEntity p && !rpgstats$damageSources.isEmpty()
+                && rpgstats$damageSources.peek().getAttacker() instanceof LivingEntity boss)
+            com.rpgstats.boss.BossLaunchTracker.recordImpulse(p,boss,before,p.getVelocity().y);
+    }
 
     @Inject(method="onDeath", at=@At("TAIL"))
     private void rpgstats$confirmedDeath(DamageSource source,
@@ -43,7 +57,7 @@ public abstract class LivingEntityDamageMixin {
     @Inject(method="damage",at=@At("HEAD"))
     private void rpgstats$beforeDamage(DamageSource source,float amount,CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self=(LivingEntity)(Object)this;
-        rpgstats$healthBefore.push(self.getHealth());rpgstats$contributionRecorded.push(false);rpgstats$trainingDamage.push(0f);
+        rpgstats$damageSources.push(source);rpgstats$healthBefore.push(self.getHealth());rpgstats$contributionRecorded.push(false);rpgstats$trainingDamage.push(0f);
     }
 
 
@@ -83,6 +97,7 @@ public abstract class LivingEntityDamageMixin {
     @Inject(method = "damage", at = @At("RETURN"))
     private void rpgstats$afterDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
+        if(!rpgstats$damageSources.isEmpty())rpgstats$damageSources.pop();
         float before=rpgstats$healthBefore.isEmpty()?self.getHealth():rpgstats$healthBefore.pop();
         boolean recorded=!rpgstats$contributionRecorded.isEmpty() && rpgstats$contributionRecorded.pop();
         float training = rpgstats$trainingDamage.isEmpty() ? 0f : rpgstats$trainingDamage.pop();
