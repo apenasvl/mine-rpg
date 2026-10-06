@@ -20,14 +20,14 @@
 - Logout/dimension/server stop must bound and clean sessions.
 
 ### Task1: representative matrix
-- [ ] RED unit tests exact current IDs, four classes, capped/deduplicated levels, no measured outcomes.
-- [ ] Implement tools/build_boss_arena_matrix.py, generate compat/boss-arena-matrix.json.
-- [ ] Run tests and check current28 profiles.
+- [x] RED unit tests exact current IDs, four classes, capped/deduplicated levels, no measured outcomes.
+- [x] Implement tools/build_boss_arena_matrix.py, generate compat/boss-arena-matrix.json.
+- [x] Run tests and check current28 profiles.
 
 ### Task2: real encounter observation
-- [ ] Add GameTests for confirmed/rejected damage, death/interruption, isolated sessions and cleanup.
-- [ ] Add debug/ArenaRecorder.java; admin /rpg debug arena start <boss> <build>, stop and mark commands.
-- [ ] Wire confirmed damage/death, tick and forget to the opt-in observer.
+- [x] Add GameTests for confirmed/rejected damage, death/interruption, isolated sessions and cleanup.
+- [x] Add debug/ArenaRecorder.java; admin /rpg debug arena start <boss> <build>, stop and mark commands.
+- [x] Wire confirmed damage/death, tick and forget to the opt-in observer.
 - [ ] Run native CI; review; retain Draft while real encounter measurements remain missing.
 
 ### Task3: encounter evidence (required before B completion)

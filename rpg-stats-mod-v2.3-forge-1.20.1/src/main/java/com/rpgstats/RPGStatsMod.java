@@ -69,6 +69,7 @@ public class RPGStatsMod {
                             return 1;
                         }))
                         .then(literal("debug")
+                                .then(com.rpgstats.debug.ArenaRecorderCommands.tree())
                                 .executes(context -> {
                                     ServerPlayerEntity player = context.getSource().getPlayer();
                                     if (player != null) com.rpgstats.debug.RpgDebug.sendState(player);
