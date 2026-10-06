@@ -48,5 +48,39 @@ public final class ArenaRecorderGameTests {
             c.assertTrue(call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED")==null,"Dimension retained active recorder");
         }finally {b.discard();cow.discard();TestPlayers.finish(c);}c.complete();
     }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void lethalPlayerHitIsCountedBeforeDeathReport(TestContext c) {
+        var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);
+        try {
+            c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
+            float hp=p.getHealth();p.timeUntilRegen=0;
+            c.assertTrue(p.damage(p.getDamageSources().outOfWorld(),Float.MAX_VALUE),"Lethal hit rejected");
+            c.assertTrue(!p.isAlive(),"Lethal fixture survived");
+            var report=(JsonObject)call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
+            c.assertTrue(report!=null,"Player death finalized before lethal damage returned");
+            c.assertTrue(report.get("outcome").getAsString().equals("PLAYER_DEAD"),"Confirmed death not preserved");
+            c.assertTrue(Math.abs(report.get("damage_received").getAsFloat()-hp)<.001,"Fatal health loss omitted");
+            c.assertTrue(report.get("net_health_recovered").getAsDouble()<.001,"Fatal damage counted as healing");
+            c.assertTrue(report.get("ttk_seconds").isJsonNull(),"Player death fabricated boss win");
+        }finally {b.discard();TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void bossDeathTtkRequiresFullStartingHealth(TestContext c) {
+        var p=player(c);
+        try {
+            for(boolean full:new boolean[]{true,false}) {
+                var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);
+                try {
+                    if(!full)b.setHealth(b.getMaxHealth()/2);
+                    c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
+                    c.assertTrue(b.damage(b.getDamageSources().outOfWorld(),Float.MAX_VALUE),"Boss lethal hit rejected");
+                    var report=(JsonObject)call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
+                    c.assertTrue(report!=null,"Boss death finalized before damage return");
+                    c.assertTrue(report.get("outcome").getAsString().equals("BOSS_DEAD"),"Confirmed boss death not recorded");
+                    c.assertTrue(report.get("ttk_seconds").isJsonNull()!=full,"Full/partial initial health TTK incorrect");
+                }finally {b.discard();}
+            }
+        }finally {TestPlayers.finish(c);}c.complete();
+    }
     private ArenaRecorderGameTests(){}
 }
