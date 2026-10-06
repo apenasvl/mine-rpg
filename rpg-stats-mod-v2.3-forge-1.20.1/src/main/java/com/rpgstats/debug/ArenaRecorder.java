@@ -21,6 +21,7 @@ import java.util.*;
 /** Opt-in real-fight observer. Never changes combat, AI, resources or progression. */
 public final class ArenaRecorder {
     private static final Map<UUID,Session> ACTIVE=new HashMap<>();
+    private static final java.util.concurrent.atomic.AtomicInteger OUTSTANDING=new java.util.concurrent.atomic.AtomicInteger();
     private static final Gson JSON=new GsonBuilder().setPrettyPrinting().create();
     private static final java.util.concurrent.ThreadPoolExecutor EXPORTER=new java.util.concurrent.ThreadPoolExecutor(
             0,1,15,java.util.concurrent.TimeUnit.SECONDS,new java.util.concurrent.ArrayBlockingQueue<>(16),task->{
@@ -86,17 +87,31 @@ public final class ArenaRecorder {
         try {
             String text=JSON.toJson(report)+"\n", finalOutcome=outcome;long ticks=s.elapsed();double dealt=s.dealt,received=s.received;
             var file=FMLPaths.GAMEDIR.get().resolve("rpgstats/arena").resolve(s.id+".json");
-            EXPORTER.execute(()->{
+            OUTSTANDING.incrementAndGet();
+            try { EXPORTER.execute(()->{
                 try {
                     Files.createDirectories(file.getParent());Files.writeString(file,text);
                     RPGStatsMod.LOGGER.info("RPG_ARENA_REPORT {} outcome={} ticks={} dealt={} received={}",file,finalOutcome,ticks,dealt,received);
                 }catch(java.io.IOException e){RPGStatsMod.LOGGER.error("Cannot save real arena report {}",file,e);}
-            });
+                finally {OUTSTANDING.decrementAndGet();}
+            }); }catch(RuntimeException e){OUTSTANDING.decrementAndGet();throw e;}
             player.sendMessage(Text.literal("[RPG Arena] "+outcome+"; exportando: rpgstats/arena/"+s.id+".json"),false);
         }catch(RuntimeException e){RPGStatsMod.LOGGER.error("Cannot queue real arena report {}",s.id,e);player.sendMessage(Text.literal("[RPG Arena] Falha ao exportar relatório; consulte o log."),false);}
         return report;
     }
-    public static void clear() {for(var s:new ArrayList<>(ACTIVE.values()))stop(s.player,"SERVER_STOPPED");}
+    /** Shutdown only: wait at most5seconds, keeping the worker reusable for integrated-server restart. */
+    public static void clear() {
+        for(var s:new ArrayList<>(ACTIVE.values()))stop(s.player,"SERVER_STOPPED");
+        if(!awaitExports(5000))RPGStatsMod.LOGGER.error("Arena shutdown export drain timed out/interrupted; {} reports may be unsaved",OUTSTANDING.get());
+    }
+    public static boolean awaitExports(long timeoutMillis) {
+        long deadline=System.nanoTime()+Math.max(0,Math.min(5000,timeoutMillis))*1_000_000L;
+        while(OUTSTANDING.get()>0) {
+            if(System.nanoTime()>=deadline)return false;
+            try {Thread.sleep(10);}catch(InterruptedException e){Thread.currentThread().interrupt();return false;}
+        }
+        return true;
+    }
     private static final class Session {
         final UUID id=UUID.randomUUID();final ServerPlayerEntity player;final LivingEntity boss;final net.minecraft.world.World world;
         final long startedTick,startedNano=System.nanoTime();final String build;

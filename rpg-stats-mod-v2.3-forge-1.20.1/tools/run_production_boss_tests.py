@@ -9,8 +9,12 @@ def download(url,target):
  return target
 def coordinate_jar(coordinate,target):
  name,file=coordinate.split(':');return download(f'https://cursemaven.com/curse/maven/{name}/{file}/{name}-{file}.jar',target)
+def validated_runtime_forge(log,expected):
+ evidence=re.search(r'Forge mod loading, version ([0-9.]+)',log)
+ if evidence is None or evidence[1]!=expected:raise RuntimeError(f'runtime Forge mismatch: expected {expected}, observed {evidence[1] if evidence else "missing"}')
+ return evidence[1]
 def main():
- p=argparse.ArgumentParser();p.add_argument('--full',action='store_true');args=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--full',action='store_true');p.add_argument('--forge-version',choices=['47.4.0','47.4.10'],default='47.4.0');args=p.parse_args()
  server=ROOT/'build'/('production-boss-full' if args.full else 'production-boss');server.mkdir(parents=True,exist_ok=True)
  mods=server/'mods';mods.mkdir(exist_ok=True)
  # Main artifact must never contain the probe or native third-party classes.
@@ -25,7 +29,7 @@ def main():
   present={x['modId'] for x in entries}
   for x in json.loads((ROOT/'compat/combat-mods.lock.json').read_text())['mods']:
    if x.get('enabled') and x['modId'] not in present:entries.append(x);present.add(x['modId'])
- installed={'minecraft':'1.20.1','forge':'47.4.0'}|{x['modId']:x['version'] for x in entries}
+ installed={'minecraft':'1.20.1','forge':args.forge_version}|{x['modId']:x['version'] for x in entries}
  reports=[]
  for x in entries:
   jar=coordinate_jar(x['coordinate'],mods/(x['modId']+'.jar'))
@@ -51,7 +55,8 @@ def main():
      reports.append({'modId':'kotlinforforge','sha256':hashlib.sha256(jar.read_bytes()).hexdigest(),'embeddedMods':descriptors,'status':'native-container-verified'})
    else:reports.append(inspect_jar(jar,{'library':True}))
  installer=server/'forge-installer.jar'
- shutil.copyfile(ROOT/'build/production-probe/forge-installer.jar',installer)
+ if args.forge_version=='47.4.0':shutil.copyfile(ROOT/'build/production-probe/forge-installer.jar',installer)
+ else:download(f'https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-{args.forge_version}/forge-1.20.1-{args.forge_version}-installer.jar',installer)
  subprocess.run(['java','-jar',str(installer),'--installServer'],cwd=server,check=True)
  (server/'eula.txt').write_text('eula=true\n')
  (server/'user_jvm_args.txt').write_text('-Xmx4G\n-Dforge.gameTestServer=true\n-Dforge.enableGameTest=true\n-Dforge.enabledGameTestNamespaces=rpgstats\n-Drpgstats.productionBossTests=true\n')
@@ -60,7 +65,8 @@ def main():
  launcher=['cmd.exe','/d','/c','run.bat','nogui'] if os.name=='nt' else ['bash','run.sh','nogui']
  result=subprocess.run(launcher,cwd=server,timeout=900)
  log=(server/'logs/latest.log').read_text()
+ runtime_forge=validated_runtime_forge(log,args.forge_version)
  if result.returncode!=0 or not re.search(r'All \d+ required tests passed',log):
   raise RuntimeError(f'Production tests not proven; exit {result.returncode}')
- (server/'result.json').write_text(json.dumps({'status':'PASS','originalNativeJars':True,'mainJarSha256':hashlib.sha256(jars[0].read_bytes()).hexdigest(),'summary':re.search(r'All \d+ required tests passed',log)[0]},indent=2)+'\n')
+ (server/'result.json').write_text(json.dumps({'status':'PASS','runtimeForge':runtime_forge,'originalNativeJars':True,'mainJarSha256':hashlib.sha256(jars[0].read_bytes()).hexdigest(),'summary':re.search(r'All \d+ required tests passed',log)[0]},indent=2)+'\n')
 if __name__=='__main__':main()

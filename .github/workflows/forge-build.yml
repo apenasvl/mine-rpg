@@ -28,7 +28,7 @@ jobs:
         run: python3 tools/validate_forge.py
 
       - name: Arena representative matrix tests
-        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix
+        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version
 
       - name: Progression and boss XP validation
         run: python3 tools/validate_progression.py
@@ -199,7 +199,9 @@ jobs:
         if: always()
         with:
           name: combat-runtime-${{ matrix.profile }}
-          path: rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+            rpg-stats-mod-v2.3-forge-1.20.1/run/rpgstats/arena/
           retention-days: 7
 
   combat-client:
@@ -248,8 +250,13 @@ jobs:
         include:
           - profile: boss
             argument: ''
+            server_folder: production-boss
           - profile: full
             argument: '--full'
+            server_folder: production-boss-full
+          - profile: full-forge47.4.10
+            argument: '--full --forge-version 47.4.10'
+            server_folder: production-boss-full
     defaults:
       run:
         working-directory: rpg-stats-mod-v2.3-forge-1.20.1
@@ -268,7 +275,7 @@ jobs:
       - name: Preserve the exact native-tested RPG artifact
         run: |
           mkdir -p dist
-          cp build/production-boss${{ matrix.profile == 'full' && '-full' || '' }}/mods/rpgstats.jar dist/rpg-stats-forge-1.20.1-mages.jar
+          cp build/${{ matrix.server_folder }}/mods/rpgstats.jar dist/rpg-stats-forge-1.20.1-mages.jar
           sha256sum dist/rpg-stats-forge-1.20.1-mages.jar > dist/rpg-stats-forge-1.20.1-mages.sha256
       - uses: actions/upload-artifact@v4
         with:
@@ -286,4 +293,5 @@ jobs:
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/logs/
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/result.json
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/native-manifest.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/rpgstats/arena/
           retention-days: 7
