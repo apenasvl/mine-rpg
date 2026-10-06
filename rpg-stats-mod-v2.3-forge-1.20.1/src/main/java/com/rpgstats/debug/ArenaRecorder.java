@@ -22,6 +22,10 @@ import java.util.*;
 public final class ArenaRecorder {
     private static final Map<UUID,Session> ACTIVE=new HashMap<>();
     private static final Gson JSON=new GsonBuilder().setPrettyPrinting().create();
+    private static final java.util.concurrent.ThreadPoolExecutor EXPORTER=new java.util.concurrent.ThreadPoolExecutor(
+            0,1,15,java.util.concurrent.TimeUnit.SECONDS,new java.util.concurrent.ArrayBlockingQueue<>(16),task->{
+                var thread=new Thread(task,"rpgstats-arena-export");thread.setDaemon(true);return thread;
+            },new java.util.concurrent.ThreadPoolExecutor.AbortPolicy());
     private static final Set<String> BUILDS=Set.of("offensive","balanced","defensive");
     public static boolean start(ServerPlayerEntity player,LivingEntity boss,String build) {
         if(player==null || boss==null || !BUILDS.contains(build) || ACTIVE.containsKey(player.getUuid()) || ACTIVE.size()>=8
@@ -29,6 +33,11 @@ public final class ArenaRecorder {
                 || StatsManager.get(player).clazz==null)return false;
         ACTIVE.put(player.getUuid(),new Session(player,boss,build));
         player.sendMessage(Text.literal("[RPG Arena] Gravando luta real; /rpg debug arena stop encerra."),false);return true;
+    }
+    /** Snapshot owned fall before lethal HP loss/death cleanup, never infer ownership afterwards. */
+    public static void beforePlayerDamage(ServerPlayerEntity player,DamageSource source) {
+        if(ACTIVE.isEmpty())return;var s=ACTIVE.get(player.getUuid());if(s==null)return;
+        s.markedFallSource=BossLaunchTracker.fallBoss(player,source)==s.boss?source:null;
     }
     public static void confirmedDamage(LivingEntity victim,DamageSource source,float actual) {
         if(ACTIVE.isEmpty() || !Float.isFinite(actual) || actual<=0)return;
@@ -39,7 +48,7 @@ public final class ArenaRecorder {
             }
             if(victim==s.player) {
                 s.received+=actual;s.pendingDamage+=actual;
-                if(source.getAttacker()==s.boss || BossLaunchTracker.fallBoss(s.player,source)==s.boss)s.attributed+=actual;
+                if(source.getAttacker()==s.boss || source==s.markedFallSource || BossLaunchTracker.fallBoss(s.player,source)==s.boss)s.attributed+=actual;
                 String key=source.getName()+"|"+(source.getAttacker()==null?"unattributed":Registries.ENTITY_TYPE.getId(source.getAttacker().getType()));
                 s.sources.merge(key,(double)actual,Double::sum);
             }
@@ -48,15 +57,18 @@ public final class ArenaRecorder {
     public static void confirmedDeath(LivingEntity entity) {
         if(ACTIVE.isEmpty())return;
         for(var s:new ArrayList<>(ACTIVE.values())) {
-            if(entity==s.boss)stop(s.player,"BOSS_DEAD");
-            else if(entity==s.player)stop(s.player,"PLAYER_DEAD");
+            if(entity==s.boss)s.bossDied=true;
+            else if(entity==s.player)s.playerDied=true;
+            else continue;
+            s.pendingOutcome=s.bossDied&&s.playerDied?"MUTUAL_DEATH":s.bossDied?"BOSS_DEAD":"PLAYER_DEAD";
         }
     }
     public static void tick(MinecraftServer server) {
         if(ACTIVE.isEmpty())return;
         for(var s:new ArrayList<>(ACTIVE.values())) {
             if(s.player.getServer()!=server)continue;
-            if(s.player.isRemoved() || s.boss.isRemoved() || s.player.getWorld()!=s.boss.getWorld() || s.player.getWorld()!=s.world)
+            if(s.pendingOutcome!=null)stop(s.player,s.pendingOutcome);
+            else if(s.player.isRemoved() || s.boss.isRemoved() || s.player.getWorld()!=s.boss.getWorld() || s.player.getWorld()!=s.world)
                 stop(s.player,"INTERRUPTED");
             else if(s.elapsed()>12000 || System.nanoTime()-s.startedNano>1_200_000_000_000L)stop(s.player,"TIMEOUT");
             else s.sample(false);
@@ -68,13 +80,20 @@ public final class ArenaRecorder {
     }
     public static JsonObject stop(ServerPlayerEntity player,String outcome) {
         if(player==null)return null;var s=ACTIVE.remove(player.getUuid());if(s==null)return null;
+        if(s.pendingOutcome!=null)outcome=s.pendingOutcome;
         s.sample(true);var report=s.report(outcome);
+        // Immutable text crosses the thread boundary; no player/entity/world access on the writer.
         try {
-            var directory=FMLPaths.GAMEDIR.get().resolve("rpgstats/arena");Files.createDirectories(directory);
-            var file=directory.resolve(s.id+".json");Files.writeString(file,JSON.toJson(report)+"\n");
-            RPGStatsMod.LOGGER.info("RPG_ARENA_REPORT {} outcome={} ticks={} dealt={} received={}",file,outcome,s.elapsed(),s.dealt,s.received);
-            player.sendMessage(Text.literal("[RPG Arena] "+outcome+"; relatório: rpgstats/arena/"+s.id+".json"),false);
-        }catch(java.io.IOException e){RPGStatsMod.LOGGER.error("Cannot save real arena report {}",s.id,e);player.sendMessage(Text.literal("[RPG Arena] Falha ao salvar relatório; consulte o log."),false);}
+            String text=JSON.toJson(report)+"\n", finalOutcome=outcome;long ticks=s.elapsed();double dealt=s.dealt,received=s.received;
+            var file=FMLPaths.GAMEDIR.get().resolve("rpgstats/arena").resolve(s.id+".json");
+            EXPORTER.execute(()->{
+                try {
+                    Files.createDirectories(file.getParent());Files.writeString(file,text);
+                    RPGStatsMod.LOGGER.info("RPG_ARENA_REPORT {} outcome={} ticks={} dealt={} received={}",file,finalOutcome,ticks,dealt,received);
+                }catch(java.io.IOException e){RPGStatsMod.LOGGER.error("Cannot save real arena report {}",file,e);}
+            });
+            player.sendMessage(Text.literal("[RPG Arena] "+outcome+"; exportando: rpgstats/arena/"+s.id+".json"),false);
+        }catch(RuntimeException e){RPGStatsMod.LOGGER.error("Cannot queue real arena report {}",s.id,e);player.sendMessage(Text.literal("[RPG Arena] Falha ao exportar relatório; consulte o log."),false);}
         return report;
     }
     public static void clear() {for(var s:new ArrayList<>(ACTIVE.values()))stop(s.player,"SERVER_STOPPED");}
@@ -84,7 +103,7 @@ public final class ArenaRecorder {
         final JsonObject initial=new JsonObject();final JsonArray samples=new JsonArray(),marks=new JsonArray();
         final Map<String,Double> sources=new TreeMap<>();final Set<UUID> otherAttackers=new HashSet<>();
         final boolean fullBoss;double dealt,received,attributed,otherDamage,pendingDamage,recovery,resourceDepleted,staminaDepleted;
-        float lastHp,lastResource,lastStamina;long lastSample=-20;int hits;
+        boolean bossDied,playerDied;DamageSource markedFallSource;String pendingOutcome;float lastHp,lastResource,lastStamina;long lastSample=-20;int hits;
         Session(ServerPlayerEntity p,LivingEntity b,String build) {
             player=p;boss=b;world=p.getWorld();startedTick=world.getTime();this.build=build;
             var stats=StatsManager.get(p);lastHp=p.getHealth();lastResource=resource(p,stats);lastStamina=stats.stamina;
@@ -93,7 +112,7 @@ public final class ArenaRecorder {
             initial.addProperty("class",stats.clazz.name());initial.addProperty("specialization",stats.specialization==null?"":stats.specialization.name());initial.addProperty("level",stats.level);
             initial.addProperty("declared_build",build);initial.addProperty("build_validated",false);initial.addProperty("boss_hp",b.getHealth());initial.addProperty("boss_max_hp",b.getMaxHealth());initial.addProperty("boss_armor",b.getArmor());
             initial.addProperty("boss_ai_disabled",b instanceof net.minecraft.entity.mob.MobEntity mob && mob.isAiDisabled());initial.addProperty("boss_no_gravity",b.hasNoGravity());
-            initial.addProperty("player_no_gravity",p.hasNoGravity());initial.addProperty("player_invulnerable",p.isInvulnerable());initial.addProperty("world_difficulty",world.getDifficulty().name());initial.addProperty("server_runtime_class",p.getServer().getClass().getName());
+            initial.addProperty("player_game_mode",p.interactionManager.getGameMode().name());initial.addProperty("player_no_gravity",p.hasNoGravity());initial.addProperty("player_invulnerable",p.isInvulnerable());initial.addProperty("world_difficulty",world.getDifficulty().name());initial.addProperty("server_runtime_class",p.getServer().getClass().getName());
             initial.addProperty("player_hp",p.getHealth());initial.addProperty("player_max_hp",p.getMaxHealth());initial.addProperty("player_armor",p.getArmor());
             var attributes=new JsonObject();stats.stats.forEach((k,v)->attributes.addProperty(k.name(),v));initial.add("stats",attributes);
             var equipment=new JsonArray();for(var stack:p.getArmorItems())equipment.add(item(stack));
@@ -108,7 +127,7 @@ public final class ArenaRecorder {
             resourceDepleted+=Math.max(0,lastResource-r);staminaDepleted+=Math.max(0,lastStamina-stamina);lastResource=r;lastStamina=stamina;
             if(!force && elapsed()-lastSample<20)return;lastSample=elapsed();
             if(samples.size()>=605)return;
-            var sample=new JsonObject();sample.addProperty("tick",elapsed());sample.addProperty("player_hp",hp);sample.addProperty("boss_hp",boss.getHealth());
+            var sample=new JsonObject();sample.addProperty("tick",elapsed());sample.addProperty("player_hp",hp);sample.addProperty("boss_hp",boss.getHealth());sample.addProperty("boss_max_hp",boss.getMaxHealth());
             sample.addProperty("resource",r);sample.addProperty("stamina",stamina);sample.addProperty("x",player.getX());sample.addProperty("y",player.getY());sample.addProperty("z",player.getZ());
             sample.addProperty("main_hand",Registries.ITEM.getId(player.getMainHandStack().getItem()).toString());sample.addProperty("off_hand",Registries.ITEM.getId(player.getOffHandStack().getItem()).toString());
             sample.addProperty("boss_distance",player.distanceTo(boss));var cooldowns=new JsonObject();var state=CombatState.get(player.getUuid());

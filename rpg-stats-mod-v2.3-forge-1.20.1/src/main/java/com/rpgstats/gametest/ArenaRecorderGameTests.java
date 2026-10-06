@@ -26,13 +26,15 @@ public final class ArenaRecorderGameTests {
     @GameTest(templateName="empty",tickLimit=80)
     public static void recorderCountsOnlyConfirmedHealthLossAndNoStopWin(TestContext c) {
         var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);b.setNoGravity(true);
+        // Stabilize vanilla encounter level scaling before measuring a fixed health delta.
+        com.rpgstats.boss.EncounterManager.recordParticipation(p,b);
         try {
             c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
             b.setInvulnerable(true);c.assertTrue(!b.damage(p.getDamageSources().playerAttack(p),5),"Rejected fixture accepted");b.setInvulnerable(false);
             b.timeUntilRegen=0;float before=b.getHealth();c.assertTrue(b.damage(p.getDamageSources().playerAttack(p),5),"Accepted fixture rejected");float dealt=before-b.getHealth();
             p.timeUntilRegen=0;before=p.getHealth();c.assertTrue(p.damage(p.getDamageSources().mobAttack(b),2),"Incoming fixture rejected");float received=before-p.getHealth();
             var report=(JsonObject)call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
-            c.assertTrue(Math.abs(report.get("damage_dealt").getAsFloat()-dealt)<.001,"Recorder counted rejected/unmitigated outgoing damage");
+            c.assertTrue(Math.abs(report.get("damage_dealt").getAsFloat()-dealt)<.001,"Recorder counted rejected/unmitigated outgoing damage: report="+report.get("damage_dealt")+" healthDelta="+dealt);
             c.assertTrue(Math.abs(report.get("damage_received").getAsFloat()-received)<.001,"Recorder did not measure confirmed incoming health loss");
             c.assertTrue(report.get("ttk_seconds").isJsonNull(),"Stopped fixture fabricated boss kill TTK");
         }finally {b.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
@@ -81,6 +83,20 @@ public final class ArenaRecorderGameTests {
                 }finally {b.discard();}
             }
         }finally {TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void lethalOwnedFallKeepsPreDeathBossAttribution(TestContext c) {
+        var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);b.setNoGravity(true);
+        try {
+            p.timeUntilRegen=0;c.assertTrue(p.damage(p.getDamageSources().mobAttack(b),1),"Fixture launch hit rejected");
+            p.setVelocity(0,1,0);com.rpgstats.boss.BossLaunchTracker.recordImpulse(p,b,0,1);p.setHealth(1);
+            c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
+            p.timeUntilRegen=0;c.assertTrue(p.damage(p.getDamageSources().fall(),Float.MAX_VALUE),"Lethal fall rejected");
+            c.assertTrue(!p.isAlive(),"Fatal fixture survived");
+            var report=(JsonObject)call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
+            c.assertTrue(report!=null,"Fatal fall report disappeared");
+            c.assertTrue(Math.abs(report.get("boss_attributed_damage_received").getAsFloat()-1)<.001,"Death cleanup erased proven fall owner");
+        }finally {b.discard();TestPlayers.finish(c);}c.complete();
     }
     private ArenaRecorderGameTests(){}
 }

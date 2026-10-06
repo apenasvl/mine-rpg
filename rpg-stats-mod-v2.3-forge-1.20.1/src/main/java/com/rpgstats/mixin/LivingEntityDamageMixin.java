@@ -62,6 +62,7 @@ public abstract class LivingEntityDamageMixin {
     private void rpgstats$beforeDamage(DamageSource source,float amount,CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self=(LivingEntity)(Object)this;
         if(self instanceof ServerPlayerEntity p) {
+            com.rpgstats.debug.ArenaRecorder.beforePlayerDamage(p,source);
             if(rpgstats$damageSources==null)rpgstats$damageSources=new java.util.ArrayDeque<>();
             com.rpgstats.boss.BossLaunchTracker.beginDamage(p);rpgstats$damageSources.push(source);
         }
