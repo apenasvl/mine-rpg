@@ -1,6 +1,6 @@
 # Auditoria de bosses — 6 de outubro de 2026
 
-Base de produção: `6ca97f3`. Os 28 perfis fixos existem no registry nativo observado; as versões dos três mods coincidem com o ZIP `rpg_astra2.zip`.
+Base oficial consultada em 2026-10-06: `main` com UI aprovada integrada em `669b608`. Esta auditoria acompanha somente a infraestrutura de Boss Calibration A. Os 28 perfis fixos existem no registry nativo observado; as versões dos três mods coincidem com o ZIP `rpg_astra2.zip`.
 
 ## Evidência e limites
 
@@ -39,7 +39,7 @@ Baseline nativo: run 36794767189, Native registry/attributes observed; arena cal
 
 ## Rotas confirmadas na inspeção do binário
 
-- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Logo, a velocidade vertical pode ser observada no dano aceito.
+- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Fases36/52 escrevem Y1/Y1.5 depois do dano. A integração mede o delta nos writes nativos, pareado com dano aceito no mesmo tick; velocidade absoluta preexistente não comprova lançamento.
 - Legendary `ModDamageTypes.causeCutDamage/causeImpaleDamage`: fontes sem atacante. Chamadas encontradas somente em SwingingAxeBlockEntity e SpikeTrapBlock; não atribuir a boss pela proximidade.
 - Rotas customizadas de laser, gravidade, nuvem e ghost possuem construtores de fonte com entidades; verificar owner efetivo em runtime, sem adivinhar a partir do tipo de dano.
 
@@ -54,7 +54,7 @@ Returning Knight e Colossus já possuem fixtures nativas de ataque; todos os per
 **Implementado:** party diminishing returns e cap8, resistências por perfil, XP fixo/first-kill, Contribution Score de dano/tanque/suporte; arquitetura Iron/RPG, afinidade off-class0.625, proteção de sustain e estado de combate. UI aprovada preservada.
 **Incompleto:** calibração nativa por rota/arena, matriz legal de builds e níveis; rewards atualmente divididos igualmente entre elegíveis.
 **Faltando:** bonusXP relativo de boss, penalidade overlevel, farm temporal por player/tipo, Threat fallback; teste de restart/save antigo/cliente servidor com ZIP inteiro.
-**Regressão a reproduzir:** queda após golpe ascendente não passa pela defesa exclusiva contra bosses. Testes anteriores desligavam gravidade e não comprovavam essa parte.
+**Regressão reproduzida e corrigida:** queda após golpe ascendente não passava pela defesa exclusiva contra bosses. Os fixtures atuais verificam ambas as ordens de impulso/dano, exclusão de pulo e consumo após primeira queda; cobertura adicional de lifecycle acompanha esta PR.
 **Obsoleto:** documentos Fabric e catálogos antigos em docs/legacy, identificador FE reservado para migração; não importar nem reativar.
 
 ## Estabilidade/performance — achados para PR C/D
@@ -62,3 +62,18 @@ Returning Knight e Colossus já possuem fixtures nativas de ataque; todos os per
 - `ArcherAimAssist` mantém GUIDES/COOLDOWNS; `ForgeEvents.forget` não chama limpeza por jogador. O tick expira guias, mas uma proteção explícita de logout/dimensão é uma lacuna de ciclo de vida a testar.
 - `EncounterManager.recordSupport` itera apenas encounters ativos, sem scan de entidades; BossScaler valida somente rastreados a cada100ticks. Preservar essas características.
 - Forge do ZIP47.4.10; harness fixado47.4.0. Validação do ZIP completo não equivale à compatibilidade isolada dos três mods.
+
+## Outras rotas indiretas — inspeção dos binários fixados
+
+| Rota | Evidência | Tratamento |
+|---|---|---|
+| BoMD MagicMissileProjectile.entityHit | getOwner; fonte indireta(projectile,owner) | Defesa existente por atacante; owner living obrigatório no código nativo |
+| Marium GrowingFireball | owner no dano de projétil; detonate passa o próprio fireball à explosão vanilla | Caminho vanilla de owner; validar dano da explosão em arena |
+| Legendary CloudEntity | getOwner e causeCloudDamage(owner,victim); sem owner usa vítima como fallback | Usar apenas atacante real; sem dono não inventar boss |
+| Legendary AnnihilationExplosionEntity.damage | getCaster persistido por UUID; DamageSource(...,caster) | Defesa existente por caster; caster nulo permanece sem atribuição |
+| BoMD MinionAction | Spawn de phantom com NBT e target, sem vínculo persistente owner | Não inferir origem por proximidade; medir em arena e instrumentar spawn apenas se necessário |
+| Marium DarkSorcerer | Monster sem owner declarado | Não tratá-lo como boss pela presença de Returning Knight |
+| Legendary axe/spike traps | Fontes cut/impale sem atacante, criadas pelos blocos | Ambientais, preservar |
+| Launch + wall | Nenhum golpe nativo inspecionado usa flyIntoWall; voo Elytra encerra marca | Não criar tratamento genérico de colisão |
+
+Inspeção de bytecode é evidência de rota, não prova da luta inteira. Nenhuma proteção genérica foi adicionada por DamageType ou registry do efeito. Fontes nativas adicionais e summons exigem cobertura na arena posterior.

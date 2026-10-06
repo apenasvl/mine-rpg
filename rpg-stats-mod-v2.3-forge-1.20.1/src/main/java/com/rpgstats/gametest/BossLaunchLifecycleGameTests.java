@@ -52,12 +52,12 @@ public final class BossLaunchLifecycleGameTests {
             for(var fluid:new net.minecraft.block.Block[]{Blocks.WATER,Blocks.LAVA}) {
                 launch(c,p,b);p.setVelocity(Vec3d.ZERO);
                 c.getWorld().setBlockState(pos,fluid.getDefaultState());c.getWorld().setBlockState(pos.up(),fluid.getDefaultState());
-                p.tick();c.assertTrue(p.isTouchingWater()||p.isInLava(),"Player did not enter fixture fluid");
+                p.playerTick();p.tick();c.assertTrue(p.isTouchingWater()||p.isInLava(),"Player did not enter fixture fluid");
                 inactive(c,p,"Fluid retained launch");
                 c.getWorld().setBlockState(pos,Blocks.AIR.getDefaultState());c.getWorld().setBlockState(pos.up(),Blocks.AIR.getDefaultState());
-                p.refreshPositionAndAngles(pos.getX()+3.5,pos.getY(),pos.getZ()+.5,0,0);p.tick();
+                p.refreshPositionAndAngles(pos.getX()+3.5,pos.getY(),pos.getZ()+.5,0,0);p.playerTick();p.tick();
                 inactive(c,p,"Leaving fluid restored stale launch");
-                p.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+.5,0,0);p.tick();p.setFireTicks(0);
+                p.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+.5,0,0);p.playerTick();p.tick();p.setFireTicks(0);
             }
         }finally {b.discard();c.getWorld().setBlockState(pos,Blocks.AIR.getDefaultState());c.getWorld().setBlockState(pos.up(),Blocks.AIR.getDefaultState());TestPlayers.finish(c);}c.complete();
     }
@@ -79,6 +79,7 @@ public final class BossLaunchLifecycleGameTests {
     @GameTest(templateName="empty",tickLimit=80)
     public static void competingBossHitAndPvpNeverBorrowOrReplaceLaunchOwner(TestContext c) {
         var p=player(c);var attacker=player(c);var a=boss(c,3);var b=boss(c,5);
+        boolean oldPvp=p.getServer().isPvpEnabled();p.getServer().setPvpEnabled(true);
         try {
             var pvp=p.getDamageSources().playerAttack(attacker);float ordinary=CombatHandler.modifyIncomingDamage(p,20,pvp);
             launch(c,p,a);hit(c,p,b);
@@ -88,7 +89,7 @@ public final class BossLaunchLifecycleGameTests {
             c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==a,"PvP without impulse changed attribution");
             impulse(p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Second boss launch not attributed to second boss");
             BossLaunchTracker.finishFall(p,p.getDamageSources().fall());inactive(c,p,"Second boss landing was not consumed");
-        }finally {a.discard();b.discard();TestPlayers.finish(c);}c.complete();
+        }finally {p.getServer().setPvpEnabled(oldPvp);a.discard();b.discard();TestPlayers.finish(c);}c.complete();
     }
     @GameTest(templateName="empty",tickLimit=80)
     public static void nonBossImpulseInvalidatesEarlierBossFlight(TestContext c) {
