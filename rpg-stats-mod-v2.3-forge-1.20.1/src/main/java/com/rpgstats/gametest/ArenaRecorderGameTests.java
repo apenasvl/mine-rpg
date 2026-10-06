@@ -98,5 +98,21 @@ public final class ArenaRecorderGameTests {
             c.assertTrue(Math.abs(report.get("boss_attributed_damage_received").getAsFloat()-1)<.001,"Death cleanup erased proven fall owner");
         }finally {b.discard();TestPlayers.finish(c);}c.complete();
     }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void shutdownDrainWaitsForQueuedReport(TestContext c) {
+        var p=player(c);var b=c.spawnMob(EntityType.WITHER,3,3,3);b.setAiDisabled(true);
+        var gate=new java.util.concurrent.CountDownLatch(1);var entered=new java.util.concurrent.CountDownLatch(1);
+        try {
+            var field=Class.forName("com.rpgstats.debug.ArenaRecorder").getDeclaredField("EXPORTER");field.setAccessible(true);
+            var executor=(java.util.concurrent.ThreadPoolExecutor)field.get(null);
+            executor.submit(()->{entered.countDown();try {gate.await();}catch(InterruptedException e){Thread.currentThread().interrupt();}});
+            c.assertTrue(entered.await(1,java.util.concurrent.TimeUnit.SECONDS),"Delayed writer did not start");
+            c.assertTrue((boolean)call("start",new Class[]{ServerPlayerEntity.class,LivingEntity.class,String.class},p,b,"balanced"),"Recorder refused fixture");
+            call("stop",new Class[]{ServerPlayerEntity.class,String.class},p,"STOPPED");
+            c.assertTrue(!(boolean)call("awaitExports",new Class[]{long.class},30L),"Shutdown declared queued report saved while writer blocked");
+            gate.countDown();c.assertTrue((boolean)call("awaitExports",new Class[]{long.class},2000L),"Queued report did not drain after releasing writer");
+        }catch(ReflectiveOperationException|InterruptedException e){throw new AssertionError(e);}
+        finally {gate.countDown();b.discard();TestPlayers.finish(c);}c.complete();
+    }
     private ArenaRecorderGameTests(){}
 }
