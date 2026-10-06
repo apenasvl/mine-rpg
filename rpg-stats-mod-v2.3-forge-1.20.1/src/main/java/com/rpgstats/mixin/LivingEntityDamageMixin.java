@@ -19,18 +19,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityDamageMixin {
     @Unique private boolean rpgstats$deathRewarded;
-    @Unique private final java.util.ArrayDeque<DamageSource> rpgstats$damageSources=(Object)this instanceof ServerPlayerEntity?new java.util.ArrayDeque<>():null;
-    @Unique private final java.util.ArrayDeque<Double> rpgstats$knockbackY=(Object)this instanceof ServerPlayerEntity?new java.util.ArrayDeque<>():null;
+    @Unique private java.util.ArrayDeque<DamageSource> rpgstats$damageSources;
+    @Unique private java.util.ArrayDeque<Double> rpgstats$knockbackY;
     @Inject(method="takeKnockback",at=@At("HEAD"))
     private void rpgstats$beforeKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
-        if(rpgstats$knockbackY!=null)rpgstats$knockbackY.push(((LivingEntity)(Object)this).getVelocity().y);
+        if((Object)this instanceof ServerPlayerEntity p) {
+            if(rpgstats$knockbackY==null)rpgstats$knockbackY=new java.util.ArrayDeque<>();
+            rpgstats$knockbackY.push(p.getVelocity().y);
+        }
     }
     @Inject(method="takeKnockback",at=@At("RETURN"))
     private void rpgstats$bossKnockback(double strength,double x,double z,org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
         LivingEntity self=(LivingEntity)(Object)this;
         if(rpgstats$knockbackY==null)return;
         double before=rpgstats$knockbackY.pop();
-        if(self instanceof ServerPlayerEntity p && !rpgstats$damageSources.isEmpty()
+        if(self instanceof ServerPlayerEntity p && rpgstats$damageSources!=null && !rpgstats$damageSources.isEmpty()
                 && rpgstats$damageSources.peek().getAttacker() instanceof LivingEntity boss)
             com.rpgstats.boss.BossLaunchTracker.recordImpulseBeforeDamage(p,boss,before,p.getVelocity().y);
     }
@@ -59,6 +62,7 @@ public abstract class LivingEntityDamageMixin {
     private void rpgstats$beforeDamage(DamageSource source,float amount,CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self=(LivingEntity)(Object)this;
         if(self instanceof ServerPlayerEntity p) {
+            if(rpgstats$damageSources==null)rpgstats$damageSources=new java.util.ArrayDeque<>();
             com.rpgstats.boss.BossLaunchTracker.beginDamage(p);rpgstats$damageSources.push(source);
         }
         rpgstats$healthBefore.push(self.getHealth());rpgstats$contributionRecorded.push(false);rpgstats$trainingDamage.push(0f);
