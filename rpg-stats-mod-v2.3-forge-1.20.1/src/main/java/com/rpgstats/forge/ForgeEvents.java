@@ -161,6 +161,7 @@ public final class ForgeEvents {
         com.rpgstats.combat.WarriorSustain.tick(server);
         com.rpgstats.compat.BetterWeaponrySustain.tick(server);
         com.rpgstats.combat.ArcherAimAssist.tick(server);
+        com.rpgstats.boss.BossLaunchTracker.tick(server);
     }
 
     /** Health loss confirmed after mitigation; called before lethal XP payment or on damage return. */
@@ -168,8 +169,15 @@ public final class ForgeEvents {
         if(victim.getWorld().isClient || !Float.isFinite(actual) || actual<=0)return;
         if(source.getAttacker() instanceof ServerPlayerEntity player && BossScaler.isCandidate(victim))
             EncounterManager.recordDamageDealt(player,victim,actual);
-        else if(victim instanceof ServerPlayerEntity player && source.getAttacker() instanceof LivingEntity boss && BossScaler.isCandidate(boss))
-            EncounterManager.recordDamageTaken(player,boss,actual);
+        else if(victim instanceof ServerPlayerEntity player) {
+            LivingEntity boss=source.getAttacker() instanceof LivingEntity attacker && BossScaler.isCandidate(attacker)
+                    ?attacker:com.rpgstats.boss.BossLaunchTracker.fallBoss(player,source);
+            if(boss!=null) {
+                EncounterManager.recordDamageTaken(player,boss,actual);
+                if(!source.isOf(net.minecraft.entity.damage.DamageTypes.FALL))
+                    com.rpgstats.boss.BossLaunchTracker.record(player,boss);
+            }
+        }
     }
 
     @SubscribeEvent public static void load(EntityJoinLevelEvent event) {
@@ -188,12 +196,15 @@ public final class ForgeEvents {
         com.rpgstats.compat.BetterWeaponrySustain.clear();
         com.rpgstats.combat.ArcherAimAssist.clear(); com.rpgstats.integration.ArcherTrapCompat.clear(); com.rpgstats.combat.ArcherTechniqueHandler.clear();
         EncounterManager.clear(); BossScaler.clear(); RpgNetwork.clear();
+        com.rpgstats.boss.BossLaunchTracker.clear();
     }
 
     /** Invoked after confirmed vanilla death, not from Forge's cancellable LivingDeathEvent. */
     public static void confirmedDeath(LivingEntity entity, DamageSource source) {
         if (entity.getWorld().isClient) return;
-        if (entity instanceof ServerPlayerEntity dead) StatsManager.onPlayerDeath(dead);
+        if (entity instanceof ServerPlayerEntity dead) {
+            com.rpgstats.boss.BossLaunchTracker.remove(dead.getUuid());StatsManager.onPlayerDeath(dead);
+        }
         boolean boss=BossScaler.isCandidate(entity);
         ServerPlayerEntity killer=source.getAttacker() instanceof ServerPlayerEntity p?p:null;
         if(boss)EncounterManager.rewardCompletion(entity,killer);
@@ -204,6 +215,7 @@ public final class ForgeEvents {
         if (BossScaler.isCandidate(entity)) EncounterManager.removeBoss(entity);
     }
     private static void forget(ServerPlayerEntity p) {
+        com.rpgstats.boss.BossLaunchTracker.remove(p.getUuid());
         com.rpgstats.combat.ArcherTechniqueHandler.remove(p.getUuid()); com.rpgstats.integration.ArcherTrapCompat.remove(p.getUuid()); com.rpgstats.combat.ArcherShotTracker.remove(p.getUuid()); CombatState.remove(p.getUuid()); MageCombatHandler.remove(p.getUuid()); RpgNetwork.forget(p.getUuid());
     }
     private ForgeEvents() {}

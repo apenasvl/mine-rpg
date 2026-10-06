@@ -156,8 +156,9 @@ public final class CombatHandler {
         if (state.smokeTicks > 0) reduction += 0.25f;
         reduction = GlobalCaps.damageReduction(reduction);
         float guarded=amount*(1f-reduction);
-        if(attacker instanceof LivingEntity boss
-                && !(boss instanceof PlayerEntity) && BossScaler.getTier(boss)>0) {
+        if((attacker instanceof LivingEntity boss
+                && !(boss instanceof PlayerEntity) && BossScaler.getTier(boss)>0)
+                || com.rpgstats.boss.BossLaunchTracker.isBossFall(player,source)) {
           if(stats.clazz==RPGClass.GUERREIRO) {
             boolean juggernaut=stats.specialization==RPGSpecialization.JUGGERNAUT
                     && stats.hasNode(RPGSpecialization.JUGGERNAUT.nodes.get(0).id());
@@ -581,4 +582,3 @@ public final class CombatHandler {
 
     private CombatHandler() {}
 }
-

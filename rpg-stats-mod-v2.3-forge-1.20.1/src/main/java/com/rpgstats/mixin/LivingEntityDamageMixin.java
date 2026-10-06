@@ -86,9 +86,13 @@ public abstract class LivingEntityDamageMixin {
         float before=rpgstats$healthBefore.isEmpty()?self.getHealth():rpgstats$healthBefore.pop();
         boolean recorded=!rpgstats$contributionRecorded.isEmpty() && rpgstats$contributionRecorded.pop();
         float training = rpgstats$trainingDamage.isEmpty() ? 0f : rpgstats$trainingDamage.pop();
-        if (!cir.getReturnValue()) return;
+        if (!cir.getReturnValue()) {
+            if(self instanceof ServerPlayerEntity player)com.rpgstats.boss.BossLaunchTracker.finishFall(player,source);
+            return;
+        }
         float actual=Math.max(0,before-self.getHealth());
         if(actual > 0 && !recorded)com.rpgstats.forge.ForgeEvents.confirmedDamage(self,source,actual);
+        if(self instanceof ServerPlayerEntity player)com.rpgstats.boss.BossLaunchTracker.finishFall(player,source);
         float resolved = actual > 0 ? actual : training;
         if(resolved<=0)return;
         if (ProcDamageQueue.isApplying()) return;
@@ -102,4 +106,3 @@ public abstract class LivingEntityDamageMixin {
         }
     }
 }
-
