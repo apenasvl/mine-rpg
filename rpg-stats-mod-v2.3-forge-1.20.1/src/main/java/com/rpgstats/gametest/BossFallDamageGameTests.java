@@ -64,5 +64,17 @@ public final class BossFallDamageGameTests {
             finally {boss.discard();TestPlayers.finish(c);}c.complete();
         });
     }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void jumpingDuringBossHitWithoutImpulseDoesNotProtectFall(TestContext c) {
+        var boss=c.spawnMob(EntityType.WITHER,3,1,3);var p=TestPlayers.create(c);build(p,RPGClass.GUERREIRO);
+        try {
+            p.getAttributeInstance(net.minecraft.entity.attribute.EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+            p.setVelocity(0,.42,0);p.timeUntilRegen=0;
+            var fall=p.getDamageSources().fall();float ordinary=CombatHandler.modifyIncomingDamage(p,40,fall);
+            c.assertTrue(p.damage(p.getDamageSources().mobAttack(boss),1),"Hit must be accepted");
+            c.assertTrue(Math.abs(p.getVelocity().y-.42)<.001,"Fixture unexpectedly received an impulse");
+            c.assertTrue(Math.abs(CombatHandler.modifyIncomingDamage(p,40,fall)-ordinary)<.001,"An existing jump was attributed to the boss");
+        }finally {boss.discard();TestPlayers.finish(c);}c.complete();
+    }
     private BossFallDamageGameTests(){}
 }
