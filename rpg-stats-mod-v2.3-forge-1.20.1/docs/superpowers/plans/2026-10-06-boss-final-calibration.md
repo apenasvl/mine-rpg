@@ -23,20 +23,27 @@
 ### Task 1: Reproduce the boss launch landing gap
 **Files:** gametest/BossFallDamageGameTests.java; .github/workflows/forge-build.yml.
 **Interfaces:** consumes CombatHandler.modifyIncomingDamage and ForgeEvents.confirmedDamage; produces an assertion that the same attributable fall receives existing class mitigation, ordinary fall does not.
-- [ ] Add native regression for all four classes, accepted upward hit, ordinary/canceled hit, expiry and lifecycle reset.
-- [ ] Run native regression on the unchanged damage pipeline and observe failure.
+- [x] Add native regression for all four classes, accepted upward hit, ordinary/canceled hit, expiry and lifecycle reset.
+- [x] Run native regression on the unchanged damage pipeline and observe failure.
 
 ### Task 2: Track only confirmed launch falls
 **Files:** boss/BossLaunchTracker.java; combat/CombatHandler.java; forge/ForgeEvents.java; mixin/LivingEntityDamageMixin.java.
 **Interfaces:** tracker records accepted upward boss hit, resolves a pending fall, consumes it after damage return; no NBT changes.
-- [ ] Add the smallest tracker and reuse existing class boss defense, excluding BossScaler damage multiplication for falls.
-- [ ] Clear after first fall/landing/expiry and player lifecycle transitions.
-- [ ] Run regression and existing class/boss GameTests; inspect native logs.
+- [x] Add the smallest tracker and reuse existing class boss defense, excluding BossScaler damage multiplication for falls.
+- [x] Clear after first fall/landing/expiry and player lifecycle transitions.
+- [x] Run regression and existing class/boss GameTests; inspect native logs.
 
 ### Task 3: Record calibration evidence
 **Files:** tools/audit_boss_calibration.py; docs/boss-calibration-audit.md.
-- [ ] Enumerate all configured bosses, native registry attributes, reference levels, profile factors, attack route coverage and missing arena evidence.
-- [ ] Validate counts/IDs against pinned baselines and pack manifest.
-- [ ] Review PR A diff, compile/build and test native binaries; keep PR stacked on approved UI until integration is valid.
+- [x] Enumerate all configured bosses, native registry attributes, reference levels, profile factors, attack route coverage and missing arena evidence.
+- [x] Validate counts/IDs against pinned baselines and pack manifest.
+- [x] Review PR A diff, compile/build and test native binaries; keep PR stacked on approved UI until integration is valid.
 
-Subsequent plans: PR B relative-level XP/farm/fallback; PR C weapons/classes; PR D release/persistence/multiplayer.
+## Finalização da infraestrutura
+- [x] PR8 revisada e mergeada isoladamente; PR9 retarget main, diff sem UI e CI reexecutado.
+- [x] RED: impulsos de outro boss/mob comum preservavam marca antiga; corrigidos.
+- [ ] Consumir o pareamento por ação de dano, invalidar hit anterior antes de novo hurt, tratar impulso pré-hurt sem reutilizar HIT antigo.
+- [ ] GREEN: líquidos, voo, veículo, pouso, dimensão/respawn/morte/clear, PvP e bosses concorrentes, limite200/201 e rejeição do mesmo boss/tick.
+- [ ] Revisão final, merge somente após CI atual verde.
+
+Próxima PR: Boss Calibration B — arena/encounters completos. XP relativo/farm/Threat e armas apenas depois, em PRs próprias. Novas classes RPG permanentemente proibidas.

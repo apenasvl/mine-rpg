@@ -30,7 +30,7 @@ public final class WarriorBossDefenseGameTests {
         p.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).setBaseValue(11);
         p.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
     }
-    private static void nativeHit(MobEntity boss,ServerPlayerEntity p,int phase) throws ReflectiveOperationException {
+    static void nativeHit(MobEntity boss,ServerPlayerEntity p,int phase) throws ReflectiveOperationException {
         if(phase==7){BossPressureGameTests.commonHit(boss,p,true);return;}
         boss.setTarget(p);boss.getClass().getMethod("setSpawning",boolean.class).invoke(boss,false);
         boss.getClass().getMethod(phase==21?"setMaceOfSpades":"setRupture",boolean.class).invoke(boss,true);

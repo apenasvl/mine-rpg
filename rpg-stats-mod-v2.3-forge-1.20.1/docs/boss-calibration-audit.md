@@ -39,7 +39,7 @@ Baseline nativo: run 36794767189, Native registry/attributes observed; arena cal
 
 ## Rotas confirmadas na inspeção do binário
 
-- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Fases36/52 escrevem Y1/Y1.5 depois do dano. A integração mede o delta nos writes nativos, pareado com dano aceito no mesmo tick; velocidade absoluta preexistente não comprova lançamento.
+- Returning Knight, `ReturningKnightGoal.tick`: estágio 21 adiciona movimento vertical (0,1,0) antes de `LivingEntity.hurt`, dano nativo 25 modificado pelo goal. Fases36/52 escrevem Y1/Y1.5 depois do dano. A integração mede o delta nos writes nativos, pareado com o dano aceito da própria ação no mesmo tick, com par consumido uma única vez; velocidade absoluta preexistente não comprova lançamento.
 - Legendary `ModDamageTypes.causeCutDamage/causeImpaleDamage`: fontes sem atacante. Chamadas encontradas somente em SwingingAxeBlockEntity e SpikeTrapBlock; não atribuir a boss pela proximidade.
 - Rotas customizadas de laser, gravidade, nuvem e ghost possuem construtores de fonte com entidades; verificar owner efetivo em runtime, sem adivinhar a partir do tipo de dano.
 

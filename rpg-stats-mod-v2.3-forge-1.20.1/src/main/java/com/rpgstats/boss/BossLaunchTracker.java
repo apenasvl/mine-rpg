@@ -19,11 +19,21 @@ public final class BossLaunchTracker {
         if(boss instanceof net.minecraft.entity.player.PlayerEntity || p.getWorld()!=boss.getWorld() || BossScaler.getTier(boss)<=0 || safe(p))return null;
         return new Event(boss.getUuid(),p.getServerWorld(),p.getServerWorld().getTime());
     }
+    /** Every damage invocation starts a new action; an older accepted hit cannot fund a rejected one. */
+    public static void beginDamage(ServerPlayerEntity p){HITS.remove(p.getUuid());}
+    public static void finishDamage(ServerPlayerEntity p,float actual) {
+        if(!(actual>0)){HITS.remove(p.getUuid());IMPULSES.remove(p.getUuid());}
+    }
     public static void record(ServerPlayerEntity p,LivingEntity boss) {
         Event e=event(p,boss);if(e==null)return;
         HITS.put(p.getUuid(),e);match(p,e,IMPULSES.get(p.getUuid()));
     }
-    /** Called only at boss-owned native velocity writes or knockback inside that boss's damage call. */
+    /** Pre-hurt writes must await their own damage; never pair with an older hit of the same boss. */
+    public static void recordImpulseBeforeDamage(ServerPlayerEntity p,LivingEntity boss,double beforeY,double afterY) {
+        if(!Double.isFinite(beforeY)||!Double.isFinite(afterY)||afterY-beforeY<.25||afterY<.25)return;
+        HITS.remove(p.getUuid());recordImpulse(p,boss,beforeY,afterY);
+    }
+    /** Post-hurt native writes pair only with the most recent accepted damage invocation. */
     public static void recordImpulse(ServerPlayerEntity p,LivingEntity boss,double beforeY,double afterY) {
         if(!Double.isFinite(beforeY)||!Double.isFinite(afterY)||afterY-beforeY<.25||afterY<.25)return;
         // A newer upward force changes the cause of this flight, even if its hit is rejected.
@@ -32,7 +42,9 @@ public final class BossLaunchTracker {
         IMPULSES.put(p.getUuid(),e);match(p,e,HITS.get(p.getUuid()));
     }
     private static void match(ServerPlayerEntity p,Event a,Event b) {
-        if(a.equals(b))LAUNCHES.put(p.getUuid(),a);
+        if(a.equals(b)) {
+            LAUNCHES.put(p.getUuid(),a);HITS.remove(p.getUuid());IMPULSES.remove(p.getUuid());
+        }
     }
     private static boolean safe(ServerPlayerEntity p) {
         return !p.isAlive() || p.getAbilities().flying || p.isFallFlying() || p.isTouchingWater()

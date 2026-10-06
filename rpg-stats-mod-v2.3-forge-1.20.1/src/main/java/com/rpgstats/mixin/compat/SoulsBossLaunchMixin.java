@@ -27,7 +27,7 @@ public abstract class SoulsBossLaunchMixin {
     @Redirect(method="m_8037_",at=@At(value="INVOKE",target="Lnet/minecraft/world/entity/LivingEntity;m_5997_(DDD)V",remap=false),require=1,remap=false)
     private void rpgstats$addImpulse(LivingEntity victim,double x,double y,double z) {
         double before=victim.getVelocity().y;victim.addVelocity(x,y,z);
-        if(victim instanceof ServerPlayerEntity p)BossLaunchTracker.recordImpulse(p,rpgstats$boss(),before,p.getVelocity().y);
+        if(victim instanceof ServerPlayerEntity p)BossLaunchTracker.recordImpulseBeforeDamage(p,rpgstats$boss(),before,p.getVelocity().y);
     }
     @Redirect(method="m_8037_",at=@At(value="INVOKE",target="Lnet/minecraft/world/entity/Entity;m_20334_(DDD)V",remap=false),require=2,remap=false)
     private void rpgstats$setImpulse(Entity victim,double x,double y,double z) {

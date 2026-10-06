@@ -87,7 +87,7 @@ public final class BossLaunchLifecycleGameTests {
             c.assertTrue(Math.abs(CombatHandler.modifyIncomingDamage(p,20,pvp)-ordinary)<.001,"Launch defense leaked into PvP");
             p.timeUntilRegen=0;c.assertTrue(p.damage(pvp,1),"PvP hit rejected");
             c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==a,"PvP without impulse changed attribution");
-            impulse(p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Second boss launch not attributed to second boss");
+            hit(c,p,b);impulse(p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Second boss launch not attributed to second boss");
             BossLaunchTracker.finishFall(p,p.getDamageSources().fall());inactive(c,p,"Second boss landing was not consumed");
         }finally {p.getServer().setPvpEnabled(oldPvp);a.discard();b.discard();TestPlayers.finish(c);}c.complete();
     }
@@ -103,7 +103,8 @@ public final class BossLaunchLifecycleGameTests {
         try {
             launch(c,p,a);impulse(p,b);inactive(c,p,"Unconfirmed second impulse borrowed first boss hit");
             hit(c,p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Confirmed second impulse not paired");
-            impulse(p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Repeated same-boss impulse lost owner");
+            impulse(p,b);inactive(c,p,"Repeated impulse reused consumed health loss");
+            hit(c,p,b);c.assertTrue(BossLaunchTracker.fallBoss(p,p.getDamageSources().fall())==b,"Second confirmed repeated impulse lost owner");
         }finally {a.discard();b.discard();TestPlayers.finish(c);}c.complete();
     }
     @GameTest(templateName="empty",tickLimit=240)
@@ -131,6 +132,20 @@ public final class BossLaunchLifecycleGameTests {
             p.setInvulnerable(false);impulse(p,b);
             inactive(c,p,"Rejected second attack borrowed earlier same-boss damage");
         }finally {p.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
+    }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void nativeRejectedPreDamageLaunchDoesNotBorrowPriorHit(TestContext c) {
+        if(!net.minecraftforge.fml.ModList.get().isLoaded("soulsweapons")){c.complete();return;}
+        var p=player(c);var pos=p.getPos();
+        var b=(net.minecraft.entity.mob.MobEntity)net.minecraft.registry.Registries.ENTITY_TYPE.get(new net.minecraft.util.Identifier("soulsweapons:returning_knight")).create(c.getWorld());
+        b.setAiDisabled(true);b.setNoGravity(true);b.refreshPositionAndAngles(pos.x,pos.y,pos.z+1,180,0);c.getWorld().spawnEntity(b);
+        try {
+            p.setVelocity(Vec3d.ZERO);hit(c,p,b);p.setInvulnerable(true);p.timeUntilRegen=0;
+            WarriorBossDefenseGameTests.nativeHit(b,p,21);
+            c.assertTrue(p.getVelocity().y>=.9,"Native rejected fixture did not launch");
+            p.setInvulnerable(false);inactive(c,p,"Rejected native pre-damage impulse borrowed prior hit");
+        }catch(ReflectiveOperationException e){throw new AssertionError(e);}
+        finally {p.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
     }
     private BossLaunchLifecycleGameTests(){}
 }
