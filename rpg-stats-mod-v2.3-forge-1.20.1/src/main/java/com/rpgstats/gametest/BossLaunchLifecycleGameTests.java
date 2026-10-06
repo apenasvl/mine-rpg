@@ -121,5 +121,16 @@ public final class BossLaunchLifecycleGameTests {
         c.waitAndRun(3,()-> {try {p.setOnGround(true);BossLaunchTracker.tick(p.getServer());inactive(c,p,"Ground landing retained state");p.setOnGround(false);inactive(c,p,"Leaving ground restored state");}
             finally {b.discard();TestPlayers.finish(c);}c.complete();});
     }
+    @GameTest(templateName="empty",tickLimit=80)
+    public static void rejectedSecondHitCannotBorrowEarlierSameBossDamage(TestContext c) {
+        var p=player(c);var b=boss(c,3);
+        try {
+            p.setVelocity(Vec3d.ZERO);hit(c,p,b);
+            p.setInvulnerable(true);p.timeUntilRegen=0;
+            c.assertTrue(!p.damage(p.getDamageSources().mobAttack(b),1),"Second attack not rejected");
+            p.setInvulnerable(false);impulse(p,b);
+            inactive(c,p,"Rejected second attack borrowed earlier same-boss damage");
+        }finally {p.setInvulnerable(false);b.discard();TestPlayers.finish(c);}c.complete();
+    }
     private BossLaunchLifecycleGameTests(){}
 }
