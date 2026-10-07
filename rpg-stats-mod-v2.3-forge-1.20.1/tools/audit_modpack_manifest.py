@@ -16,12 +16,14 @@ from inspect_combat_mods import includes_version
 def inspect_archive(data, origin='ROOT', depth=0):
     if depth > 8:
         raise ValueError('nested archive depth exceeds audit limit')
-    result = {'sha256': hashlib.sha256(data).hexdigest(), 'mods': [], 'loaders': [], 'findings': []}
+    result = {'sha256': hashlib.sha256(data).hexdigest(), 'mods': [], 'loaders': [], 'findings': [],
+              'archive_kind': 'UNSUPPORTED_ARCHIVE'}
     with zipfile.ZipFile(io.BytesIO(data)) as archive:
         names = set(archive.namelist())
         manifest = archive.read('META-INF/MANIFEST.MF').decode(errors='replace') if 'META-INF/MANIFEST.MF' in names else ''
         manifest = re.sub(r'\r?\n ', '', manifest)
         if 'META-INF/mods.toml' in names:
+            result['archive_kind'] = 'FORGE_MOD'
             metadata = tomllib.loads(archive.read('META-INF/mods.toml').decode())
             result['loaders'].append({'loader': metadata.get('modLoader'),
                                       'range': metadata.get('loaderVersion'), 'origin': origin})
@@ -32,7 +34,16 @@ def inspect_archive(data, origin='ROOT', depth=0):
                     version = match[1].strip() if match else None
                 result['mods'].append({'modId': entry['modId'], 'version': version, 'origin': origin,
                                        'dependencies': metadata.get('dependencies', {}).get(entry['modId'], [])})
-        elif not re.search(r'^FMLModType: (LIBRARY|LANGPROVIDER|GAMELIBRARY)\s*$', manifest, re.M):
+        elif 'pack.mcmeta' in names and 'fabric.mod.json' not in names and not any(n.endswith('.class') for n in names) \
+                and any(n.startswith('assets/') for n in names):
+            result['archive_kind'] = 'RESOURCE_PACK'
+            result['pack_metadata'] = json.loads(archive.read('pack.mcmeta'))
+        elif re.search(r'^FMLModType: (LIBRARY|LANGPROVIDER|GAMELIBRARY)\s*$', manifest, re.M):
+            result['archive_kind'] = 'FORGE_LIBRARY_CONTAINER'
+        elif origin != 'ROOT':
+            result['archive_kind'] = 'EMBEDDED_LIBRARY'
+            result['findings'].append({'kind': 'EMBEDDED_LIBRARY_REQUIRES_RUNTIME_VALIDATION', 'origin': origin})
+        else:
             result['findings'].append({'kind': 'UNSUPPORTED_ARCHIVE', 'origin': origin})
         if 'META-INF/jarjar/metadata.json' in names:
             nested = json.loads(archive.read('META-INF/jarjar/metadata.json'))
@@ -65,10 +76,23 @@ def range_result(version, requirement):
     # Do not silently flatten Maven qualifiers or unions into numeric versions.
     if not isinstance(version, str) or not isinstance(requirement, str):
         return None
-    if not re.fullmatch(r'\d+(?:\.\d+)*', version) or not re.fullmatch(r'[\d.,\[\]() ]+', requirement):
+    numeric = r'\d+(?:\.\d+)*'
+    if not re.fullmatch(numeric, version):
         return None
-    if requirement.count(',') > 1:
-        return None
+    requirement = requirement.strip()
+    if not re.fullmatch(numeric, requirement) and not re.fullmatch(r'\[\s*' + numeric + r'\s*\]', requirement):
+        match = re.fullmatch(r'([\[(])\s*(' + numeric + r')?\s*,\s*(' + numeric + r')?\s*([\])])', requirement)
+        if not match:
+            return None
+        opening, lower, upper, closing = match.groups()
+        if (lower is None and opening == '[') or (upper is None and closing == ']'):
+            return None
+        if lower and upper:
+            def parts(value):
+                values = tuple(map(int, value.split('.')))
+                return values + (0,) * (max(len(lower.split('.')), len(upper.split('.'))) - len(values))
+            if parts(lower) > parts(upper):
+                return None
     try:
         return includes_version(version, requirement)
     except (ValueError, IndexError):
@@ -94,6 +118,9 @@ def audit_manifest(manifest, directory):
                                  'file': path.name, **loader})
         for mod in report['mods']:
             identifier = mod['modId']
+            if not isinstance(mod['version'], str) or not mod['version'].strip() or '${' in mod['version']:
+                findings.append({'kind': 'UNRESOLVED_MOD_VERSION', 'modId': identifier,
+                                 'file': path.name, 'version': mod['version']})
             if identifier in owners:
                 previous = owners[identifier]
                 kind = ('DUPLICATE_MOD_ID' if previous['origin'] == mod['origin'] == 'ROOT'
@@ -119,8 +146,13 @@ def audit_manifest(manifest, directory):
                     if compatible is not True:
                         findings.append({'kind': 'INCOMPATIBLE_VERSION' if compatible is False
                                          else 'RANGE_REQUIRES_RUNTIME_VALIDATION', **finding})
+    archive_counts = {}
+    for report in reports:
+        kind = report['archive_kind']
+        archive_counts[kind] = archive_counts.get(kind, 0) + 1
     return {'schema': 1, 'status': 'INVENTORY_WITH_FINDINGS' if findings else 'INVENTORY_COMPLETE',
             'forge': '47.4.10', 'resolved_files': len(reports), 'files': reports,
+            'archive_counts': archive_counts,
             'installed_mods': installed, 'dependency_findings': findings,
             'runtime_validated': False, 'release_ready': False,
             'limitations': 'Includes client/server declared dependencies and nested descriptors. No game boot, '
@@ -180,6 +212,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({'status': result['status'], 'resolved_files': result['resolved_files'],
+                      'archive_counts': result['archive_counts'],
                       'findings': len(result['dependency_findings']), 'runtime_validated': False}))
 
 

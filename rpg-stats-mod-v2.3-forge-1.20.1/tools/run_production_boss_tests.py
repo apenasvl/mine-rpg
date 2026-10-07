@@ -53,7 +53,7 @@ def main():
        if 'META-INF/mods.toml' in nested.namelist():descriptors.extend(tomllib.loads(nested.read('META-INF/mods.toml').decode()).get('mods',[]))
      if not any(x.get('modId')=='kotlinforforge' for x in descriptors):raise RuntimeError('Original KFF mod descriptor missing')
      reports.append({'modId':'kotlinforforge','sha256':hashlib.sha256(jar.read_bytes()).hexdigest(),'embeddedMods':descriptors,'status':'native-container-verified'})
-   else:reports.append(inspect_jar(jar,{'library':True}))
+   else:reports.append(inspect_jar(jar,{'library':True},forge_version=args.forge_version))
  installer=server/'forge-installer.jar'
  shutil.copyfile(ROOT/'build/production-probe/forge-installer.jar',installer)
  subprocess.run(['java','-jar',str(installer),'--installServer'],cwd=server,check=True)

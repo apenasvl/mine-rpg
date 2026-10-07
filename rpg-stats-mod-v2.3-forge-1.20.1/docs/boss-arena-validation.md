@@ -97,9 +97,13 @@ python3 tools/audit_modpack_manifest.py \
 
 The CI `modpack-inventory` job resolves every exact project/file pin and inspects root/nested Forge descriptors, SHA-256, declared mandatory dependencies and sides, loader ranges, duplicate mod IDs and unsupported archives. No files are swapped or silently omitted; failed exact downloads fail the job and produce an INCOMPLETE_DOWNLOAD report. Third-party JARs are not uploaded as artifacts or packaged into RPG Stats.
 
+All62exact pins were resolved by CI37695055881. Inspection showed that the supplied manifest includes resource packs: project231821(Dramatic Skys),383269(Enhanced Audio),296616(Round Trees). They are not Forge mod JARs. The auditor distinguishes a resource pack using actual ZIP pack metadata/assets, absence of Java bytecode and absence of Fabric mod metadata; it does not silently install these into mods. Final archive counts are exported in the report. A library-only nested archive remains an explicit runtime verification item, not a purported incompatible standalone mod.
+
 INVENTORY_COMPLETE means all declared numeric metadata checks completed; INVENTORY_WITH_FINDINGS means the audit completed with actionable incompatibilities or checks that require Forge's resolver. Both always have `runtime_validated=false` and `release_ready=false`. The CI job's success means the inventory was produced, not that the pack booted. Maven qualifiers/unions, language-provider versions and JarJar duplicate resolution stay explicit findings rather than using an approximate comparator to approve them.
 
 The native production inspector now uses the actual requested/installed Forge version for loader metadata. Previously this one check was hardcoded47.4.0 even for47.4.10; accepted/rejected range tests reproduce the error. The game loader log remains the authoritative evidence of the runtime actually booted. This fix does not change gameplay or prove full encounters.
+
+Fresh review caught an additional call site: full-profile extra libraries did not carry an installed dependency map, so they still took the47.4.0fallback. They now receive the requested Forge version explicitly while avoiding premature dependency checks against an incomplete map. Malformed range syntax and unresolved standalone versions are also reported rather than producing clean metadata inventory. All three review findings were reproduced in failing tests before correction.
 
 A revisão reproduziu fechamento precoce em dano letal antes do retorno de damage; o gravador agora aguarda o dano confirmado. A fixture de delta de saúde prepara o scaling vanilla antes da medição, pois a entrada no encounter muda o HP máximo preservando porcentagem. Isso não altera o comportamento de produção.
 

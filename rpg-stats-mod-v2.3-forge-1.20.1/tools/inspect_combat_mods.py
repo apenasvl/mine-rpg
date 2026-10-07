@@ -17,14 +17,14 @@ def includes_version(version, requirement):
     return (not lower.strip() or value >= parts(lower) if requirement[0]=='[' else not lower.strip() or value > parts(lower)) and (not upper.strip() or value <= parts(upper) if requirement[-1]==']' else not upper.strip() or value < parts(upper))
 
 
-def inspect_jar(path, expected, installed=None):
+def inspect_jar(path, expected, installed=None, forge_version=None):
     digest=hashlib.sha256(Path(path).read_bytes()).hexdigest()
     if expected.get('sha256') and expected['sha256'] != digest: raise InspectionError('Checksum mismatch')
     with zipfile.ZipFile(path) as jar:
         if 'META-INF/mods.toml' not in jar.namelist(): raise InspectionError('Missing Forge metadata')
         meta=tomllib.loads(jar.read('META-INF/mods.toml').decode())
         if meta.get('modLoader')!='javafml': raise InspectionError('Unsupported loader')
-        runtime_forge=installed.get('forge','47.4.0') if isinstance(installed,dict) else '47.4.0'
+        runtime_forge=forge_version or (installed.get('forge','47.4.0') if isinstance(installed,dict) else '47.4.0')
         if not includes_version(runtime_forge, meta.get('loaderVersion','')): raise InspectionError(f'Forge {runtime_forge} not supported')
         mods=meta.get('mods',[])
         mod=next((m for m in mods if m['modId']==expected.get('modId')),mods[0] if mods else None)
