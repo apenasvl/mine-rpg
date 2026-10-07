@@ -10,7 +10,9 @@ allprojects {
                 }
             }
             configurations { productionForgeInstaller }
-            dependencies { productionForgeInstaller('net.minecraftforge:forge:1.20.1-47.4.0:installer@jar') { transitive = false } }
+            def runtimeForge = project.findProperty('productionForgeVersion') ?: '47.4.0'
+            if (!(runtimeForge in ['47.4.0', '47.4.10'])) throw new GradleException('Unsupported production Forge runtime')
+            dependencies { productionForgeInstaller("net.minecraftforge:forge:1.20.1-${runtimeForge}:installer@jar") { transitive = false } }
             tasks.register('prepareProductionForgeInstaller', Copy) {
                 from configurations.productionForgeInstaller
                 into layout.buildDirectory.dir('production-probe')

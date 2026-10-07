@@ -162,11 +162,13 @@ public final class ForgeEvents {
         com.rpgstats.compat.BetterWeaponrySustain.tick(server);
         com.rpgstats.combat.ArcherAimAssist.tick(server);
         com.rpgstats.boss.BossLaunchTracker.tick(server);
+        com.rpgstats.debug.ArenaRecorder.tick(server);
     }
 
     /** Health loss confirmed after mitigation; called before lethal XP payment or on damage return. */
     public static void confirmedDamage(LivingEntity victim,DamageSource source,float actual) {
         if(victim.getWorld().isClient || !Float.isFinite(actual) || actual<=0)return;
+        com.rpgstats.debug.ArenaRecorder.confirmedDamage(victim,source,actual);
         if(source.getAttacker() instanceof ServerPlayerEntity player && BossScaler.isCandidate(victim))
             EncounterManager.recordDamageDealt(player,victim,actual);
         else if(victim instanceof ServerPlayerEntity player) {
@@ -197,11 +199,13 @@ public final class ForgeEvents {
         com.rpgstats.combat.ArcherAimAssist.clear(); com.rpgstats.integration.ArcherTrapCompat.clear(); com.rpgstats.combat.ArcherTechniqueHandler.clear();
         EncounterManager.clear(); BossScaler.clear(); RpgNetwork.clear();
         com.rpgstats.boss.BossLaunchTracker.clear();
+        com.rpgstats.debug.ArenaRecorder.clear();
     }
 
     /** Invoked after confirmed vanilla death, not from Forge's cancellable LivingDeathEvent. */
     public static void confirmedDeath(LivingEntity entity, DamageSource source) {
         if (entity.getWorld().isClient) return;
+        com.rpgstats.debug.ArenaRecorder.confirmedDeath(entity);
         if (entity instanceof ServerPlayerEntity dead) {
             com.rpgstats.boss.BossLaunchTracker.remove(dead.getUuid());StatsManager.onPlayerDeath(dead);
         }
@@ -215,6 +219,7 @@ public final class ForgeEvents {
         if (BossScaler.isCandidate(entity)) EncounterManager.removeBoss(entity);
     }
     private static void forget(ServerPlayerEntity p) {
+        com.rpgstats.debug.ArenaRecorder.stop(p,"INTERRUPTED");
         com.rpgstats.boss.BossLaunchTracker.remove(p.getUuid());
         com.rpgstats.combat.ArcherTechniqueHandler.remove(p.getUuid()); com.rpgstats.integration.ArcherTrapCompat.remove(p.getUuid()); com.rpgstats.combat.ArcherShotTracker.remove(p.getUuid()); CombatState.remove(p.getUuid()); MageCombatHandler.remove(p.getUuid()); RpgNetwork.forget(p.getUuid());
     }

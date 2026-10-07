@@ -27,6 +27,9 @@ jobs:
       - name: Static Forge and compat validation
         run: python3 tools/validate_forge.py
 
+      - name: Arena representative matrix tests
+        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence tools.test_modpack_audit tools.test_modpack_server_smoke
+
       - name: Progression and boss XP validation
         run: python3 tools/validate_progression.py
 
@@ -136,6 +139,77 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+  modpack-server-smoke:
+    needs: [build, modpack-inventory]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - uses: actions/download-artifact@v4
+        with:
+          name: rpg-stats-forge-test
+          path: rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-current-artifact
+      - name: Test staging and native boot evidence
+        run: PYTHONPATH=tools python3 -m unittest tools.test_modpack_server_smoke
+      - name: Resolve exact Forge47.4.10 installer
+        run: >-
+          bash gradlew --no-daemon --stacktrace
+          -I tools/production-boss-probe.init.gradle
+          -PproductionForgeVersion=47.4.10 prepareProductionForgeInstaller
+      - name: Boot normal dedicated server with supplied native pack
+        run: >-
+          python3 tools/run_modpack_server_smoke.py
+          --snapshot compat/modpack-snapshot
+          --rpg-jar build/modpack-current-artifact/rpg-stats-forge-1.20.1-test.jar
+          --installer build/production-probe/forge-installer.jar
+          --work build/modpack-server-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: modpack-normal-server-forge47.4.10
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/result.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/native-inventory.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/logs/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/crash-reports/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/smoke-console.log
+          retention-days: 7
+
+  modpack-inventory:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact manifest inventory contracts
+        run: PYTHONPATH=tools python3 -m unittest tools.test_modpack_audit
+      - name: Audit every pinned file from supplied modpack
+        run: >-
+          python3 tools/audit_modpack_manifest.py
+          --manifest compat/modpack-snapshot/manifest.json
+          --jars build/modpack-inventory/jars
+          --output build/modpack-inventory/report.json
+          --download
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: modpack-inventory-forge47.4.10
+          path: rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-inventory/report.json
+          if-no-files-found: error
+          retention-days: 7
+
   archer-mod-inspection:
     runs-on: ubuntu-latest
     steps:
@@ -196,7 +270,9 @@ jobs:
         if: always()
         with:
           name: combat-runtime-${{ matrix.profile }}
-          path: rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/run/logs/
+            rpg-stats-mod-v2.3-forge-1.20.1/run/rpgstats/arena/
           retention-days: 7
 
   combat-client:
@@ -245,8 +321,16 @@ jobs:
         include:
           - profile: boss
             argument: ''
+            server_folder: production-boss
+            forge_version: 47.4.0
           - profile: full
             argument: '--full'
+            server_folder: production-boss-full
+            forge_version: 47.4.0
+          - profile: full-forge47.4.10
+            argument: '--full --forge-version 47.4.10'
+            server_folder: production-boss-full
+            forge_version: 47.4.10
     defaults:
       run:
         working-directory: rpg-stats-mod-v2.3-forge-1.20.1
@@ -259,13 +343,13 @@ jobs:
           cache: gradle
       - run: chmod +x gradlew
       - name: Build separate production namespace probe
-        run: ./gradlew --no-daemon --stacktrace -I tools/production-boss-probe.init.gradle build productionBossProbeJar
+        run: ./gradlew --no-daemon --stacktrace -PproductionForgeVersion=${{ matrix.forge_version }} -I tools/production-boss-probe.init.gradle build productionBossProbeJar
       - name: Test original native binaries in installed Forge
         run: python3 tools/run_production_boss_tests.py ${{ matrix.argument }}
       - name: Preserve the exact native-tested RPG artifact
         run: |
           mkdir -p dist
-          cp build/production-boss${{ matrix.profile == 'full' && '-full' || '' }}/mods/rpgstats.jar dist/rpg-stats-forge-1.20.1-mages.jar
+          cp build/${{ matrix.server_folder }}/mods/rpgstats.jar dist/rpg-stats-forge-1.20.1-mages.jar
           sha256sum dist/rpg-stats-forge-1.20.1-mages.jar > dist/rpg-stats-forge-1.20.1-mages.sha256
       - uses: actions/upload-artifact@v4
         with:
@@ -283,4 +367,5 @@ jobs:
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/logs/
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/result.json
             rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/native-manifest.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/production-boss*/rpgstats/arena/
           retention-days: 7
