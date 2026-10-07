@@ -28,7 +28,7 @@ jobs:
         run: python3 tools/validate_forge.py
 
       - name: Arena representative matrix tests
-        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version
+        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence
 
       - name: Progression and boss XP validation
         run: python3 tools/validate_progression.py

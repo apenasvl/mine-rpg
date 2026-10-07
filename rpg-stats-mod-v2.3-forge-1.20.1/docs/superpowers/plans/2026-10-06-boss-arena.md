@@ -28,9 +28,10 @@
 - [x] Add GameTests for confirmed/rejected damage, death/interruption, isolated sessions and cleanup.
 - [x] Add debug/ArenaRecorder.java; admin /rpg debug arena start <boss> <build>, stop and mark commands.
 - [x] Wire confirmed damage/death, tick and forget to the opt-in observer.
-- [ ] Run native CI; review; retain Draft while real encounter measurements remain missing.
+- [x] Run native CI; review; retain Draft while real encounter measurements remain missing. Head7e0c618:8/8green,178GameTests including loaded Forge47.4.10.
 
 ### Task3: encounter evidence (required before B completion)
+- [x] Add strict reviewed-evidence import, preserving raw trials and NOT_RUN cases; never approve full modpack or release automatically.
 - [ ] Execute matrix real fights and annotate phases/summons/cooldowns/movement/windows.
 - [ ] Validate Forge47.4.10 complete current ZIP, compare isolated47.4.0.
 - [ ] Tune only observed outliers; review four-class tier coverage and native replays.

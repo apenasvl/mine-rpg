@@ -27,6 +27,63 @@ Recorder GameTests verify confirmed/rejected damage and lifecycle cleanup. They 
 
 Next: execute representative matrix with legal builds and real native combat for Legendary/Marium/BoMD, review outliers around boss90–240s/miniboss30–90s, then tune only supported numbers. B remains Draft until those measurements and current modpack validation exist. XP relative/farm/Threat and weapons remain later PRs.
 
+## Import reviewed native encounter evidence
+
+Run `tools/import_boss_arena_evidence.py` against the original NOT_RUN matrix. Reports must be real survival encounters, start at full boss HP, and finish with boss/player/mutual death. Interrupted recordings remain useful diagnostic files but do not complete a matrix case. Other damage or attackers invalidate a solo trial. Player/mutual death never becomes a successful TTK. Trials are retained individually; missing cases stay NOT_RUN and no aggregate balance verdict is invented.
+
+Each report needs a separate human review JSON. This is a reviewer attestation tied to the exact report bytes by SHA-256, **not cryptographic proof of honest gameplay or an automatic build-legality check**. The reviewer must inspect the replay and stats/equipment, verify normal combat throughout the session (initial flags alone cannot prove this), and describe native mechanics including missing measurements. Do not change the report bytes after review.
+
+```json
+{
+  "schema": 1,
+  "session": "<session UUID from report>",
+  "report_sha256": "<SHA-256 of unchanged report file>",
+  "reviewer": "<reviewer name>",
+  "build_legal": true,
+  "build_notes": "<normal stat budget, nodes and gear; changes during fight reviewed>",
+  "replay_reference": "<replay path or URL>",
+  "runtime_scope": "NATIVE_SELECTION",
+  "runtime_notes": "<actual versions/configuration and selection tested>",
+  "mechanics": {
+    "phases": "<observations>",
+    "special_attacks": "<observations>",
+    "summons": "<observations, or explicitly none>",
+    "indirect_sources": "<observations and ownership limits>",
+    "native_cooldowns": "<observed timings or explicitly unmeasured>",
+    "vulnerability_windows": "<observations>",
+    "movement": "<dodging, chase, distance>",
+    "combos": "<observations>",
+    "misses": "<count or explicitly unmeasured>",
+    "uptime": "<measurement or explicitly unmeasured>"
+  }
+}
+```
+
+```sh
+sha256sum path/to/report.json
+python3 tools/import_boss_arena_evidence.py \
+  --matrix compat/boss-arena-matrix.json \
+  --report path/to/report.json --review path/to/review.json \
+  --output build/arena-reviewed.json
+```
+
+Repeat `--report`/`--review` in matching order for multiple trials. Supply all reviewed reports each time; the source matrix is preserved. Validation failure leaves an existing output intact. Synthetic tests never get imported into the committed matrix. Output status MEASURED_REVIEWED means a completed, manually reviewed native-selection trial; it does not mean calibrated, every metric measured, or release-ready. Native cooldown/uptime limitations remain explicit in the replay review.
+
+`FULL_MODPACK` is deliberately rejected: this tool cannot prove that all manifest files/configs loaded correctly or validate multiplayer/persistence. Those require independent modpack evidence. The supplied ZIP currently contains a 62-file CurseForge manifest and one overridden RPG JAR, not the other 62 binaries or encounter reports. Importing it alone does not run Minecraft or measure fights.
+
+## Supplied ZIP configuration audit — 2026-10-07
+
+Read directly from the supplied `rpg_astra2.zip`, without changing any config. Manifest SHA-256: `d68f6308fd2d0219e67cb73ec74aaf3c2fe8d21d090734bcc728f899ef4293a0`. Minecraft1.20.1/Forge47.4.10,62 CurseForge file references, one overridden RPG JAR, no arena reports. This identifies the supplied snapshot; it does not prove the user's current installed instance still matches it.
+
+| Config | Values present in the ZIP | Encounter review relevance |
+| --- | --- | --- |
+| Marium Returning Knight | HP500, armor15, damage modifier1; attack/special/summon cooldown40/80/200ticks | Preserve native timing and summons when measuring a full fight; these are config values, not measured scaled HP/TTK. |
+| BoMD Obsidilith | HP300, armor14, attack16, idle healing0.5/tick, anvil explosion strength4 | Record combat uptime and idle regeneration; isolated hits cannot establish encounter duration. |
+| Legendary general settings | MiniBoss DamageCap21; natural healing, resistance reduction and teleport-to-spawn enabled | Replay must include damage caps, disengagement and native defensive-effect behavior. No numeric change is justified by config inspection alone. |
+| Better Combat server | attack interval cap2ticks; fast attacks enabled; dual-wield attack-speed multiplier1.2000000476837158; movement multiplier while attacking0.5 | Real melee cadence/movement must use the installed combat system; stationary vanilla attack fixtures are insufficient. |
+
+The overridden RPG JAR is named `RPG-Stats-Interface-Limpa-Forge-1.20.1.jar`; its name is not proof of current PR contents. Replace the old RPG JAR with the tested current artifact for future arena sessions, retaining only one RPG JAR. Keep these supplied native configs unless a measured outlier supports a later change.
+
 A revisão reproduziu fechamento precoce em dano letal antes do retorno de damage; o gravador agora aguarda o dano confirmado. A fixture de delta de saúde prepara o scaling vanilla antes da medição, pois a entrada no encounter muda o HP máximo preservando porcentagem. Isso não altera o comportamento de produção.
 
 ## Forge version comparison
