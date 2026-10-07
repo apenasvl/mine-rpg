@@ -84,6 +84,23 @@ Read directly from the supplied `rpg_astra2.zip`, without changing any config. M
 
 The overridden RPG JAR is named `RPG-Stats-Interface-Limpa-Forge-1.20.1.jar`; its name is not proof of current PR contents. Replace the old RPG JAR with the tested current artifact for future arena sessions, retaining only one RPG JAR. Keep these supplied native configs unless a measured outlier supports a later change.
 
+### Exact modpack binary inventory
+
+`compat/modpack-snapshot/manifest.json` preserves the supplied manifest bytes. `source.json` fingerprints the supplied ZIP and all82config files without republishing binaries. This is the supplied snapshot, not an assertion that the user's installed instance has not changed.
+
+```sh
+python3 tools/audit_modpack_manifest.py \
+  --manifest compat/modpack-snapshot/manifest.json \
+  --jars build/modpack-inventory/jars \
+  --output build/modpack-inventory/report.json --download
+```
+
+The CI `modpack-inventory` job resolves every exact project/file pin and inspects root/nested Forge descriptors, SHA-256, declared mandatory dependencies and sides, loader ranges, duplicate mod IDs and unsupported archives. No files are swapped or silently omitted; failed exact downloads fail the job and produce an INCOMPLETE_DOWNLOAD report. Third-party JARs are not uploaded as artifacts or packaged into RPG Stats.
+
+INVENTORY_COMPLETE means all declared numeric metadata checks completed; INVENTORY_WITH_FINDINGS means the audit completed with actionable incompatibilities or checks that require Forge's resolver. Both always have `runtime_validated=false` and `release_ready=false`. The CI job's success means the inventory was produced, not that the pack booted. Maven qualifiers/unions, language-provider versions and JarJar duplicate resolution stay explicit findings rather than using an approximate comparator to approve them.
+
+The native production inspector now uses the actual requested/installed Forge version for loader metadata. Previously this one check was hardcoded47.4.0 even for47.4.10; accepted/rejected range tests reproduce the error. The game loader log remains the authoritative evidence of the runtime actually booted. This fix does not change gameplay or prove full encounters.
+
 A revisão reproduziu fechamento precoce em dano letal antes do retorno de damage; o gravador agora aguarda o dano confirmado. A fixture de delta de saúde prepara o scaling vanilla antes da medição, pois a entrada no encounter muda o HP máximo preservando porcentagem. Isso não altera o comportamento de produção.
 
 ## Forge version comparison

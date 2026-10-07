@@ -28,7 +28,7 @@ jobs:
         run: python3 tools/validate_forge.py
 
       - name: Arena representative matrix tests
-        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence
+        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence tools.test_modpack_audit
 
       - name: Progression and boss XP validation
         run: python3 tools/validate_progression.py
@@ -136,6 +136,33 @@ jobs:
         with:
           name: rpg-stats-forge-test
           path: rpg-stats-mod-v2.3-forge-1.20.1/dist/rpg-stats-forge-1.20.1-test.jar
+          if-no-files-found: error
+          retention-days: 7
+
+  modpack-inventory:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact manifest inventory contracts
+        run: PYTHONPATH=tools python3 -m unittest tools.test_modpack_audit
+      - name: Audit every pinned file from supplied modpack
+        run: >-
+          python3 tools/audit_modpack_manifest.py
+          --manifest compat/modpack-snapshot/manifest.json
+          --jars build/modpack-inventory/jars
+          --output build/modpack-inventory/report.json
+          --download
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: modpack-inventory-forge47.4.10
+          path: rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-inventory/report.json
           if-no-files-found: error
           retention-days: 7
 

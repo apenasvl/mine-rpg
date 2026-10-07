@@ -1,0 +1,338 @@
+{
+  "source": "supplied rpg_astra2.zip",
+  "snapshot_date": "2026-10-07",
+  "zip_sha256": "d174af10fbe1c3d98c5e8bc4abde5fdff910dc3bccb93de5838f5ef98c07f90e",
+  "manifest_sha256": "d68f6308fd2d0219e67cb73ec74aaf3c2fe8d21d090734bcc728f899ef4293a0",
+  "config_fingerprints": [
+    {
+      "path": "overrides/config/DistantHorizons.toml",
+      "sha256": "6352884b0e433f5842ab651cccc3a51f259108b32eab9aa6311ee9075025d1e0"
+    },
+    {
+      "path": "overrides/config/MouseTweaks.cfg",
+      "sha256": "4069ce1a439d8c37453c1b1e9f2037e0942674c7e48723a39b37eab245792ad4"
+    },
+    {
+      "path": "overrides/config/TerramityCommonConfig.toml",
+      "sha256": "b5e1821c83e6ce1cc44065be24da48e97327552548e9a0ce7ae75bcb0d9ff586"
+    },
+    {
+      "path": "overrides/config/appleskin-client.toml",
+      "sha256": "e6609ffbea927ee6390b1317bb6f3abb3f31ee591ca5c1d5e748f5e625fefea1"
+    },
+    {
+      "path": "overrides/config/attributefix.json",
+      "sha256": "a9eb637e5d791108cb08578d6760b8737f3fbc1173ca88bf8bcc4456b38eb29e"
+    },
+    {
+      "path": "overrides/config/bettercombat/client.json5",
+      "sha256": "8b11818b19f97decfcb119cce4038bfe28e83fbf3d2173a5472df678fce1a842"
+    },
+    {
+      "path": "overrides/config/bettercombat/fallback_compatibility.json",
+      "sha256": "754feb4474a3f4d9fe6bd08f38c248fd5a796ed51f38d7d5704680250f3a34ca"
+    },
+    {
+      "path": "overrides/config/bettercombat/server.json5",
+      "sha256": "cdf806c0ace89872a439f44f383132ed75003ae3445d55faa02a5f5b29aad4ef"
+    },
+    {
+      "path": "overrides/config/bosses_of_mass_destruction.json5",
+      "sha256": "7564bd719243a64b1d00424eb4602b85415e578905de5a9587f5f10ff2427d1f"
+    },
+    {
+      "path": "overrides/config/c2me.toml",
+      "sha256": "be379e1597216d66ca7baa6af3b05631220973ec5a7b2306c847b29dccbb453e"
+    },
+    {
+      "path": "overrides/config/cinematic_respawn.properties",
+      "sha256": "cbaf3417571c14dab12f33ed6ffb3dd3f41b452d0cff64778275306deb4b40c5"
+    },
+    {
+      "path": "overrides/config/combatroll/client.json5",
+      "sha256": "e9714f119c3862a898e53eab1a4ba6220a2194a5bdf0aea86623042d6cbf57e3"
+    },
+    {
+      "path": "overrides/config/combatroll/enchantments.json",
+      "sha256": "b807ca9ebe5ca5e45c8367b08cb97a08aa73181b66da4ab7c9f92e02200ca01e"
+    },
+    {
+      "path": "overrides/config/combatroll/hud_config.json",
+      "sha256": "dd256182183eda6d42d798798371b748908d54658805ca2b1886bae27c7b4d4c"
+    },
+    {
+      "path": "overrides/config/combatroll/server.json5",
+      "sha256": "6c3ec2b2926b78c73dddf0cfedaf483efb7c3fe8a093f557e560ab280a0683f4"
+    },
+    {
+      "path": "overrides/config/connectivity.json",
+      "sha256": "cb20491983041d580526140e579cc7e04c390e07a4e6d907af9f853c6b80dee8"
+    },
+    {
+      "path": "overrides/config/cupboard.json",
+      "sha256": "aa0b18642df9fb56c45e03c948b614f158b792c15b85cf0094af1dcca516ec3a"
+    },
+    {
+      "path": "overrides/config/curios-client.toml",
+      "sha256": "ebc96c813d601e9c61b6929a8490e71fa990dc64918c19e1f9937bb275510abc"
+    },
+    {
+      "path": "overrides/config/curios-common.toml",
+      "sha256": "5fe808869d46a4b80e1191fbe40f40a4d63987beda0eaeb2d89b909a990ea2ea"
+    },
+    {
+      "path": "overrides/config/cutthrough-client.toml",
+      "sha256": "2dfca01b0ad9942ed5c6cede6fd043ca4adf912f5edee1857a39216f461b4a3b"
+    },
+    {
+      "path": "overrides/config/doggytalents-client.toml",
+      "sha256": "14fc91989f506b8ec766907812ec2e8b2d1460808d4064d9835deb99cc803f59"
+    },
+    {
+      "path": "overrides/config/doggytalents-dog_custom_skins_client.toml",
+      "sha256": "922d6ea872ad4087927cfc62351886ad6b7b74550f4e6cb213c9fd0f3408f984"
+    },
+    {
+      "path": "overrides/config/dummmmmmy-client.toml",
+      "sha256": "5647f914b26b4f8d7279a574baf3716dd08f9056ff77fe54c0798ee66a149927"
+    },
+    {
+      "path": "overrides/config/dummmmmmy-common.toml",
+      "sha256": "951f25df08b8ba7c1f353d225f503ee103fff7df85eb8570dd68e877b217587a"
+    },
+    {
+      "path": "overrides/config/emi.css",
+      "sha256": "b2fefce8b997851759990d1ec0c71d4be631e435857eb7b19516e4806986ac34"
+    },
+    {
+      "path": "overrides/config/emi_loot_config.toml",
+      "sha256": "374a21b90368302fd58761d913159113f827700d255ee17880d0c6c92ba97b34"
+    },
+    {
+      "path": "overrides/config/entityculling.json",
+      "sha256": "4a6d510b7e0157027b1cf2022184567fd5387aa09d08db108cb0369ba371ddbe"
+    },
+    {
+      "path": "overrides/config/epicfight-client.toml",
+      "sha256": "04179e7444dd784e26c1965152ff0faae785baaab8bed9f46a7a35af4344e124"
+    },
+    {
+      "path": "overrides/config/epicfight-common.toml",
+      "sha256": "38b6eabbf557c9089adf939d8303a67f12c98e9c78c01c1265e414b3f8943b6c"
+    },
+    {
+      "path": "overrides/config/epicfight/native/ServerCommunicationHelper.dll",
+      "sha256": "88dc3d72269035c6fc4a0d7daaad4eb4d052786c788c37723a3bb6cac38619ec"
+    },
+    {
+      "path": "overrides/config/ferritecore-mixin.toml",
+      "sha256": "c164439c632aa7c95c07edec5cfef74b8e2d5671a8445a781deeb4de7ad0c8b6"
+    },
+    {
+      "path": "overrides/config/fml.toml",
+      "sha256": "506f0c4c714bf1528d45ab8202f303bde6ba5f9e53778c92a679efbc185afb12"
+    },
+    {
+      "path": "overrides/config/forge-client.toml",
+      "sha256": "0b1b3c45343435184c9dde3149b38afcdb97953e287686ecda54385f53ebcddc"
+    },
+    {
+      "path": "overrides/config/fzzy_config/keybinds.toml",
+      "sha256": "26ac5810c9b5dc5c1968827357f0a58c58ac2b6f7b082630960228e16585062f"
+    },
+    {
+      "path": "overrides/config/irons_spellbooks-client.toml",
+      "sha256": "c02cc14cee5f91bbc236f0392ce7ce05d1a182aacc3ee0dbc8540180c739fdb4"
+    },
+    {
+      "path": "overrides/config/irons_spellbooks_spell_config/global_config.json",
+      "sha256": "7a8fd5e37e183cccd59a72a4af0b9e1fe1b4d930cd034b2f11da7307a8741580"
+    },
+    {
+      "path": "overrides/config/irons_spellbooks_spell_config/irons_spellbooks/example.txt",
+      "sha256": "168b79a354b04c4520f51bae0245126b75e6842bb2b8724ed13a1bfef68be846"
+    },
+    {
+      "path": "overrides/config/jade/hide-blocks.json",
+      "sha256": "247df2699ebb5a0d4c9585aeeb267ef9388cd5bee2b13ca340f35124a135b35b"
+    },
+    {
+      "path": "overrides/config/jade/hide-entities.json",
+      "sha256": "22b4560c3dc05da35a70bb6611da0ce04cff295ab8c663afd58e725c396a24b3"
+    },
+    {
+      "path": "overrides/config/jade/jade.json",
+      "sha256": "8a9c0403b385ca106d0c0b541ea2f2128bf39e3f9b05b342b176ca11834857a4"
+    },
+    {
+      "path": "overrides/config/jade/plugins.json",
+      "sha256": "4b340db9e27b79707db7a2b38946e310ec9df1fb0e1fb77717dff37bd0ad055e"
+    },
+    {
+      "path": "overrides/config/jade/sort-order.json",
+      "sha256": "bcbf758bd53ea1caec93acb6cf4f313a3eb1e28f1682ce1d231fc02c817c0194"
+    },
+    {
+      "path": "overrides/config/jei/blacklist.json",
+      "sha256": "3ca754fefc49ea02e5203353bc3390e520e6717dd8b148aa07042f0b48a78621"
+    },
+    {
+      "path": "overrides/config/jei/jei-client.ini",
+      "sha256": "3691319148dbb9c0f07e18682bdb911279d36e25708ad644db24fbd5cdd7c516"
+    },
+    {
+      "path": "overrides/config/jei/jei-colors.ini",
+      "sha256": "755f199a3868224bdccb2a8ffd8f1a4eb2d96140757f444ba31f8d677a66034f"
+    },
+    {
+      "path": "overrides/config/jei/jei-debug.ini",
+      "sha256": "8bb0722d480964720a1500654493b5be225c74f7ff3f94e8658e39db5ab098ad"
+    },
+    {
+      "path": "overrides/config/jei/jei-mod-id-format.ini",
+      "sha256": "6a91c09d1cabc1980d90ab102a03ec58c0551213ab16a459b599d768b334d054"
+    },
+    {
+      "path": "overrides/config/jei/recipe-category-sort-order.ini",
+      "sha256": "9ef8ac4716e849e37df4f62933dbb858f1bcd0ddb72ed06bff70d6596fc31999"
+    },
+    {
+      "path": "overrides/config/jeresources-common.toml",
+      "sha256": "9dbe8c6973dc932be6dd20cb63381276740b23c75349dbe870fc8098c8529989"
+    },
+    {
+      "path": "overrides/config/jeresources.toml",
+      "sha256": "b101c668c6c658e2db126b7f6d3b9eb913537ff8903fbfce0128534299b2aea5"
+    },
+    {
+      "path": "overrides/config/legendary_monsters-common.toml",
+      "sha256": "6af5b9459b5a2c22919009246c05d7bba724734f28b53da92ceb4d1025d36041"
+    },
+    {
+      "path": "overrides/config/modernfix-common.toml",
+      "sha256": "fad9aea710ec3508eab562cd8f2b5f8e2dda6ee1c5fb1fe818f90ce253017f66"
+    },
+    {
+      "path": "overrides/config/modernfix-mixins.properties",
+      "sha256": "44e96f5fcc45f1bcd53b5160495b1684afe974911889e93c3887b535af04fd11"
+    },
+    {
+      "path": "overrides/config/monolib-common.toml",
+      "sha256": "68e213486c5652b58bf82639565a0c76f76d5ff14a6e5f93b35b975518dc77e7"
+    },
+    {
+      "path": "overrides/config/moonlight-client.toml",
+      "sha256": "47297d47ca3fa4525d1adbc7234b9b0dc2ee490b87216fe6002e34ff69acac08"
+    },
+    {
+      "path": "overrides/config/moonlight-common.toml",
+      "sha256": "02cd35fbcc371cf63303ae1264ad9f4613b3f73ace93417af825baf7d3ac7baf"
+    },
+    {
+      "path": "overrides/config/more_bows_and_arrows-server.toml",
+      "sha256": "90801227b20ca4994e596b3ca09252ea650add2ad0c2a295f9b83a36b3d680b9"
+    },
+    {
+      "path": "overrides/config/oculus.properties",
+      "sha256": "59210cbfcc50e93a353a22b85e891c1a01ed4fded54757397547d9bd8804c29b"
+    },
+    {
+      "path": "overrides/config/particle_core_config.toml",
+      "sha256": "9f21aae26ba31a4fd9bab85c4bb4e37d10ac408aff9feed91ad6acdf1e269634"
+    },
+    {
+      "path": "overrides/config/particle_core_disabled_optimizations_v2.json",
+      "sha256": "7189bb61c58cb1030b8ee486e66abf694d257192248b9b3ac4978df2b1366f7d"
+    },
+    {
+      "path": "overrides/config/patchouli-client.toml",
+      "sha256": "d289f4c7540e3e24bcf6bbf3f5a2aaaf87ccf58027d2213e40497fc627422068"
+    },
+    {
+      "path": "overrides/config/pfg-client.toml",
+      "sha256": "f59ec82ff6e91214b91a18e124f33b388f54d95f3955b17c02cf3b65786d1c0d"
+    },
+    {
+      "path": "overrides/config/pickupnotifier/pickupnotifier-client.toml",
+      "sha256": "242a0f58407ecc71ff5e2c6cd2910001c089ee4e6130454c377115e8a8f3c83a"
+    },
+    {
+      "path": "overrides/config/pickupnotifier/pickupnotifier-server.toml",
+      "sha256": "6e18bfa2ec02629937474e436f3f44fb67d54fd6e6b47a7c9b4c5b3a3bd83916"
+    },
+    {
+      "path": "overrides/config/renderscale.json5",
+      "sha256": "adcd5ed15cb62dd8eb4f524d1ee88d7d11671b065ba9e5da319a341384b57e9e"
+    },
+    {
+      "path": "overrides/config/resourceful-config-web.json",
+      "sha256": "8dade1bd5154fb0224f9a99d7769dba0030021adb39d94dfc8bf8bf8d4bfde7a"
+    },
+    {
+      "path": "overrides/config/resourcify.json",
+      "sha256": "ade1b4a28332a849a0b3dfe006db3d1ef22810301999316fd58a34b130968fb5"
+    },
+    {
+      "path": "overrides/config/rubidium-mixins.properties",
+      "sha256": "28e5b8f2e7d93aa4a086c908e6fe135055d1ebda0eb5465d165e1d3790f34a1b"
+    },
+    {
+      "path": "overrides/config/rubidium-options.json",
+      "sha256": "515a81423ac49422eccc28c17295ca8c6c3b7df3a8b4143d8259d25d864e2a5d"
+    },
+    {
+      "path": "overrides/config/soulsweapons/soulsweapons.json",
+      "sha256": "2ef922c768e4569cba0abf99d40591e5e52ab4b622a38bbd74e452d5da21a6d5"
+    },
+    {
+      "path": "overrides/config/soulsweapons/soulsweapons_boss_config.json",
+      "sha256": "9101dabc8b9a350ae226e5dd9d8d069d465fb4ab11c1c72790c56e3095351c52"
+    },
+    {
+      "path": "overrides/config/soulsweapons/soulsweapons_chungus_tonic_whitelist.json",
+      "sha256": "774b553576a62a67ff029185fb346fea4eb3770d4b197a8151d141f25c6fe547"
+    },
+    {
+      "path": "overrides/config/soulsweapons/soulsweapons_client.json",
+      "sha256": "7b4c84615f3a11c8313f215f1fe9388186baea251124059a04d12acb1fb1dbd6"
+    },
+    {
+      "path": "overrides/config/sound_physics_remastered/occlusion.properties",
+      "sha256": "ebbac45fbb3ca01487b85ffee9601b213b71896e6606fb297bcb0f3ac9c30ffb"
+    },
+    {
+      "path": "overrides/config/sound_physics_remastered/reflectivity.properties",
+      "sha256": "e26b00784bb6239988759ed1a64551b9f301dc33c5a855d91e976ee4bf40ac8a"
+    },
+    {
+      "path": "overrides/config/sound_physics_remastered/sound_rates.properties",
+      "sha256": "3c0153da746bb63c3889431c1ac01c4f191c6e228b1c74fef292b4f3a524cf30"
+    },
+    {
+      "path": "overrides/config/sound_physics_remastered/soundphysics.properties",
+      "sha256": "d29dede3f214ee4b1aa03314f92c3f973c21ee6e26d173eba3d01a2083237b6d"
+    },
+    {
+      "path": "overrides/config/terramity-client-config.toml",
+      "sha256": "11129df13229ef31931c149cd56cba5bd57be291ff46f15fe857834c32c371cd"
+    },
+    {
+      "path": "overrides/config/too_many_bows.json",
+      "sha256": "7e6d7045f6321a85a6ff8588ac966a7d4552a2717e369e0af49e8c897ab87fc4"
+    },
+    {
+      "path": "overrides/config/transition.json",
+      "sha256": "60420a41571a4658b91babfa2b47d6fefb7c1766eeea969f51ff98ab34c2431c"
+    },
+    {
+      "path": "overrides/config/trender.json",
+      "sha256": "fe0bed19bd0927b3d519816c73378730689080a8f07e66a6167c266ffde29dd2"
+    },
+    {
+      "path": "overrides/config/zfastnoise.mixin.properties",
+      "sha256": "7b8547fbd36aa033dee09cb1bdbb65a61745b100ecf03631e12368b1b4eb0579"
+    }
+  ],
+  "rpg_override_replaced_by_current_build": true,
+  "full_runtime_validated": false
+}

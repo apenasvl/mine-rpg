@@ -32,6 +32,7 @@
 
 ### Task3: encounter evidence (required before B completion)
 - [x] Add strict reviewed-evidence import, preserving raw trials and NOT_RUN cases; never approve full modpack or release automatically.
+- [x] Add exact62-file modpack inventory job and snapshot/config fingerprints; verify metadata against actual Forge47.4.10 and preserve unresolved findings. Inventory is not runtime/encounter proof.
 - [ ] Execute matrix real fights and annotate phases/summons/cooldowns/movement/windows.
 - [ ] Validate Forge47.4.10 complete current ZIP, compare isolated47.4.0.
 - [ ] Tune only observed outliers; review four-class tier coverage and native replays.
