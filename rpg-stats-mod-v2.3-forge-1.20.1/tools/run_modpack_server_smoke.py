@@ -28,8 +28,8 @@ def validated_boot(log, exit_code):
 
 
 def stage_modpack(inventory, jars, configuration, main_jar, server):
-    if (server / 'mods').exists() and any((server / 'mods').iterdir()):
-        raise ValueError('existing mods would invalidate exact-pack staging; use a fresh work directory')
+    if server.exists() and any(server.iterdir()):
+        raise ValueError('existing server content would invalidate exact-pack staging; use a fresh work directory')
     mods = server / 'mods'; mods.mkdir(parents=True, exist_ok=True)
     resources = server / 'resourcepacks'; resources.mkdir(exist_ok=True)
     count = resource_count = 0
@@ -63,7 +63,7 @@ def stage_modpack(inventory, jars, configuration, main_jar, server):
                            'are staged separately, not activated on a client. Windows nontext config is excluded.'}
 
 
-def run_server(server, timeout=600):
+def run_server(server, timeout=600, cleanup_grace=15):
     # Process group makes bounded cleanup include the launcher and its Java child.
     process = subprocess.Popen(['bash', 'run.sh', 'nogui'], cwd=server, stdin=subprocess.PIPE,
                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
@@ -105,12 +105,23 @@ def run_server(server, timeout=600):
         (server / 'smoke-console.log').write_text(log)
         return return_code, log
     finally:
-        if process.poll() is None:
-            os.killpg(process.pid, signal.SIGTERM)
+        if process.poll() is None or reader.is_alive():
             try:
-                process.wait(timeout=15)
-            except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL); process.wait(timeout=15)
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            reader.join(timeout=cleanup_grace)
+            # A terminated launcher does not prove its Java child terminated.
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.wait(timeout=15)
+            reader.join(timeout=5)
+        while not lines.empty():
+            line = lines.get_nowait()
+            if line is not None:
+                captured.append(line)
         if not (server / 'smoke-console.log').exists():
             (server / 'smoke-console.log').write_text(''.join(captured))
         process.stdin.close(); process.stdout.close()

@@ -1,10 +1,21 @@
 import tempfile
+import time
 import unittest
 from pathlib import Path
-from run_modpack_server_smoke import stage_modpack, validated_boot
+from run_modpack_server_smoke import stage_modpack, validated_boot, run_server
 
 
 class ModpackServerSmokeTests(unittest.TestCase):
+    def test_timeout_kills_term_ignoring_child_and_preserves_logs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'run.sh').write_text("python3 -u -c 'import signal,time; signal.signal(signal.SIGTERM, signal.SIG_IGN); print(\"child ready\", flush=True); time.sleep(30)' &\nwait\n")
+            started = time.monotonic()
+            with self.assertRaises(TimeoutError):
+                run_server(root, timeout=.3, cleanup_grace=.2)
+            self.assertLess(time.monotonic() - started, 3)
+            self.assertIn('child ready', (root / 'smoke-console.log').read_text())
+
     def test_boot_requires_actual_forge_normal_server_and_clean_shutdown(self):
         log = ('Forge mod loading, version 47.4.10, for MC 1.20.1\n'
                '[Server thread/INFO] [minecraft/DedicatedServer]: Done (12.0s)! For help, type "help"\n'
@@ -48,6 +59,18 @@ class ModpackServerSmokeTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 stage_modpack({'files': []}, root, {'files': {'../outside': 'bad'}, 'excluded_nontext': []},
                               main, root / 'server')
+
+    def test_existing_world_or_config_cannot_be_claimed_as_fresh(self):
+        for relative in ('world/level.dat', 'config/extra.toml', 'resourcepacks/extra.zip'):
+            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                existing = root / 'server' / relative
+                existing.parent.mkdir(parents=True)
+                existing.write_bytes(b'existing')
+                main = root / 'rpg.jar'; main.write_bytes(b'RPG')
+                with self.assertRaises(ValueError):
+                    stage_modpack({'files': []}, root, {'files': {}, 'excluded_nontext': []}, main, root / 'server')
+                self.assertEqual(b'existing', existing.read_bytes())
 
     def test_stale_mods_are_rejected_without_deleting_them(self):
         with tempfile.TemporaryDirectory() as directory:
