@@ -28,7 +28,7 @@ jobs:
         run: python3 tools/validate_forge.py
 
       - name: Arena representative matrix tests
-        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence tools.test_modpack_audit
+        run: PYTHONPATH=tools python3 -m unittest tools.test_boss_arena_matrix tools.test_native_forge_version tools.test_boss_arena_evidence tools.test_modpack_audit tools.test_modpack_server_smoke
 
       - name: Progression and boss XP validation
         run: python3 tools/validate_progression.py
@@ -137,6 +137,50 @@ jobs:
           name: rpg-stats-forge-test
           path: rpg-stats-mod-v2.3-forge-1.20.1/dist/rpg-stats-forge-1.20.1-test.jar
           if-no-files-found: error
+          retention-days: 7
+
+  modpack-server-smoke:
+    needs: [build, modpack-inventory]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: rpg-stats-mod-v2.3-forge-1.20.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - uses: actions/download-artifact@v4
+        with:
+          name: rpg-stats-forge-test
+          path: rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-current-artifact
+      - name: Test staging and native boot evidence
+        run: PYTHONPATH=tools python3 -m unittest tools.test_modpack_server_smoke
+      - name: Resolve exact Forge47.4.10 installer
+        run: >-
+          bash gradlew --no-daemon --stacktrace
+          -I tools/production-boss-probe.init.gradle
+          -PproductionForgeVersion=47.4.10 prepareProductionForgeInstaller
+      - name: Boot normal dedicated server with supplied native pack
+        run: >-
+          python3 tools/run_modpack_server_smoke.py
+          --snapshot compat/modpack-snapshot
+          --rpg-jar build/modpack-current-artifact/rpg-stats-forge-1.20.1-test.jar
+          --installer build/production-probe/forge-installer.jar
+          --work build/modpack-server-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: modpack-normal-server-forge47.4.10
+          path: |
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/result.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/native-inventory.json
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/logs/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/crash-reports/
+            rpg-stats-mod-v2.3-forge-1.20.1/build/modpack-server-smoke/server/smoke-console.log
           retention-days: 7
 
   modpack-inventory:
